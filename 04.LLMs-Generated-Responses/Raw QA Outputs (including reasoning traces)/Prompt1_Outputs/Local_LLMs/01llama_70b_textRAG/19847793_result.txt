@@ -1,0 +1,99 @@
+总时间（秒）：14023.49
+问答时间（秒）：76.24
+
+```python
+import re
+import json
+
+# Define regular expressions for pattern matching
+gene_regex = r"(?<=\b)[A-Z][A-Za-z0-9]+(?=\b)"
+protein_change_regex = r"(?<=\b)[A-Z]\d+[A-Z](?=\b)"
+ref_aa_regex = r"(?<=\b)[A-Z](?=\d+)"
+alt_aa_regex = r"(?<=\d+)[A-Z](?=\b)"
+position_regex = r"(?<=\b)\d+(?=\b)"
+variant_string_id_regex = r"(?<=\b)[A-Z][A-Za-z0-9]+[A-Z]\d+[A-Z](?=\b)"
+
+# Define constants for evaluation steps and outcomes
+STEPS = [
+    "Step 1", # Define disease mechanism
+    "Step 2a", # Basic controls and replicates
+    "Step 2b", # Accepted/validated assay
+    "Step 3", # Variant controls
+    "Step 4a", # Statistical analyses
+    "Step 4b", # No OddsPath calculation
+    "Step 4c" # Correlate OddsPath
+]
+EVIDENCE_STRENGTHS = ["PS3_very_strong", "PS3_moderate", "PS3_supporting", "BS3_very_strong", "BS3_moderate", "BS3_supporting"]
+
+# Define helper functions for extraction and evaluation
+def extract_pattern(text, pattern):
+    matches = re.findall(pattern, text)
+    if not matches:
+        return None
+    else:
+        return matches[0]
+
+def evaluate_disease_mechanism(text):
+    disease_mechanism = extract_pattern(text, gene_regex)
+    if disease_mechanism:
+        return True, f"The gene {disease_mechanism} is mentioned, implying a defined disease mechanism."
+    else:
+        return False, "No gene is mentioned, so the disease mechanism is unclear."
+
+def evaluate_assay_applicability(text):
+    assay_type = extract_pattern(text, protein_change_regex)
+    if assay_type:
+        return True, f"The assay type {assay_type} is mentioned, indicating applicability to the disease mechanism."
+    else:
+        return False, "No assay type is mentioned, so its applicability to the disease mechanism is unknown."
+
+def evaluate_basic_controls(text):
+    normal_control = extract_pattern(text, ref_aa_regex)
+    abnormal_control = extract_pattern(text, alt_aa_regex)
+    replicates = extract_pattern(text, position_regex)
+    if normal_control and abnormal_control and replicates:
+        return True, f"Normal ({normal_control}), abnormal ({abnormal_control}), and replicate ({replicates}) controls are mentioned, indicating proper controls."
+    else:
+        return False, "Some expected controls are missing or unclear."
+
+def evaluate_accepted_validated_assay(text):
+    assay_validity = extract_pattern(text, variant_string_id_regex)
+    if assay_validity:
+        return True, f"An accepted/validated assay ({assay_validity}) is mentioned, indicating validity."
+    else:
+        return False, "No accepted/validated assay is mentioned, so its validity is unclear."
+
+def evaluate_variant_controls(text):
+    variant_controls = extract_pattern(text, gene_regex)
+    if variant_controls:
+        return True, f"Variant controls for the gene {variant_controls} are mentioned, indicating applicability to the variant in question."
+    else:
+        return False, "No variant controls are mentioned, so their applicability to the variant in question is unclear."
+
+def evaluate_statistical_analyses(text):
+    statistical_analysis = extract_pattern(text, ref_aa_regex)
+    if statistical_analysis:
+        return True, f"Statistical analyses ({statistical_analysis}) are mentioned, indicating sufficient statistics."
+    else:
+        return False, "No statistical analyses are mentioned, so their sufficiency is unclear."
+
+def evaluate_odds_path(text):
+    odds_path = extract_pattern(text, position_regex)
+    if odds_path:
+        return True, f"An odds path value ({odds_path}) is mentioned, indicating sufficient statistics."
+    else:
+        return False, "No odds path value is mentioned, so its sufficiency is unclear."
+
+def extract_evidence_strength(text):
+    evidence_strength = extract_pattern(text, ref_aa_regex)
+    if evidence_strength:
+        return evidence_strength
+    else:
+        return "N/A"
+
+def evaluate_final_outcome(outcomes):
+    outcome = max(outcomes, key=lambda x: x[1])[0]
+    return outcome
+
+# Process the input scientific paper text
+paper_text = """Pathogenicity of PINK1 mutations: Evaluation of 71

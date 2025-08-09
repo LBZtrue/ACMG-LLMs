@@ -1,0 +1,260 @@
+总时间（秒）：28.68
+问答时间（秒）：28.60
+
+Based on the provided specification, I will write the code to extract and standardize the variant information from the literature. I will use Python as the programming language for this task.
+
+**Note:** The code below assumes that you have a text file containing the literature and the relevant lines are marked with `###` symbols at the beginning of each line. You may need to modify the code to match your specific needs.
+
+```python
+import json
+
+# Define the function to standardize HGVS nomenclature
+def standardize_hgvs(hgvs):
+    # Implement API call or use a database to retrieve standardized HGVS
+    # For simplicity, assume we have a dictionary mapping old HGVS to new ones
+    hgvs_dict = {
+        'NM_001126112.3:c.248G>A': 'NM_001126112.4:c.248G>A',
+        'NM_001126113.3:c.249T>C': 'NM_001126114.4:c.249T>C'
+    }
+    return hgvs_dict.get(hgvs, hgvs)
+
+# Define the function to extract and standardize variant information
+def extract_variant_info(literature_text):
+    # Split literature text into sections based on ### symbols
+    sections = literature_text.split('###')
+    
+    variants = []
+    for section in sections:
+        lines = section.split('\n')
+        
+        # Extract gene name, HGVS nomenclature, and description of the variant
+        gene_name = None
+        hgvs_nomenclature = None
+        description = None
+        
+        for line in lines:
+            if 'Gene:' in line:
+                gene_name = line.strip().split(':')[1].strip()
+            elif 'HGVS Nomenclature:' in line:
+                hgvs_nomenclature = line.strip().split(':')[1].strip()
+            elif 'Description:' in line:
+                description = line.strip().split(':')[1].strip()
+        
+        # Standardize HGVS nomenclature
+        hgvs_nomenclature = standardize_hgvs(hgvs_nomenclature)
+        
+        # Extract cDNA and protein changes from HGVS nomenclature
+        cDNA_change = None
+        protein_change = None
+        
+        if ':' in hgvs_nomenclature:
+            transcript, variation = hgvs_nomenclature.split(':')
+            ref, alt = variation.split(',')
+            position = variation.split(',')[0].split('.')[1]
+            
+            cDNA_change = {
+                'transcript': transcript,
+                'ref': ref,
+                'alt': alt,
+                'position': position
+            }
+        else:
+            hgvs_nomenclature_parts = hgvs_nomenclature.split('.')
+            protein_change = {
+                'ref': hgvs_nomenclature_parts[0].split(':')[1],
+                'alt': hgvs_nomenclature_parts[1].split(':')[1],
+                'position': hgvs_nomenclature_parts[2]
+            }
+        
+        variants.append({
+            'Gene': gene_name,
+            'HGVS': hgvs_nomenclature,
+            'cDNA Change': cDNA_change if cDNA_change else {},
+            'Protein Change': protein_change if protein_change else {},
+            'Description in input context': description
+        })
+    
+    return variants
+
+# Define the function to extract disease information from literature
+def extract_disease_info(literature_text):
+    # Split literature text into sections based on ### symbols
+    sections = literature_text.split('###')
+    
+    disease_name = None
+    mondo_term = None
+    
+    for section in sections:
+        lines = section.split('\n')
+        
+        # Extract disease name and MONDO term from the literature
+        for line in lines:
+            if 'Disease:' in line:
+                disease_name = line.strip().split(':')[1].strip()
+            elif 'MONDO Term:' in line:
+                mondo_term = line.strip().split(':')[1].strip()
+    
+    return {
+        'Described Disease': disease_name,
+        'MONDO': mondo_term
+    }
+
+# Define the function to extract experimental method information from literature
+def extract_experiment_method_info(literature_text):
+    # Split literature text into sections based on ### symbols
+    sections = literature_text.split('###')
+    
+    experiment_methods = []
+    
+    for section in sections:
+        lines = section.split('\n')
+        
+        # Extract assay method, material used, readout type, and result description from the literature
+        assay_method = None
+        material_used = {
+            'Material Source': None,
+            'Material Name': None,
+            'Description': None
+        }
+        readout_type = None
+        result_description = []
+        
+        for line in lines:
+            if 'Assay Method:' in line:
+                assay_method = line.strip().split(':')[1].strip()
+            elif 'Material Used:' in line:
+                material_used_parts = line.strip().split(':')
+                material_used['Material Source'] = material_used_parts[1].split(',')[0]
+                material_used['Material Name'] = material_used_parts[1].split(',')[1]
+                material_used['Description'] = material_used_parts[2]
+            elif 'Readout Type:' in line:
+                readout_type = line.strip().split(':')[1].strip()
+            elif 'Result Description:' in line:
+                result_description.append(line.strip().split(':'))
+        
+        # Extract biological and technical replicates, positive and negative controls from the literature
+        biological_replicates = None
+        technical_replicates = None
+        basic_positive_control = None
+        basic_negative_control = None
+        
+        for line in lines:
+            if 'Biological Replicates:' in line:
+                biological_replicates = line.strip().split(':')[1].strip()
+            elif 'Technical Replicates:' in line:
+                technical_replicates = line.strip().split(':')[1].strip()
+            elif 'Basic Positive Control:' in line:
+                basic_positive_control = line.strip().split(':')[1].strip()
+            elif 'Basic Negative Control:' in line:
+                basic_negative_control = line.strip().split(':')[1].strip()
+        
+        # Extract validation controls and statistical analysis method from the literature
+        validation_controls_pathogenic_likely_pathogenic = None
+        validation_controls_benign_likely_benign = None
+        
+        for line in lines:
+            if 'Validation Controls P/LP:' in line:
+                validation_controls_pathogenic_likely_pathogenic = line.strip().split(':')[1].strip()
+            elif 'Validation Controls B/LB:' in line:
+                validation_controls_benign_likely_benign = line.strip().split(':')[1].strip()
+        
+        # Extract threshold for normal and abnormal readouts from the literature
+        threshold_for_normal_readout = None
+        threshold_for_abnormal_readout = None
+        
+        for line in lines:
+            if 'Threshold for Normal Readout:' in line:
+                threshold_for_normal_readout = line.strip().split(':')[1].strip()
+            elif 'Threshold for Abnormal Readout:' in line:
+                threshold_for_abnormal_readout = line.strip().split(':')[1].strip()
+        
+        # Extract approved assay information from the literature
+        approved_assay = None
+        
+        for line in lines:
+            if 'Approved Assay:' in line:
+                approved_assay = line.strip().split(':')[1].strip()
+        
+        experiment_methods.append({
+            'Assay Method': assay_method,
+            'Material used': material_used,
+            'Readout type': readout_type,
+            'Result description': result_description,
+            'Biological replicates': biological_replicates if biological_replicates else None,
+            'Technical replicates': technical_replicates if technical_replicates else None,
+            'Basic positive control': basic_positive_control if basic_positive_control else None,
+            'Basic negative control': basic_negative_control if basic_negative_control else None,
+            'Validation controls P/LP': validation_controls_pathogenic_likely_pathogenic if validation_controls_pathogenic_likely_pathogenic else None,
+            'Validation controls B/LB': validation_controls_benign_likely_benign if validation_controls_benign_likely_benign else None,
+            'Statistical analysis method': None,  # Extract statistical analysis method from the literature
+            'Threshold for normal readout': threshold_for_normal_readout if threshold_for_normal_readout else None,
+            'Threshold for abnormal readout': threshold_for_abnormal_readout if threshold_for_abnormal_readout else None,
+            'Approved assay': approved_assay if approved_assay else None
+        })
+    
+    return experiment_methods
+
+# Define the main function to extract and standardize information from literature
+def main(literature_text):
+    # Extract variant information
+    variants = extract_variant_info(literature_text)
+    
+    # Standardize HGVS nomenclature
+    for variant in variants:
+        variant['HGVS'] = standardize_hgvs(variant['HGVS'])
+        
+        # Extract cDNA and protein changes from standardized HGVS
+        if ':' in variant['HGVS']:
+            transcript, variation = variant['HGVS'].split(':')
+            ref, alt = variation.split(',')
+            position = variation.split(',')[0].split('.')[1]
+            
+            variant['cDNA Change'] = {
+                'transcript': transcript,
+                'ref': ref,
+                'alt': alt,
+                'position': position
+            }
+        else:
+            hgvs_nomenclature_parts = variant['HGVS'].split('.')
+            protein_change = {
+                'ref': hgvs_nomenclature_parts[0].split(':')[1],
+                'alt': hgvs_nomenclature_parts[1].split(':')[1],
+                'position': hgvs_nomenclature_parts[2]
+            }
+            
+            # Update protein change in variant dictionary
+            variant['Protein Change'] = protein_change
+    
+    # Extract disease information
+    disease_info = extract_disease_info(literature_text)
+    
+    # Extract experimental method information
+    experiment_methods = extract_experiment_method_info(literature_text)
+    
+    return {
+        'Variants': variants,
+        'Disease Information': disease_info,
+        'Experimental Methods': experiment_methods
+    }
+
+# Load literature text from file
+with open('literature.txt', 'r') as f:
+    literature_text = f.read()
+
+# Call main function to extract and standardize information
+info = main(literature_text)
+
+# Print extracted information in JSON format
+print(json.dumps(info, indent=4))
+```
+
+This code defines four functions: `extract_variant_info`, `extract_disease_info`, `extract_experiment_method_info`, and `main`. The `main` function orchestrates the extraction of information from the literature text.
+
+The code uses a dictionary to map old HGVS nomenclature to new ones for simplicity. In a real-world scenario, you would use an API or database to retrieve standardized HGVS.
+
+Note that this code assumes the literature text is stored in a file named `literature.txt`. You may need to modify the file path and name according to your specific needs.
+
+Also, this code does not handle errors or exceptions. In a real-world scenario, you would add error handling mechanisms to ensure robustness.
+
+To run the code, save it as a Python script (e.g., `extract_info.py`) and execute it using `python extract_info.py`. The extracted information will be printed in JSON format to the console.

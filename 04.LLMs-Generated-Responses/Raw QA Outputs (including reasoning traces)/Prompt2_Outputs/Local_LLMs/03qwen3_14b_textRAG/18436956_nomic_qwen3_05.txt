@@ -1,0 +1,128 @@
+总时间（秒）：29.86
+问答时间（秒）：26.77
+
+<think>
+Okay, let's tackle this query. The user wants detailed information extracted from the given scientific literature about genetic variants, diseases, and experimental methods, structured in JSON format with specific standards.
+
+First, I need to identify the genetic variants mentioned. The paper talks about five DJ-1 mutations: L166P, E64D, M26I, A104T, and D149A. The gene is DJ-1, which is also known as PARK7. I'll need to convert these protein changes into HGVS nomenclature. However, the original text doesn't provide transcript numbers or cDNA changes, so I might have to note that as N.D. unless I can infer them from standard databases. Since the user mentioned using APIs for standardization, I'll have to leave that placeholder and assume that's handled externally.
+
+Next, the disease associated here is Parkinson's disease. I need to find the MONDO term for Parkinson's disease. MONDO:0005321 is the correct term for Parkinson's disease.
+
+For the experimental methods, the paper uses solution state NMR and circular dichroism spectroscopies. The materials used are the wild-type protein and the mutant proteins. The readout types are structural perturbations, thermodynamic stability, etc. The results compare the mutants to the wild-type, showing different effects. The readout descriptions should include all variants mentioned, but again, without specific HGVS nomenclature, I'll have to use the protein changes as described. The user example uses NM_001126112.3 for TP53, but for DJ-1, the transcript might be different. However, the original text doesn't specify, so I'll use N.D. for transcript numbers and positions.
+
+I need to check if the methods are generally used for studying Parkinson's disease. NMR and CD are common for structural studies, so "Approved assay" would be "Yes".
+
+Also, the user mentioned biological and technical replicates, controls, etc. The original text doesn't specify replicates or controls, so those fields would be N.D. except where mentioned, like the comparison to wild-type as a positive control.
+
+Putting this all together into the JSON structure as per the example, making sure to handle missing data with N.D. and placeholders where standardization is required.
+</think>
+
+{
+  "Variants Include": [
+    {
+      "Gene": "PARK7",
+      "variants": [
+        {
+          "HGVS": "N.D.",
+          "cDNA Change": {
+            "transcript": "N.D.",
+            "ref": "N.D.",
+            "alt": "N.D.",
+            "position": "N.D."
+          },
+          "Protein Change": {
+            "ref": "N.D.",
+            "alt": "N.D.",
+            "position": "N.D."
+          },
+          "Description in input context": "L166P, E64D, M26I, A104T, D149A"
+        }
+      ]
+    }
+  ],
+  "Described Disease": {
+    "Described Disease": "Parkinson's disease",
+    "MONDO": "MONDO:0005321"
+  },
+  "Experiment Method": [
+    {
+      "Assay Method": "Solution-state NMR and Circular Dichroism Spectroscopy",
+      "Material used": {
+        "Material Source": "Protein samples",
+        "Material Name": "Wild-type and mutant DJ-1 proteins",
+        "Description": "Structural and thermodynamic analysis of wild-type and mutant DJ-1 proteins."
+      },
+      "Readout type": "Structural/thermodynamic",
+      "Readout description": [
+        {
+          "Variant": "L166P",
+          "Conclusion": "Abnormal",
+          "Molecular Effect": "Severe structural destabilization",
+          "Result Description": "L166P caused significant structural perturbations and loss of thermodynamic stability."
+        },
+        {
+          "Variant": "E64D",
+          "Conclusion": "Abnormal",
+          "Molecular Effect": "Partial structural destabilization",
+          "Result Description": "E64D showed moderate structural changes and reduced stability."
+        },
+        {
+          "Variant": "M26I",
+          "Conclusion": "Abnormal",
+          "Molecular Effect": "Intermediate structural effect",
+          "Result Description": "M26I exhibited mild structural perturbations with minimal stability loss."
+        },
+        {
+          "Variant": "A104T",
+          "Conclusion": "Abnormal",
+          "Molecular Effect": "Intermediate structural effect",
+          "Result Description": "A104T showed moderate structural changes and partial stability loss."
+        },
+        {
+          "Variant": "D149A",
+          "Conclusion": "Abnormal",
+          "Molecular Effect": "Partial structural destabilization",
+          "Result Description": "D149A caused moderate structural changes and reduced stability."
+        }
+      ],
+      "Biological replicates": {
+        "Biological replicates": "N.D.",
+        "Description": "N.D."
+      },
+      "Technical replicates": {
+        "Technical replicates": "N.D.",
+        "Description": "N.D."
+      },
+      "Basic positive control": {
+        "Basic positive control": "Yes",
+        "Description": "Wild-type DJ-1 protein used as a reference for structural and thermodynamic comparisons."
+      },
+      "Basic negative control": {
+        "Basic negative control": "N.D.",
+        "Description": "N.D."
+      },
+      "Validation controls P/LP": {
+        "Validation controls P/LP": "N.D.",
+        "Counts": "N.D."
+      },
+      "Validation controls B/LB": {
+        "Validation controls B/LB": "N.D.",
+        "Counts": "N.D."
+      },
+      "Statistical analysis method": {
+        "Statistical analysis method": "N.D."
+      },
+      "Threshold for normal readout": {
+        "Threshold for normal readout": "N.D.",
+        "Source": "N.D."
+      },
+      "Threshold for abnormal readout": {
+        "Threshold for abnormal readout": "N.D.",
+        "Source": "N.D."
+      },
+      "Approved assay": {
+        "Approved assay": "Yes"
+      }
+    }
+  ]
+}

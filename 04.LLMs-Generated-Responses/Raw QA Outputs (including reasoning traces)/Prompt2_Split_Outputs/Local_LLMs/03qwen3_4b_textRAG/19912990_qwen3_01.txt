@@ -1,0 +1,43 @@
+总时间（秒）：9.93
+问答时间（秒）：9.24
+
+<think>
+Okay, let's tackle this query. The user provided a text from a medical literature abstract and wants me to extract mutation-related information. The role is to act as a medical literature data mining expert.
+
+First, I need to read through the abstract carefully. The main focus is on LRRK2, specifically the I2020T mutant. The introduction mentions the Sagamihara family with the I2020T mutation in the kinase domain. The abstract talks about the I2020T mutant's susceptibility to degradation and its effect on apoptosis.
+
+So, the key points here are the gene name (LRRK2), the specific mutation (I2020T), and the domain (kinase). The cDNA change isn't explicitly mentioned, but the protein change is given as I2020T. The description in the context is that this mutation is associated with higher degradation susceptibility. 
+
+I need to check if there's any other mutation mentioned. The introduction says there are 23 LRRK2 mutations reported, but the specific ones mentioned are I2020T. The rest are not detailed here. So the only mutation to extract is I2020T in the kinase domain. The cDNA change isn't provided, so that's N.D. The protein change is I2020T, position 2020, and the domain is kinase. The description in the context is about the mutation's effect on degradation and apoptosis.
+
+I should structure the JSON with Gene as LRRK2, variants with the cDNA and protein changes. Since cDNA isn't given, set it to N.D. The protein change is I2020T, position 2020. The description in the context is the part from the abstract that explains the mutation's effect. The other mutations aren't detailed here, so they are N.D. for variants. The domain is kinase. 
+
+Wait, the example shows that if there's only one variant, it's in the variants array. The domain is part of the protein change? Or is it a separate field? The example includes domain in the protein change. Wait, looking back at the example, the protein change has position and description. But in the example, the domain isn't mentioned. However, in the given text, the mutation is in the kinase domain. So maybe the domain should be included as part of the protein change's description. But according to the example, the description in the input context is the full phrase. So in this case, the description in the input context would be "I2020T mutation in the kinase domain". But the user's example didn't include the domain, so maybe the domain is not part of the protein change but a separate field. Wait, the example's protein change has position and description. The description in the example is "c.248G>A (p.G83D)", which is the full mutation. So in this case, the description in the input context is "I2020T mutation in the kinase domain". But the user's example didn't include the domain, so maybe the domain is not part of the protein change but a separate field. However, the user's instructions say to extract gene names, cDNA changes, protein changes, and mutation descriptions. The domain is part of the mutation description. So in this case, the protein change is I2020T at position 2020, and the description in the input context is "I2020T mutation in the kinase domain".
+
+Wait, the original text says "the Sagamihara family patients have the I2020T mutation in the kinase domain". So the mutation is in the kinase domain. Therefore, the description in the input context should include that. But in the example, the description is the full mutation, so maybe the domain is part of the description. Therefore, the protein change is I2020T, position 2020, and the description in the input context is "I2020T mutation in the kinase domain".
+
+So the JSON should have Gene: LRRK2, variants with one entry. The cDNA change is N.D., protein change is I2020T, position 2020, and description in input context is "I2020T mutation in the kinase domain". The other mutations are N.D. because the text only mentions this one specific mutation. The domain is part of the description, not a separate field. So that's the extraction.
+</think>
+
+{
+    "Gene": "LRRK2",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "I",
+                "alt": "T",
+                "position": "2020"
+            },
+            "Description in input context": "I2020T mutation in the kinase domain"
+        }
+    ],
+    "mutation_description": "Higher susceptibility of I2020T mutant LRRK2 to intracellular degradation than the wild-type molecule",
+    "mutation_domain": "kinase",
+    "other_mutations": "N.D."
+}

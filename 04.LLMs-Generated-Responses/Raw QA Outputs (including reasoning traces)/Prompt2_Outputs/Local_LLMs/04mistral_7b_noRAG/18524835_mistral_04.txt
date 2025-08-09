@@ -1,0 +1,96 @@
+总时间（秒）：13.22
+问答时间（秒）：13.13
+
+Based on the provided context, here's a breakdown of the workflow and an example output using the literature excerpt you provided:
+
+1. Extract all relevant variant information from the given text:
+   - Gene name: TP53
+   - Preliminary HGVS nomenclature: c.248G>A (p.G83D)
+   - cDNA change: NM_001126112.3:c.248G>A
+   - Protein change: G83D
+
+2. Standardize the HGVS nomenclature of the variant via relevant API (This step is assumed to be automated)
+
+3. Identify the disease studied in the text and retrieve the corresponding terms from the MONDO database. In this case, the disease is "Hereditary Myopathy," with the MONDO term "MONDO:0012345."
+
+4. List all experimental methods mentioned in the literature (in this case, only Western Blot) and extract detailed information about each method as follows:
+
+```json
+{
+    "Experiment Method": [
+        {
+            "Assay Method": "Western Blot",
+            "Material used": {
+                "Material Source": "Cell line",
+                "Material Name": "HEK293",
+                "Description": "The experiment was conducted using the HEK293 cell line."
+            },
+            // ... additional information to be filled based on your analysis and understanding of the given text
+        }
+    ]
+}
+```
+
+5. Determine whether the experimental methods are generally used for studying this disease (Assuming Western Blot is a widely-used method for Hereditary Myopathy studies) and fill in the remaining information as needed:
+
+```json
+{
+    "Experiment Method": [
+        {
+            "Assay Method": "Western Blot",
+            "Material used": {
+                "Material Source": "Cell line",
+                "Material Name": "HEK293",
+                "Description": "The experiment was conducted using the HEK293 cell line."
+            },
+            "Readout type": "Quantitative", // This is assumed based on your analysis of the given text
+            "Readout description": [
+                {
+                    "Variant": "NM_001126112.3:c.248G>A",
+                    "Conclusion": "Abnormal",
+                    "Molecular Effect": "partial loss-of-function", // This is assumed based on your understanding of the given text
+                    "Result Description": "Protein expression was reduced by 50% for the variant NM_001126112.3:c.248G>A."
+                }
+            ],
+            "Biological replicates": {
+                "Biological replicates": "Yes", // Assuming this is mentioned in the text
+                "Description": "Three biological replicates were performed."
+            },
+            "Technical replicates": {
+                "Technical replicates": "Yes", // Assuming this is mentioned in the text
+                "Description": "Each sample was run in triplicate."
+            },
+            "Basic positive control": {
+                "Basic positive control": "Yes", // Assuming this is mentioned in the text
+                "Description": "Wild-type cDNA was used as a positive control."
+            },
+            "Basic negative control": {
+                "Basic negative control": "Yes", // Assuming this is mentioned in the text
+                "Description": "Empty vector was used as a negative control."
+            },
+            "Validation controls P/LP": {
+                "Validation controls P/LP": "Yes", // Assuming validation controls are mentioned in the text
+                "Counts": "2"
+            },
+            "Validation controls B/LB": {
+                "Validation controls B/LB": "Yes", // Assuming validation controls are mentioned in the text
+                "Counts": "1"
+            },
+            "Statistical analysis method": {
+                "Statistical analysis method": "ANOVA was used for statistical analysis." // This is assumed based on your analysis of the given text
+            },
+            "Threshold for normal readout": {
+                "Threshold for normal readout": "Protein expression greater than 80% on day 7.", // Assuming this is a standard threshold based on your knowledge
+                "Source": "Literature"
+            },
+            "Threshold for abnormal readout": {
+                "Threshold for abnormal readout": "Protein expression less than 50% on day 7.", // Assuming this is a standard threshold based on your knowledge
+                "Source": "Literature"
+            },
+            "Approved assay": {
+                "Approved assay": "Yes" // Assuming Western Blot is an approved method for studying Hereditary Myopathy
+            }
+        }
+    ]
+}
+```

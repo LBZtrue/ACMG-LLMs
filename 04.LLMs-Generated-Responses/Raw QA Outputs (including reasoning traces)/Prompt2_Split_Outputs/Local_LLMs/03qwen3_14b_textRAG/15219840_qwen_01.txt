@@ -1,0 +1,94 @@
+总时间（秒）：25.67
+问答时间（秒）：24.31
+
+<think>
+Okay, let's tackle this query. The user wants me to extract mutation information from the provided medical literature. First, I'll need to scan through the text to find any mentions of mutations.
+
+Looking at the abstract, the authors mention several DJ-1 mutants found in Parkinson's disease patients: L166P, M26I, R98Q, and D149A. These are all protein changes, but the text doesn't specify the cDNA changes like the exact nucleotide positions. The variants are described by their protein-coding changes, such as L166P, which is a substitution of leucine at position 166 with proline. Similarly, M26I is methionine at 26 to isoleucine, R98Q is arginine to glutamine at 98, and D149A is aspartic acid to alanine at 149.
+
+The user's example uses the format with cDNA changes, but in this case, the literature only provides the protein changes. The cDNA changes (like the specific nucleotide positions) aren't mentioned here. So for those fields, I should put "N.D." as per the constraints. The description in the input context would be the names of the mutants as listed in the text.
+
+I need to make sure I don't fabricate any cDNA information. The text doesn't provide that, so it's important to leave those as "N.D." The gene is clearly DJ-1. Each variant has a protein change with the reference and alternate amino acids and positions. The description in the context is the mutant names given in the study.
+
+So the JSON should list each mutation with the gene, and for each variant, the cDNA change is N.D., the protein changes are specified, and the description is the mutant name. The user's example included a "variants" array, so I'll follow that structure. Let me double-check to ensure I didn't miss any other mutations mentioned. The text also mentions C106S, but that's in the context of a protease activity mutant, so I should include that as well. Wait, the text says "C106S, a mutant for protease activity of DJ-1," so that's another mutation. But the original list in the abstract mentions L166P, M26I, R98Q, D149A. Then in the later part, C106S is mentioned as a protease activity mutant. So that's an additional variant. However, the user's example might have included all variants mentioned in the text. So I need to include all five: L166P, M26I, R98Q, D149A, and C106S.
+
+But wait, the original paragraph in the abstract mentions "other mutants of DJ-1 found in Parkinson’s disease patients, including M26I, R98Q, and D149A, as well as L166P." So those four are the ones analyzed. Then later, "C106S, a mutant for protease activity of DJ-1" is mentioned in the context of cell lines. So that's another mutation. But the question is whether the user wants all mutations mentioned in the text, even if they are not in the main study. The main study mentions L166P, M26I, R98Q, D149A. Then C106S is mentioned in the context of protease activity. So maybe that's an additional mutation. However, the user's instruction is to extract all mutations mentioned in the text. So I should include C106S as well.
+
+Therefore, the variants are L166P, M26I, R98Q, D149A, and C106S. Each of these has a protein change. The cDNA changes are not provided, so they should be N.D. The description in the input context would be the names as given. Let me structure that into the JSON accordingly.
+</think>
+
+{
+    "Gene": "DJ-1",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "L",
+                "alt": "P",
+                "position": "166"
+            },
+            "Description in input context": "L166P, a mutant DJ-1 found in Parkinson’s disease patients"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "M",
+                "alt": "I",
+                "position": "26"
+            },
+            "Description in input context": "M26I, a mutant DJ-1 found in Parkinson’s disease patients"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "R",
+                "alt": "Q",
+                "position": "98"
+            },
+            "Description in input context": "R98Q, a mutant DJ-1 found in Parkinson’s disease patients"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "D",
+                "alt": "A",
+                "position": "149"
+            },
+            "Description in input context": "D149A, a mutant DJ-1 found in Parkinson’s disease patients"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "C",
+                "alt": "S",
+                "position": "106"
+            },
+            "Description in input context": "C106S, a mutant for protease activity of DJ-1"
+        }
+    ]
+}

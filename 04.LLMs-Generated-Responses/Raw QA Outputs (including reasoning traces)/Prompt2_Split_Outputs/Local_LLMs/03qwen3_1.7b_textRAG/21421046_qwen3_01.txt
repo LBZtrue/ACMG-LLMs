@@ -1,0 +1,68 @@
+总时间（秒）：5.48
+问答时间（秒）：3.35
+
+<think>
+Okay, let's tackle this query. The user provided a paragraph from a medical literature abstract and wants to know if it contains mutation-related information. They need the extracted details in a specific JSON format.
+
+First, I'll read through the abstract carefully. The main focus is on PINK1 mutations in PARK6. The abstract mentions PINK1 knockout mice, confocal imaging, mitochondrial membrane potential, and oxidative stress. 
+
+Looking for mutation terms: The paragraph mentions "PARK6 mutant (G309D), (E417G) or (CΔ145) PINK1". These are specific mutations. Each has a gene name (PINK1), and the mutations are described with their positions and residues. 
+
+So, the gene is PINK1. The mutations are G309D, E417G, and CΔ145. Each of these has a cDNA change with the reference and alternate bases, and a protein change with the corresponding amino acids. The description in the input context is the mutation names.
+
+I need to structure this into the JSON format. The "Gene" field should be PINK1. The variants array will have three entries, each with cDNA and protein changes. The positions are given as numbers, so I'll keep them as is. The description in the input context is the mutation names.
+
+I need to check if there's any other mutation info. The abstract doesn't mention any other mutations or variants. So, all the relevant info is there. The user's constraints say to use "N.D." for missing info, but here all the required details are present. 
+
+So the final JSON should include the gene, the three mutations with their details, and the description from the context. No missing fields, so it's complete.
+</think>
+
+```json
+{
+    "Gene": "PINK1",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "G",
+                "alt": "D",
+                "position": "309"
+            },
+            "Protein Change": {
+                "ref": "G",
+                "alt": "D",
+                "position": "309"
+            },
+            "Description in input context": "PARK6 mutant (G309D)"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "G",
+                "alt": "G",
+                "position": "417"
+            },
+            "Protein Change": {
+                "ref": "G",
+                "alt": "G",
+                "position": "417"
+            },
+            "Description in input context": "PARK6 mutant (E417G)"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "C",
+                "alt": "Δ",
+                "position": "145"
+            },
+            "Protein Change": {
+                "ref": "C",
+                "alt": "Δ",
+                "position": "145"
+            },
+            "Description in input context": "PARK6 mutant (CΔ145)"
+        }
+    ]
+}
+```

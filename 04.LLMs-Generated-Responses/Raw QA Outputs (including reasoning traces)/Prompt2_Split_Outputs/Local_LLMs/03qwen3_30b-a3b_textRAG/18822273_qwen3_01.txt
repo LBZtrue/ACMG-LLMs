@@ -1,0 +1,44 @@
+总时间（秒）：12.78
+问答时间（秒）：10.58
+
+<think>
+Okay, let's tackle this query. The user wants me to act as a Professional Medical Literature Data Mining Expert. The task is to determine if the provided text has mutation information and extract it accordingly. 
+
+First, I'll read through the given context carefully. The abstract mentions a "novel homozygous missense mutation in the gene encoding human DJ-1 protein resulting in the E163K amino acid substitution." That's a key point. The introduction also talks about mutations in DJ-1, like truncation, missense, etc.
+
+So, the gene here is DJ-1, which is also known as PARK7. The mutation described is E163K. The cDNA change would be c.163G>A because the amino acid change is from glutamic acid (E) to lysine (K) at position 163. But wait, the position in the text is "E163K", which refers to the protein level. The cDNA change would correspond to the nucleotide change causing that. However, the text doesn't explicitly state the cDNA change, only the protein change. So in the JSON, the cDNA Change might be N.D. unless inferred. But the user's example had c.248G>A, which is the cDNA change. Since the input here doesn't specify the cDNA change, maybe that's N.D. 
+
+The protein change is E163K. The description in the context is "E163K amino acid substitution". Also, the introduction mentions various mutations in DJ-1, including missense, but the specific one in the abstract is E163K. 
+
+So, the Gene is DJ-1 (PARK7). The variants would include the E163K mutation. The cDNA Change isn't provided, so it's N.D. The Protein Change is E163K. The Description is "E163K amino acid substitution". 
+
+I need to make sure there's no other mutations mentioned. The introduction talks about other mutations like truncation, missense, splice-site, deletions, but the specific one in the abstract is E163K. So the JSON should capture that. Also, check if the output format is correct, with Gene, variants array, and each variant having cDNA Change, Protein Change, and Description. Since the cDNA isn't given, it's N.D. But wait, in the example, the cDNA Change had transcript as N.D. So maybe here, the transcript is also N.D. unless specified. 
+
+Yes, the input text doesn't mention the transcript, so transcript is N.D. The ref and alt for cDNA would be G and A if the position is 163, but since it's not stated, it's N.D. 
+
+So the final JSON should have Gene as "DJ-1" or "PARK7"? The introduction mentions PARK7 (DJ-1), so maybe both? But the user's example used the gene name. The question says to extract specific gene names. The abstract says "the gene encoding human DJ-1 protein", so the gene is DJ-1. However, in the introduction, it's referred to as PARK7. But the user might expect the gene symbol. So probably "DJ-1" is correct. 
+
+Wait, the user's example used "TP53" as the gene. So here, the gene is "DJ-1". The variants would have the cDNA Change as N.D., Protein Change as E163K, and Description as "E163K amino acid substitution". 
+
+I think that's all. Let me structure the JSON accordingly.
+</think>
+
+{
+    "Gene": "DJ-1",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "E",
+                "alt": "K",
+                "position": "163"
+            },
+            "Description in input context": "E163K amino acid substitution"
+        }
+    ]
+}

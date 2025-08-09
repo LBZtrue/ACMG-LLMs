@@ -1,0 +1,56 @@
+总时间（秒）：16.84
+问答时间（秒）：16.67
+
+<think>
+Alright, let me try to figure out how to approach this query. The user is asking for a data mining expert to extract mutation information from medical literature paragraphs. They provided an example response in JSON format and want the output structured similarly.
+
+First, I'll need to read through each paragraph carefully. My goal is to spot any mentions of mutations, which might include gene names followed by specific cDNA or protein changes. Sometimes these are written as abbreviations like c.248G>A or p.G83D, so I should look for those patterns.
+
+I notice the example given has fields for Gene, variants with cDNA and Protein Changes, and a description from the context. If there's no mutation info, I just return "N.D." in each relevant field.
+
+Looking at the provided paragraphs, they all seem to discuss DJ-1 mutations related to Parkinson’s disease. The key terms here are things like "L166P", which refers to a protein change. There might be mentions of cDNA changes as well, but some only describe the protein-level mutation.
+
+I'll go through each paragraph one by one. For instance, in paragraph 37, it talks about DJ-1L166P being linked to Parkinson's and forming higher-order complexes. So here, the gene is DJ-1, the variant is L166P at the protein level, but no cDNA info is provided.
+
+Another paragraph mentions R98Q as a polymorphism, which is another mutation. I'll need to extract each of these instances separately under variants, noting what's available and filling in "N.D." where details are missing.
+
+I should make sure that for each mutation mentioned, whether it's a missense, truncating, or other type, I capture the gene, cDNA (if any), protein changes, and a brief description from context. Since some paragraphs only mention the protein change without cDNA specifics, those fields will have "N.D.".
+
+Finally, I'll structure all this information into the specified JSON format, ensuring each mutation is listed under variants with appropriate details. If a paragraph doesn't discuss mutations at all, I'd return "N.D." across all relevant fields for that entry.
+</think>
+
+```json
+{
+    "Gene": "DJ-1",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "L",
+                "alt": "P",
+                "position": "166"
+            },
+            "Protein Change": {
+                "ref": "L",
+                "alt": "P",
+                "position": "166"
+            },
+            "Description in input context": "The DJ-1L166P mutant protein associated with early onset Parkinson's disease is unstable and forms higher order protein complexes."
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "R",
+                "alt": "Q",
+                "position": "98"
+            },
+            "Protein Change": {
+                "ref": "R",
+                "alt": "Q",
+                "position": "98"
+            },
+            "Description in input context": "The R98Q variation in DJ-1 represents a rare polymorphism."
+        }
+    ]
+}
+```

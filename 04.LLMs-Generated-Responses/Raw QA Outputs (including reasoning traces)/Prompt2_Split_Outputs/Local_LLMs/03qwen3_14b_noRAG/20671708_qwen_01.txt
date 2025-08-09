@@ -1,0 +1,56 @@
+总时间（秒）：18.02
+问答时间（秒）：17.94
+
+<think>
+Okay, let's tackle this query. The user wants me to extract mutation information from the provided medical literature text. First, I need to read through the text carefully to spot any mentions of mutations.
+
+Looking at the input, there's a lot of technical terms related to genetics and molecular biology. I see terms like "pathogenic LRRK2," "let-7 function," "Argonaute," "E2F1," "DP," "miR-184*," and "hLRRK2(G2019S)." Wait, here's a mention of a specific mutation: "hLRRK2(G2019S)" and "dLRRK(I1915T)." These look like protein-coding mutations. 
+
+Next, I need to parse these into the required format. The gene here is LRRK2. The variants are G2019S and I1915T. The user's example shows that for each variant, I should include cDNA change (even if it's not specified, use N.D.), protein change, and the description from the text. 
+
+Wait, the text mentions "hLRRK2(G2019S)" which is a missense mutation changing glycine to serine at position 2019. Similarly, "dLRRK(I1915T)" changes isoleucine to threonine at position 1915. The description in the context would be the exact terms used, like "hLRRK2(G2019S)" and "dLRRK(I1915T)." 
+
+I should check if there are any other mutations mentioned. The text also refers to "3KD" in hLRRK2(3KD), but that might be a kinase-dead mutant or a triple knockout, which isn't a point mutation. The example given by the user includes cDNA changes, but in this case, the input doesn't specify the cDNA positions, so those fields should be N.D. 
+
+So, the JSON structure should have the gene as LRRK2, and two variants. Each variant will have cDNA change with N.D. for transcript, ref, alt, and position. The protein change will have the respective amino acids and positions. The description in the input context would be the exact mutation names from the text. 
+
+I need to ensure that only the mutations are extracted and that other terms like miR-184* or E2F1 aren't included unless they are part of a mutation. Since the user's examples focus on gene mutations, the rest of the text doesn't mention other mutations. 
+
+Therefore, the final JSON should list both hLRRK2(G2019S) and dLRRK(I1915T) as variants under the LRRK2 gene with appropriate fields filled in.
+</think>
+
+```json
+{
+    "Gene": "LRRK2",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "G",
+                "alt": "S",
+                "position": "2019"
+            },
+            "Description in input context": "hLRRK2(G2019S)"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "I",
+                "alt": "T",
+                "position": "1915"
+            },
+            "Description in input context": "dLRRK(I1915T)"
+        }
+    ]
+}
+```

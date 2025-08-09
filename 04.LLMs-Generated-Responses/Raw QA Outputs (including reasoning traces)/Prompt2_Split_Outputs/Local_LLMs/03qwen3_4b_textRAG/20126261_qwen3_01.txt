@@ -1,0 +1,54 @@
+总时间（秒）：9.93
+问答时间（秒）：6.37
+
+<think>
+Okay, let's tackle this query. The user provided a text from a medical literature abstract and wants me to extract mutation-related information. First, I need to read through the text carefully.
+
+The abstract mentions "loss-of-function mutations in PINK1 and Parkin cause parkinsonism in humans and mitochondrial dysfunction in model organisms." So here, PINK1 and Parkin are genes, and the mutations are loss-of-function. That's a key point. Then, it says "disease-causing mutations in PINK1 and Parkin disrupt Parkin recruitment..." So these are specific mutations in the genes. But the text doesn't specify the exact mutations, like cDNA changes or protein changes. It just mentions that the mutations are loss-of-function. 
+
+Looking at the example given, the user expects gene names, cDNA changes, protein changes, and descriptions. However, in this text, there's no specific cDNA or amino acid change mentioned. The only thing is that the mutations are loss-of-function. So for the variants, maybe there's no specific details, so I should mark those as N.D. 
+
+Wait, the example had a cDNA change and protein change. In this case, the text doesn't provide specific positions or changes. It just says "disease-causing mutations" in PINK1 and Parkin. So the variants array would have entries for PINK1 and Parkin, but since there's no specific cDNA or protein changes, those fields would be N.D. But the gene names are present. 
+
+So the extracted information should include the genes PINK1 and Parkin, and their mutation descriptions as "loss-of-function". But according to the example, the "Description in input context" should be the exact phrase from the text. The text says "loss-of-function mutations" and "disease-causing mutations". So each gene would have a description. 
+
+Wait, the example had one gene with one variant. Here, there are two genes, PINK1 and Parkin, each with loss-of-function mutations. So the variants array would have two entries. Each variant's cDNA and protein changes are N.D., but the description is the exact text from the input. 
+
+So the JSON should have "Gene": "PINK1" and "Parkin", each with their respective descriptions. The cDNA and protein changes are N.D. because the text doesn't specify them. The description in input context would be "loss-of-function mutations" and "disease-causing mutations" respectively. 
+
+I need to make sure that I'm not adding any information that isn't in the text. The text doesn't mention specific positions or amino acids, so those fields are N.D. The key is to extract exactly what's there. So the final JSON should reflect that.
+</think>
+
+{
+    "Gene": "PINK1",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "loss-of-function mutations"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "disease-causing mutations"
+        }
+    ]
+}

@@ -1,0 +1,27 @@
+总时间（秒）：14851.79
+问答时间（秒）：16.29
+
+// Import required libraries
+import requests
+import json
+from bs4 import BeautifulSoup
+
+def get_hgvs_info(variant):
+    """Get HGVS nomenclature information from the API."""
+    url = f"https://www.genomatix.com/variants/{variant}/hgvs"
+    response = requests.get(url)
+    data = response.json()
+    return data
+
+def get_mondo_term(disease):
+    """Get MONDO term for the disease."""
+    url = f"https://mondo.monarchinitiative.org/api/search?q={disease}"
+    response = requests.get(url)
+    data = response.json()
+    return data["results"][0]["id"]
+
+def extract_readout_description(experiment):
+    """Extract readout description for the experiment."""
+    soup = BeautifulSoup(experiment, "html.parser")
+    readout = soup.find("p", class_="readout").text
+    return readout

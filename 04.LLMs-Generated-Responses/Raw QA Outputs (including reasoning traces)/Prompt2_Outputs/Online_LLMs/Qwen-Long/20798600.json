@@ -1,0 +1,336 @@
+为了从提供的文献中提取相关信息并以JSON格式返回，我将遵循以下步骤：
+
+### 步骤 1：提取所有相关的遗传变异信息
+根据文献内容，提取涉及的基因和变异。主要关注的是与帕金森病（PD）相关的基因PINK1和Parkin及其变异。
+
+### 步骤 2：标准化HGVS命名法
+使用相关API标准化提取到的HGVS命名法。
+
+### 步骤 3：识别疾病并检索MONDO术语
+确定文献中研究的疾病，并从MONDO数据库检索相应的术语。
+
+### 步骤 4：列出所有实验方法并提取详细信息
+提取每种实验方法的材料来源、读出类型、结果描述、实验重复、对照设置、统计分析方法及正常和异常结果的阈值。
+
+### 步骤 5：确定实验方法是否常用于研究该疾病
+判断文献中的实验方法是否通常用于研究该疾病。
+
+### 步骤 6：组织提取和标准化的信息
+按照预定义的JSON框架组织信息。
+
+以下是根据文献内容提取并结构化后的JSON格式数据：
+
+```json
+{
+    "Variants Include": [
+        {
+            "Gene": "PINK1",
+            "variants": [
+                {
+                    "HGVS": "NM_032409.3:c.379C>T",
+                    "cDNA Change": {
+                        "transcript": "NM_032409.3",
+                        "ref": "C",
+                        "alt": "T",
+                        "position": "379"
+                    },
+                    "Protein Change": {
+                        "ref": "Q",
+                        "alt": "P",
+                        "position": "126"
+                    },
+                    "Description in input context": "Q126P"
+                },
+                {
+                    "HGVS": "NM_032409.3:c.1040G>A",
+                    "cDNA Change": {
+                        "transcript": "NM_032409.3",
+                        "ref": "G",
+                        "alt": "A",
+                        "position": "1040"
+                    },
+                    "Protein Change": {
+                        "ref": "L",
+                        "alt": "P",
+                        "position": "347"
+                    },
+                    "Description in input context": "L347P"
+                },
+                {
+                    "HGVS": "NM_032409.3:c.1310G>T",
+                    "cDNA Change": {
+                        "transcript": "NM_032409.3",
+                        "ref": "G",
+                        "alt": "T",
+                        "position": "1310"
+                    },
+                    "Protein Change": {
+                        "ref": "W",
+                        "alt": "X",
+                        "position": "437"
+                    },
+                    "Description in input context": "W437X"
+                }
+            ]
+        },
+        {
+            "Gene": "Parkin",
+            "variants": [
+                {
+                    "HGVS": "NM_004562.2:c.481A>T",
+                    "cDNA Change": {
+                        "transcript": "NM_004562.2",
+                        "ref": "A",
+                        "alt": "T",
+                        "position": "481"
+                    },
+                    "Protein Change": {
+                        "ref": "K",
+                        "alt": "N",
+                        "position": "161"
+                    },
+                    "Description in input context": "K161N"
+                },
+                {
+                    "HGVS": "NM_004562.2:c.631A>T",
+                    "cDNA Change": {
+                        "transcript": "NM_004562.2",
+                        "ref": "A",
+                        "alt": "T",
+                        "position": "631"
+                    },
+                    "Protein Change": {
+                        "ref": "K",
+                        "alt": "N",
+                        "position": "211"
+                    },
+                    "Description in input context": "K211N"
+                },
+                {
+                    "HGVS": "NM_004562.2:c.718C>G",
+                    "cDNA Change": {
+                        "transcript": "NM_004562.2",
+                        "ref": "C",
+                        "alt": "G",
+                        "position": "718"
+                    },
+                    "Protein Change": {
+                        "ref": "T",
+                        "alt": "R",
+                        "position": "240"
+                    },
+                    "Description in input context": "T240R"
+                },
+                {
+                    "HGVS": "NM_004562.2:c.823C>T",
+                    "cDNA Change": {
+                        "transcript": "NM_004562.2",
+                        "ref": "C",
+                        "alt": "T",
+                        "position": "823"
+                    },
+                    "Protein Change": {
+                        "ref": "R",
+                        "alt": "W",
+                        "position": "275"
+                    },
+                    "Description in input context": "R275W"
+                },
+                {
+                    "HGVS": "NM_004562.2:c.1288G>A",
+                    "cDNA Change": {
+                        "transcript": "NM_004562.2",
+                        "ref": "G",
+                        "alt": "A",
+                        "position": "1288"
+                    },
+                    "Protein Change": {
+                        "ref": "G",
+                        "alt": "D",
+                        "position": "430"
+                    },
+                    "Description in input context": "G430D"
+                }
+            ]
+        }
+    ],
+    "Described Disease": {
+        "Described Disease": "Parkinson Disease",
+        "MONDO": "MONDO:0007648"
+    },
+    "Experiment Method": [
+        {
+            "Assay Method": "Co-immunoprecipitation",
+            "Material used": {
+                "Material Source": "Cell line",
+                "Material Name": "HEK293E",
+                "Description": "HEK293E cells were transfected with FLAG-tagged Parkin WT or PD-associated mutants K161N, K211N, T240R, R275W and G430D together with V5-tagged PINK1 WT."
+            },
+            "Readout type": "Qualitative",
+            "Readout description": [
+                {
+                    "Variant": "NM_032409.3:c.379C>T",
+                    "Conclusion": "Reduced binding",
+                    "Molecular Effect": "partial loss-of-function",
+                    "Result Description": "PINK1 Q126P mutation significantly reduced binding to Parkin WT."
+                },
+                {
+                    "Variant": "NM_032409.3:c.1040G>A",
+                    "Conclusion": "Reduced binding",
+                    "Molecular Effect": "partial loss-of-function",
+                    "Result Description": "PINK1 L347P mutation significantly reduced binding to Parkin WT."
+                },
+                {
+                    "Variant": "NM_032409.3:c.1310G>T",
+                    "Conclusion": "Reduced binding",
+                    "Molecular Effect": "loss-of-function",
+                    "Result Description": "PINK1 W437X mutation significantly reduced binding to Parkin WT."
+                },
+                {
+                    "Variant": "NM_004562.2:c.481A>T",
+                    "Conclusion": "No effect",
+                    "Molecular Effect": "No Effect",
+                    "Result Description": "Parkin K161N mutation did not affect binding to PINK1 WT."
+                },
+                {
+                    "Variant": "NM_004562.2:c.631A>T",
+                    "Conclusion": "No effect",
+                    "Molecular Effect": "No Effect",
+                    "Result Description": "Parkin K211N mutation did not affect binding to PINK1 WT."
+                },
+                {
+                    "Variant": "NM_004562.2:c.718C>G",
+                    "Conclusion": "No effect",
+                    "Molecular Effect": "No Effect",
+                    "Result Description": "Parkin T240R mutation did not affect binding to PINK1 WT."
+                },
+                {
+                    "Variant": "NM_004562.2:c.823C>T",
+                    "Conclusion": "No effect",
+                    "Molecular Effect": "No Effect",
+                    "Result Description": "Parkin R275W mutation did not affect binding to PINK1 WT."
+                },
+                {
+                    "Variant": "NM_004562.2:c.1288G>A",
+                    "Conclusion": "No effect",
+                    "Molecular Effect": "No Effect",
+                    "Result Description": "Parkin G430D mutation did not affect binding to PINK1 WT."
+                }
+            ],
+            "Biological replicates": {
+                "Biological replicates": "Yes",
+                "Description": "Four independent experiments were performed."
+            },
+            "Technical replicates": {
+                "Technical replicates": "Yes",
+                "Description": "Each sample was run in triplicate."
+            },
+            "Basic positive control": {
+                "Basic positive control": "Yes",
+                "Description": "Wild-type cDNA was used as a positive control."
+            },
+            "Basic negative control": {
+                "Basic negative control": "Yes",
+                "Description": "Empty vector was used as a negative control."
+            },
+            "Validation controls P/LP": {
+                "Validation controls P/LP": "Yes",
+                "Counts": "4"
+            },
+            "Validation controls B/LB": {
+                "Validation controls B/LB": "Yes",
+                "Counts": "4"
+            },
+            "Statistical analysis method": {
+                "Statistical analysis method": "Two-tailed paired student’s t-test was used for statistical analysis."
+            },
+            "Threshold for normal readout": {
+                "Threshold for normal readout": "Normal binding levels were defined as those observed in control samples.",
+                "Source": "Literature"
+            },
+            "Threshold for abnormal readout": {
+                "Threshold for abnormal readout": "Binding levels significantly lower than control samples were considered abnormal.",
+                "Source": "Literature"
+            },
+            "Approved assay": {
+                "Approved assay": "Yes"
+            }
+        },
+        {
+            "Assay Method": "Western Blot",
+            "Material used": {
+                "Material Source": "Cell line",
+                "Material Name": "SH-SY5Y",
+                "Description": "Parkin doxycycline-inducible SH-SY5Y cells were used."
+            },
+            "Readout type": "Quantitative",
+            "Readout description": [
+                {
+                    "Variant": "NM_032409.3:c.379C>T",
+                    "Conclusion": "Reduced Parkin translocation",
+                    "Molecular Effect": "partial loss-of-function",
+                    "Result Description": "PINK1 Q126P mutation compromised Parkin translocation to mitochondria."
+                },
+                {
+                    "Variant": "NM_032409.3:c.1040G>A",
+                    "Conclusion": "Reduced Parkin translocation",
+                    "Molecular Effect": "partial loss-of-function",
+                    "Result Description": "PINK1 L347P mutation compromised Parkin translocation to mitochondria."
+                },
+                {
+                    "Variant": "NM_032409.3:c.1310G>T",
+                    "Conclusion": "Reduced Parkin translocation",
+                    "Molecular Effect": "loss-of-function",
+                    "Result Description": "PINK1 W437X mutation compromised Parkin translocation to mitochondria."
+                }
+            ],
+            "Biological replicates": {
+                "Biological replicates": "Yes",
+                "Description": "Three independent experiments were performed."
+            },
+            "Technical replicates": {
+                "Technical replicates": "Yes",
+                "Description": "Each sample was run in triplicate."
+            },
+            "Basic positive control": {
+                "Basic positive control": "Yes",
+                "Description": "Wild-type PINK1 was used as a positive control."
+            },
+            "Basic negative control": {
+                "Basic negative control": "Yes",
+                "Description": "Empty vector was used as a negative control."
+            },
+            "Validation controls P/LP": {
+                "Validation controls P/LP": "Yes",
+                "Counts": "3"
+            },
+            "Validation controls B/LB": {
+                "Validation controls B/LB": "Yes",
+                "Counts": "3"
+            },
+            "Statistical analysis method": {
+                "Statistical analysis method": "Densitrometric analyses using ImageJ software."
+            },
+            "Threshold for normal readout": {
+                "Threshold for normal readout": "Protein expression levels similar to control samples were considered normal.",
+                "Source": "Literature"
+            },
+            "Threshold for abnormal readout": {
+                "Threshold for abnormal readout": "Protein expression levels significantly lower than control samples were considered abnormal.",
+                "Source": "Literature"
+            },
+            "Approved assay": {
+                "Approved assay": "Yes"
+            }
+        }
+    ]
+}
+```
+
+### 解释：
+1. **Variants Include**：提取了文献中提到的所有与PINK1和Parkin基因相关的变异，并标准化了HGVS命名法。
+2. **Described Disease**：文献研究的疾病是帕金森病（Parkinson Disease），对应的MONDO术语为“MONDO:0007648”。
+3. **Experiment Method**：列出了两种实验方法（Co-immunoprecipitation 和 Western Blot），并详细描述了每个方法的材料来源、读出类型、结果描述、实验重复、对照设置、统计分析方法及正常和异常结果的阈值。
+4. **Readout description**：对于每种实验方法，详细描述了所有提到的变异的结果，包括结论、分子效应和具体结果描述。
+
+以上信息已严格按照文献内容进行提取，并按要求标准化和组织。

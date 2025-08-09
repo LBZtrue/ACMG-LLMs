@@ -1,0 +1,60 @@
+总时间（秒）：4.73
+问答时间（秒）：4.20
+
+<think>
+Okay, let's tackle this query. The user provided a paragraph from a medical literature abstract and wants to know if it contains mutation information. They need the extracted details in a specific JSON format.
+
+First, I need to read through the paragraph carefully. The abstract talks about resistin's different forms, their bioactivity, and the similarity to adiponectin. Then it moves to Parkinson's disease, mentioning PINK1 mutations. The key part here is the mention of mutations in PINK1. 
+
+Looking at the text: "We have identified two homozygous mutations affecting the PINK1 kinase domain in three consanguineous PARK6 families: a truncating nonsense mutation and a missense mutation at a highly conserved amino acid." 
+
+So, the mutations here are truncating nonsense and missense. The gene is PINK1. The positions are mentioned as "a truncating nonsense mutation" and "missense mutation at a highly conserved amino acid." 
+
+I need to extract the gene name, the types of mutations (truncating nonsense, missense), the positions, and the description. The JSON structure requires "Gene", "variants", each with "cDNA Change" and "Protein Change", and "Description in input context".
+
+The cDNA changes would be the position and the change. For the truncating nonsense mutation, the cDNA change is "c.XXG>A (p.XXXD)" but the exact position isn't given. Wait, the text says "a truncating nonsense mutation" but the exact position isn't specified. However, the user's example shows that even if the position isn't given, it's still extracted. So maybe the position is "N.D." as per the example.
+
+Similarly, the missense mutation is at a highly conserved amino acid, but the exact position isn't specified. The example uses "N.D." for position when not given. So for both mutations, the positions would be "N.D.".
+
+The protein changes would be the reference and alternate amino acids. For the truncating nonsense mutation, the protein change is "truncating nonsense" but the exact protein change isn't specified. However, the example shows that if the exact protein change isn't given, it's "N.D." So the protein change would be "N.D.".
+
+Wait, but the user's example shows that for the cDNA change, if the position isn't given, it's "N.D." So in this case, the cDNA changes for both mutations would be "N.D." because the exact positions aren't specified. The description in the input context is "a truncating nonsense mutation" and "a missense mutation at a highly conserved amino acid".
+
+So the JSON should have the gene as PINK1, two variants with cDNA changes as N.D., protein changes as N.D., and the descriptions as given. 
+
+I need to make sure that the JSON is correctly formatted with the required fields. The "variants" array should have two entries, each with their respective cDNA and protein changes. The "Description in input context" fields should include the specific mutations mentioned in the text.
+</think>
+
+{
+    "Gene": "PINK1",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "a truncating nonsense mutation"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "a missense mutation at a highly conserved amino acid"
+        }
+    ]
+}

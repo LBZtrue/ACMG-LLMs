@@ -1,0 +1,64 @@
+总时间（秒）：13.60
+问答时间（秒）：13.53
+
+<think>
+Alright, let me try to figure out how to approach this query. The user is a professional looking to extract mutation information from medical literature. They provided a detailed question with examples and constraints. I need to determine if the given text contains mutation info and then extract specific details.
+
+First, I'll read through the input paragraphs carefully. In the first paragraph, there's mention of PINK1 mutations: G309D, E46K, R357Q. These are known mutations associated with Parkinson's disease. The description includes their locations and types (missense). 
+
+Looking at the second paragraph about dogs, I don't see any mutation-related terms like SNPs or specific gene changes. It talks about genetic clusters and breed differences but not mutations.
+
+So, for the first part, I'll extract the gene as PINK1 and list each variant with their cDNA and protein changes if possible. Since the text uses numerical positions without transcript info, I'll mark that as N.D. For the second paragraph, since there's no mutation info, I'll return "N.D." for all fields.
+
+I need to structure this in JSON format, ensuring accuracy and completeness where possible.
+</think>
+
+```json
+{
+    "Gene": "PINK1",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "G",
+                "alt": "D",
+                "position": "309"
+            },
+            "Protein Change": {
+                "ref": "G",
+                "alt": "D",
+                "position": "309"
+            },
+            "Description in input context": "G309D"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "E",
+                "alt": "K",
+                "position": "46"
+            },
+            "Protein Change": {
+                "ref": "E",
+                "alt": "K",
+                "position": "46"
+            },
+            "Description in input context": "E46K"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "R",
+                "alt": "Q",
+                "position": "357"
+            },
+            "Protein Change": {
+                "ref": "R",
+                "alt": "Q",
+                "position": "357"
+            },
+            "Description in input context": "R357Q"
+        }
+    ]
+}
+```

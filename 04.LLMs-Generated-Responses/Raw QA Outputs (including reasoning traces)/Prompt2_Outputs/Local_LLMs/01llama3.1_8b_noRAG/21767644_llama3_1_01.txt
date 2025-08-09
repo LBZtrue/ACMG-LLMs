@@ -1,0 +1,134 @@
+总时间（秒）：13.77
+问答时间（秒）：13.66
+
+I'll guide you through the process of extracting and organizing information from a literature study into the specified JSON framework.
+
+**Step 1: Read the Literature and Extract Relevant Variant Information**
+
+First, we need to carefully read the literature and extract all relevant variant information. This includes:
+
+* Gene name
+* Preliminary HGVS nomenclature (e.g., c.248G>A)
+* cDNA changes:
+	+ Transcript number
+	+ Reference nucleotide
+	+ Alternative nucleotide
+	+ Position of the variant in the transcript
+* Protein changes:
+	+ Reference amino acid
+	+ Alternative amino acid
+	+ Position of the variant in the protein
+
+**Step 2: Standardize HGVS Nomenclature via Relevant API**
+
+Next, we need to standardize the HGVS nomenclature of the variants using a relevant API. This will ensure that all variants are represented consistently across the dataset.
+
+**Step 3: Identify Disease Studied and Retrieve Corresponding MONDO Terms**
+
+We then identify the disease studied in the literature and retrieve the corresponding terms from the MONDO database.
+
+**Step 4: Extract Detailed Information for Each Experimental Method**
+
+For each experimental method mentioned in the literature, we extract detailed information including:
+
+* Material sources
+* Readout types (qualitative or quantitative)
+* Result descriptions for each variant mentioned
+* Biological replicates:
+	+ Whether biological replicate experiments were performed
+	+ Description of biological replicates from the literature
+* Technical replicates:
+	+ Whether technical replicate experiments were performed
+	+ Description of technical replicates from the literature
+* Basic positive control:
+	+ Whether a basic positive control was set up
+	+ Description of the positive control from the literature
+* Basic negative control:
+	+ Whether a basic negative control was set up
+	+ Description of the negative control from the literature
+* Validation controls for pathogenic/likely pathogenic variants:
+	+ Whether validation controls were included
+	+ Number of validation controls
+* Validation controls for benign/likely benign variants:
+	+ Whether validation controls were included
+	+ Number of validation controls
+* Statistical analysis method used in the experimental protocol
+* Thresholds for normal and abnormal readouts:
+	+ Description of thresholds from the literature or custom thresholds based on knowledge
+	+ Source of thresholds (literature or custom)
+
+**Step 5: Organize Extracted Information into Predefined JSON Framework**
+
+Finally, we organize the extracted and standardized information according to the predefined JSON framework.
+
+Here is an example of how this might look in code:
+
+```python
+import json
+
+def extract_and_standardize_info(literature_text):
+    # Step 1: Read literature and extract relevant variant information
+    variants = []
+    for line in literature_text.split('\n'):
+        if 'variant' in line.lower():
+            gene, hgvs, description = extract_variant_info(line)
+            variants.append({
+                'gene': gene,
+                'hgvs': hgvs,
+                'cDNA_change': extract_cDNA_change(hgvs),
+                'protein_change': extract_protein_change(hgvs)
+            })
+
+    # Step 2: Standardize HGVS nomenclature via relevant API
+    standardized_variants = []
+    for variant in variants:
+        standard_hgvs = standardize_HGVS(variant['hgvs'])
+        standardized_variants.append({
+            'gene': variant['gene'],
+            'hgvs': standard_hgvs,
+            'cDNA_change': variant['cDNA_change'],
+            'protein_change': variant['protein_change']
+        })
+
+    # Step 3: Identify disease studied and retrieve corresponding MONDO terms
+    disease = extract_disease(literature_text)
+    mondo_term = retrieve_MONDO_term(disease)
+
+    # Step 4: Extract detailed information for each experimental method
+    methods = []
+    for line in literature_text.split('\n'):
+        if 'method' in line.lower():
+            assay_method, material_used, readout_type, result_description = extract_method_info(line)
+            methods.append({
+                'assay_method': assay_method,
+                'material_used': material_used,
+                'readout_type': readout_type,
+                'result_description': result_description
+            })
+
+    # Step 5: Organize extracted information into predefined JSON framework
+    json_data = {
+        'Variants Include': standardized_variants,
+        'Described Disease': {
+            'Described Disease': disease,
+            'MONDO': mondo_term
+        },
+        'Experiment Method': methods
+    }
+
+    return json.dumps(json_data)
+
+def main():
+    with open('literature_text.txt', 'r') as f:
+        literature_text = f.read()
+
+    output = extract_and_standardize_info(literature_text)
+    print(output)
+
+if __name__ == '__main__':
+    main()
+```
+
+This code assumes that the `extract_variant_info`, `standardize_HGVS`, `extract_disease`, `retrieve_MONDO_term`, and `extract_method_info` functions are defined elsewhere in the codebase. You will need to implement these functions to extract the relevant information from the literature.
+
+Note that this is a simplified example, and you may need to modify it to fit your specific use case. Additionally, you should ensure that the code is properly documented and follows best practices for readability and maintainability.

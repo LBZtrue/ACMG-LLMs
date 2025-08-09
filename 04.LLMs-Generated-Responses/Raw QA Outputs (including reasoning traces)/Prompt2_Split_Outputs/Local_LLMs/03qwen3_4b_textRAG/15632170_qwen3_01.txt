@@ -1,0 +1,78 @@
+总时间（秒）：8.74
+问答时间（秒）：7.71
+
+<think>
+Okay, let's tackle this query. The user provided a paragraph from a medical literature abstract and wants me to extract mutation information following their specified JSON format.
+
+First, I need to read through the abstract carefully. The main points are about mutations in α-synuclein, specifically E46K and A53T. The E46K mutation is in the KTKEGV-type repeats in the amino-terminal region. The A53T mutation is mentioned as having a greater effect. Also, there's a mention of Glu 83 being mutated to Lys or Ala.
+
+Looking at the structure of the JSON, I need to extract gene names, cDNA changes, protein changes, and descriptions. The gene here is α-synuclein. The mutations mentioned are E46K and A53T. However, the abstract doesn't mention cDNA positions, so those would be N.D. The protein changes are specified with positions and amino acids. For example, E46K is replacing Glu with Lys at position 46. Similarly, A53T is replacing Ala with Thr at position 53. The Glu 83 mutations are to Lys or Ala, so those are separate entries.
+
+I need to make sure that each variant is listed with the correct cDNA and protein changes. Since the abstract doesn't specify cDNA positions, those fields should be N.D. The description in the input context is the exact mutation mentioned, like E46K or A53T. Also, the Glu 83 mutations are two different variants: E83K and E83A. 
+
+Wait, the original text says "mutation of Glu 83 to a Lys or Ala". So that's two separate mutations: E83K and E83A. Each should be in the variants array. 
+
+So the final JSON should have the gene as α-synuclein, with variants for E46K, A53T, E83K, and E83A. Each variant's cDNA change is N.D., but the protein change is specified. The description in the input context is the exact mutation name. I need to check if all the mutations are correctly captured and if there's any other information I might have missed. The abstract also mentions that the E46K effect is less than A53T, but the user wants only the mutation details, not the effects. So the description in the input context should just be the mutation names as given.
+</think>
+
+{
+    "Gene": "α-synuclein",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "Glu",
+                "alt": "Lys",
+                "position": "46"
+            },
+            "Description in input context": "E46K mutation"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "Ala",
+                "alt": "Thr",
+                "position": "53"
+            },
+            "Description in input context": "A53T mutation"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "Glu",
+                "alt": "Lys",
+                "position": "83"
+            },
+            "Description in input context": "Glu 83 substituted with Lys"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "Glu",
+                "alt": "Ala",
+                "position": "83"
+            },
+            "Description in input context": "Glu 83 substituted with Ala"
+        }
+    ]
+}

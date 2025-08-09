@@ -1,0 +1,38 @@
+总时间（秒）：10.20
+问答时间（秒）：9.03
+
+<think>
+Alright, I'm looking at the user's query about extracting mutation information from a given medical literature paragraph. The user wants me to act as an expert data miner, specifically focusing on mutations.
+
+First, I need to understand the structure of the response they want. They provided an example where they extract gene names, cDNA changes, protein changes, and descriptions. So, my JSON should follow that template exactly, without any missing fields.
+
+Looking at the context given, it's a research article about PINK1 mutations in Parkinson's disease. The abstract mentions heterozygous mutations in the kinase domain causing a gene dosage effect. But wait, the example they gave uses TP53 with specific cDNA and protein changes. In this case, though, the text doesn't provide specific mutation details like nucleotide or amino acid changes.
+
+Hmm, so I need to check if there are any specific variants mentioned. The abstract talks about mutations in general terms—N-terminus, C-terminus, kinase domain—but without exact cDNA positions or protein changes. So, under "variants," each would have the transcript as N.D., ref and alt as N.D., same for protein.
+
+I should structure it so that each type of mutation (kinase, C-terminus, N-terminus) is a separate variant in the JSON array. But since no specific cDNA or protein changes are given, everything under variants will be marked as N.D.
+
+Finally, the description in context would just state that clinically reported heterozygous mutations in PINK1's kinase domain have a gene dosage effect. That's all I can extract without overstepping the explicit information provided.
+</think>
+
+```json
+{
+    "Gene": "PINK1",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "clinically reported heterozygous mutations in the PINK1 kinase domain"
+        }
+    ]
+}
+```

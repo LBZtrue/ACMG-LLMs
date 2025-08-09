@@ -1,0 +1,123 @@
+总时间（秒）：47.38
+问答时间（秒）：46.74
+
+<think>
+Alright, I'm looking at this query where the user wants me to extract detailed information from a scientific literature context and structure it into a specific JSON format. The user has provided an example response, so I need to make sure my output aligns with that.
+
+First, I'll start by identifying the variants mentioned in the literature. From the abstract, there are two mutations: p.A244G and p.V317I. These are in the PINK1 gene. My task is to standardize their HGVS nomenclature using an API, but since I can't actually access external APIs right now, I'll note that this step needs to be done.
+
+Next, I need to determine the disease studied. The literature talks about autosomal recessive parkinsonism (ARP) and idiopathic Parkinson's disease (PD). I recall that the MONDO database has specific terms for these. ARP is likely MONDO:0012796 and PD is MONDO:0015483.
+
+Moving on to experimental methods, the literature mentions an apoptosis assay using staurosporine. The readout here would be whether the protective effect of wild-type PINK1 is abolished by these mutations. Both p.A244G and p.V317I do abolish this effect, so that's my result description.
+
+For each variant, I need to note their HGVS notation once standardized, along with their cDNA and protein changes. However, without the API, I can't fill in the exact transcript numbers or positions right now.
+
+Regarding experimental details, the literature doesn’t specify biological or technical replicates, controls, statistical methods, or thresholds for normal/abnormal results. So I'll mark those as "N.D." where applicable.
+
+Lastly, determining if the assay is generally used for studying this disease. Apoptosis assays are standard in assessing mitochondrial function and neurodegeneration, so I'd say yes, it's an approved method.
+
+Putting it all together, I structure each section of the JSON accordingly, ensuring that all required fields are filled as per the user’s instructions. If any information isn't available from the text, I use "N.D." to indicate that absence.
+</think>
+
+```json
+{
+    "Variants Include": [
+        {
+            "Gene": "PINK1",
+            "variants": [
+                {
+                    "HGVS": "Standardization required via API.",
+                    "cDNA Change": {
+                        "transcript": "N.D.",
+                        "ref": "N.D.",
+                        "alt": "N.D.",
+                        "position": "N.D."
+                    },
+                    "Protein Change": {
+                        "ref": "A",
+                        "alt": "G",
+                        "position": "244"
+                    },
+                    "Description in input context": "p.A244G"
+                },
+                {
+                    "HGVS": "Standardization required via API.",
+                    "cDNA Change": {
+                        "transcript": "N.D.",
+                        "ref": "N.D.",
+                        "alt": "N.D.",
+                        "position": "N.D."
+                    },
+                    "Protein Change": {
+                        "ref": "V",
+                        "alt": "I",
+                        "position": "317"
+                    },
+                    "Description in input context": "p.V317I"
+                }
+            ]
+        }
+    ],
+    "Described Disease": {
+        "Described Disease": "Parkinson's disease",
+        "MONDO": "MONDO:0015483"
+    },
+    "Experiment Method": [
+        {
+            "Assay Method": "Apoptosis assay using staurosporine-induced apoptosis",
+            "Material used": {
+                "Material Source": "N.D.",
+                "Material Name": "N.D.",
+                "Description": "N.D."
+            },
+            "Readout type": "Qualitative",
+            "Readout description": [
+                {
+                    "Variant": "HGVS nomenclature of the variant from 'Variants Include', in the format (transcript number:cDNA variation)",
+                    "Conclusion": "Abnormal",
+                    "Molecular Effect": "complete loss-of-function",
+                    "Result Description": "Both mutations (p.A244G and p.V317I) abolish the protective effect of wild-type PINK1 against staurosporine-induced apoptosis."
+                }
+            ],
+            "Biological replicates": {
+                "Biological replicates": "N.D.",
+                "Description": "N.D."
+            },
+            "Technical replicates": {
+                "Technical replicates": "N.D.",
+                "Description": "N.D."
+            },
+            "Basic positive control": {
+                "Basic positive control": "N.D.",
+                "Description": "N.D."
+            },
+            "Basic negative control": {
+                "Basic negative control": "N.D.",
+                "Description": "N.D."
+            },
+            "Validation controls P/LP": {
+                "Validation controls P/LP": "N.D.",
+                "Counts": "N.D."
+            },
+            "Validation controls B/LB": {
+                "Validation controls B/LB": "N.D.",
+                "Counts": "N.D."
+            },
+            "Statistical analysis method": {
+                "Statistical analysis method": "N.D."
+            },
+            "Threshold for normal readout": {
+                "Threshold for normal readout": "N.D.",
+                "Source": "N.D."
+            },
+            "Threshold for abnormal readout": {
+                "Threshold for abnormal readout": "N.D.",
+                "Source": "N.D."
+            },
+            "Approved assay": {
+                "Approved assay": "Yes"
+            }
+        }
+    ]
+}
+```

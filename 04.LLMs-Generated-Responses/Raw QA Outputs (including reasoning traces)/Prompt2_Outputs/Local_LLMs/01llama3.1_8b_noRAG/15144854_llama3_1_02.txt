@@ -1,0 +1,139 @@
+总时间（秒）：16.11
+问答时间（秒）：16.04
+
+Based on the provided specification, I will outline the steps to complete the task:
+
+**Step 1: Read the literature and extract relevant variant information**
+
+* Identify the gene name and preliminary HGVS nomenclature for each variant mentioned in the literature.
+* Extract cDNA changes (transcript number, reference nucleotide, alternative nucleotide, and variant position) and protein changes (reference amino acid, alternative amino acid, and variant position).
+* Record a description of each variant in its original context.
+
+**Step 2: Standardize HGVS nomenclature via API**
+
+* Use the standardized framework to standardize the HGVS nomenclature for each variant.
+* Update the "HGVS" field with the standardized value.
+
+**Step 3: Identify disease and retrieve MONDO term**
+
+* Identify the disease studied in the literature and record its name.
+* Retrieve the corresponding MONDO term from the database using the disease name.
+
+**Step 4: Extract experimental method information**
+
+* List all experimental methods mentioned in the literature.
+* For each method, extract:
+	+ Material source (e.g., cell line, animal model, patients-derived material)
+	+ Material name
+	+ Description of the material used
+	+ Readout type (qualitative or quantitative)
+	+ Result description for each variant mentioned in the literature or listed in "Variants Include"
+	+ Biological replicates (yes/no/ND) and description
+	+ Technical replicates (yes/no/ND) and description
+	+ Basic positive control (yes/no/ND) and description
+	+ Basic negative control (yes/no/ND) and description
+	+ Validation controls for pathogenic/likely pathogenic variants (yes/no/ND) and count
+	+ Validation controls for benign/likely benign variants (yes/no/ND) and count
+	+ Statistical analysis method used
+	+ Threshold for normal readout (if described in the literature) or a standard threshold based on knowledge
+	+ Threshold for abnormal readout (if described in the literature) or a standard threshold based on knowledge
+
+**Step 5: Determine approved assay**
+
+* For each experimental method, determine whether it is generally used for studying the disease.
+* Record "yes" or "no" or "ND" (not determined) as the value for the "Approved assay" field.
+
+**Step 6: Organize extracted and standardized information according to the predefined JSON framework**
+
+* Use the provided example structure as a guide to organize the extracted and standardized data into the required fields.
+* Make sure to fill in all required fields with the relevant data.
+
+Here's an example of what the completed JSON output might look like based on the provided literature:
+
+```json
+{
+  "Variants Include": [
+    {
+      "Gene": "TP53",
+      "variants": [
+        {
+          "HGVS": "NM_001126112.3:c.248G>A",
+          "cDNA Change": {
+            "transcript": "NM_001126112.3",
+            "ref": "G",
+            "alt": "A",
+            "position": "248"
+          },
+          "Protein Change": {
+            "ref": "G",
+            "alt": "D",
+            "position": "83"
+          },
+          "Description in input context": "c.248G>A (p.G83D)"
+        }
+      ]
+    }
+  ],
+  "Described Disease": {
+    "Described Disease": "Hereditary Myopathy",
+    "MONDO": "MONDO:0012345"
+  },
+  "Experiment Method": [
+    {
+      "Assay Method": "Western Blot",
+      "Material used": {
+        "Material Source": "Cell line",
+        "Material Name": "HEK293",
+        "Description": "The experiment was conducted using the HEK293 cell line."
+      },
+      "Readout type": "Quantitative",
+      "Readout description": [
+        {
+          "Variant": "NM_001126112.3:c.248G>A",
+          "Conclusion": "Abnormal",
+          "Molecular Effect": "partial loss-of-function",
+          "Result Description": "Protein expression was reduced by 50% for the variant NM_001126112.3:c.248G>A."
+        }
+      ],
+      "Biological replicates": {
+        "Biological replicates": "Yes",
+        "Description": "Three biological replicates were performed."
+      },
+      "Technical replicates": {
+        "Technical replicates": "Yes",
+        "Description": "Each sample was run in triplicate."
+      },
+      "Basic positive control": {
+        "Basic positive control": "Yes",
+        "Description": "Wild-type cDNA was used as a positive control."
+      },
+      "Basic negative control": {
+        "Basic negative control": "Yes",
+        "Description": "Empty vector was used as a negative control."
+      },
+      "Validation controls P/LP": {
+        "Validation controls P/LP": "Yes",
+        "Counts": "2"
+      },
+      "Validation controls B/LB": {
+        "Validation controls B/LB": "Yes",
+        "Counts": "1"
+      },
+      "Statistical analysis method": {
+        "Statistical analysis method": "ANOVA was used for statistical analysis."
+      },
+      "Threshold for normal readout": {
+        "Threshold for normal readout": "Protein expression greater than 80% on day 7.",
+        "Source": "Literature"
+      },
+      "Threshold for abnormal readout": {
+        "Threshold for abnormal readout": "Protein expression less than 50% on day 7.",
+        "Source": "Literature"
+      },
+      "Approved assay": {
+        "Approved assay": "Yes"
+      }
+    }
+  ]
+}
+```

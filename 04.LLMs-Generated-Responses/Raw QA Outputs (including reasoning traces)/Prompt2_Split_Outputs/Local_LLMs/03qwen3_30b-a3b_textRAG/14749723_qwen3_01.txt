@@ -1,0 +1,42 @@
+总时间（秒）：10.24
+问答时间（秒）：9.26
+
+<think>
+Okay, let's tackle this query. The user wants me to act as a Medical Literature Data Mining Expert, specifically looking for mutation information in the provided text. The input is a paragraph from an abstract and introduction of a study on DJ-1 and Parkinson's disease.
+
+First, I need to carefully read the text. The abstract mentions "Deletion and point (L166P) mutations of DJ-1 have recently been shown to be responsible for the onset of familial Parkinson's disease (PD, PARK7)." So here, there's a mention of mutations in DJ-1. The specific mutation is L166P. 
+
+Looking at the introduction, it also states "Deletion and point (L166P) mutations of DJ-1 have recently been shown to be responsible for the onset of familial PD, PARK7 (Bonifati et al, 2003)." So the same mutation is mentioned again. 
+
+Now, the task is to extract gene names, cDNA changes, protein changes, and mutation descriptions. The gene here is DJ-1. The mutation is L166P. But wait, the format in the example uses cDNA and protein changes with positions. The input here doesn't mention cDNA changes like "c.248G>A" but rather a protein change "L166P". 
+
+In the example, the mutation was given as c.248G>A (p.G83D), which includes both cDNA and protein changes. Here, the text only mentions the protein change "L166P". There's no cDNA change specified. So for the JSON, I need to note that the cDNA change is N.D., but the protein change is L166P. The description in the context is "L166P".
+
+Also, the user's constraints say to use "N.D." for content not mentioned. So for the cDNA Change, since it's not provided, I should put N.D. But the protein change is present. 
+
+I need to structure the JSON accordingly. The gene is DJ-1. The variants array will have one entry. The cDNA Change object will have transcript as N.D., ref and alt as N.D., position as N.D. because there's no cDNA info. The Protein Change will have ref "L", alt "P", position "166". The Description in input context is "L166P".
+
+Wait, but in the example, the cDNA Change had transcript as N.D. when not specified. So following that, even if the transcript isn't mentioned, it's set to N.D. So yes, that's correct.
+
+So the final JSON should have Gene: "DJ-1", variants with the protein change details, and cDNA as N.D. Also, check if there are other mutations mentioned. The text also mentions "deletion" but doesn't specify the exact deletion, so that's not detailed. Only the point mutation L166P is specified. So the extraction is correct.
+</think>
+
+{
+    "Gene": "DJ-1",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "L",
+                "alt": "P",
+                "position": "166"
+            },
+            "Description in input context": "L166P"
+        }
+    ]
+}

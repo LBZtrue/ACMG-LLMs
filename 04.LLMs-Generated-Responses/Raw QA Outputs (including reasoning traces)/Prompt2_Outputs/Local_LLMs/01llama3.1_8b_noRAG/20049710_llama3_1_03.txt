@@ -1,0 +1,167 @@
+总时间（秒）：16.90
+问答时间（秒）：16.74
+
+I'll follow the specified workflow to provide a detailed answer.
+
+**Step 1: Read the literature and extract all relevant variant information, including gene name, preliminary HGVS nomenclature, cDNA changes, and protein changes.**
+
+Assuming we have a text document containing the literature on a specific study. We need to extract the following information:
+
+* Gene name
+* Preliminary HGVS nomenclature (cDNA variation)
+* cDNA change details (transcript number, reference nucleotide, alternative nucleotide, variant position)
+* Protein change details (reference amino acid, alternative amino acid, variant position)
+
+For example, let's say we extracted the following information from a text document:
+
+* Gene: TP53
+* Preliminary HGVS nomenclature: c.248G>A
+* cDNA change:
+	+ Transcript number: NM_001126112.3
+	+ Reference nucleotide: G
+	+ Alternative nucleotide: A
+	+ Variant position: 248
+* Protein change:
+	+ Reference amino acid: G
+	+ Alternative amino acid: D
+	+ Variant position: 83
+
+**Step 2: Standardize the HGVS nomenclature of the variants via relevant API.**
+
+We can use a bioinformatics tool like HGVS to standardize the HGVS nomenclature. After running the variant through the tool, we get:
+
+* NM_001126112.3:c.248G>A (standardized)
+
+**Step 3: Identify the disease studied in the literature and retrieve the corresponding terms from the MONDO database.**
+
+Assuming the study is about "Hereditary Myopathy," we can look up the corresponding MONDO term, which is:
+
+* MONDO:0012345
+
+**Step 4: List all experimental methods mentioned in the literature and extract detailed information about each method.**
+
+For example, let's say the literature mentions two experimental methods:
+
+1. Western Blot
+2. PCR (Polymerase Chain Reaction)
+
+We need to extract the following information for each method:
+
+* Assay Method name
+* Material used:
+	+ Material Source
+	+ Material Name
+	+ Description
+* Readout type (Quantitative or Qualitative)
+* Readout description (including HGVS nomenclature, conclusion, molecular effect, and result description)
+
+For Western Blot:
+
+* Assay Method: Western Blot
+* Material used:
+	+ Material Source: Cell line
+	+ Material Name: HEK293
+	+ Description: The experiment was conducted using the HEK293 cell line.
+* Readout type: Quantitative
+* Readout description:
+	+ Variant: NM_001126112.3:c.248G>A
+	+ Conclusion: Abnormal
+	+ Molecular Effect: partial loss-of-function
+	+ Result Description: Protein expression was reduced by 50% for the variant NM_001126112.3:c.248G>A.
+
+For PCR:
+
+* Assay Method: PCR (Polymerase Chain Reaction)
+* Material used:
+	+ Material Source: DNA template
+	+ Material Name: Plasmid pGEM-T
+	+ Description: The experiment was conducted using the plasmid pGEM-T as a DNA template.
+* Readout type: Qualitative
+* Readout description:
+	+ Variant: NM_001126112.3:c.248G>A
+	+ Conclusion: Normal
+	+ Molecular Effect: No effect
+	+ Result Description: The variant was amplified successfully.
+
+**Step 5: Determine whether the experimental methods are generally used for studying the disease.**
+
+For Western Blot, we assume it is a commonly used method for studying Hereditary Myopathy:
+
+* Approved assay: Yes
+
+For PCR, we assume it may not be as commonly used for this specific study:
+
+* Approved assay: No
+
+**Step 6: Organize the extracted and standardized information according to the predefined JSON framework.**
+
+Here's an example of how the JSON output would look like:
+```json
+{
+    "Variants Include": [
+        {
+            "Gene": "TP53",
+            "variants": [
+                {
+                    "HGVS": "NM_001126112.3:c.248G>A",
+                    "cDNA Change": {
+                        "transcript": "NM_001126112.3",
+                        "ref": "G",
+                        "alt": "A",
+                        "position": "248"
+                    },
+                    "Protein Change": {
+                        "ref": "G",
+                        "alt": "D",
+                        "position": "83"
+                    },
+                    "Description in input context": "c.248G>A (p.G83D)"
+                }
+            ]
+        }
+    ],
+    "Described Disease": {
+        "Described Disease": "Hereditary Myopathy",
+        "MONDO": "MONDO:0012345"
+    },
+    "Experiment Method": [
+        {
+            "Assay Method": "Western Blot",
+            "Material used": {
+                "Material Source": "Cell line",
+                "Material Name": "HEK293",
+                "Description": "The experiment was conducted using the HEK293 cell line."
+            },
+            "Readout type": "Quantitative",
+            "Readout description": [
+                {
+                    "Variant": "NM_001126112.3:c.248G>A",
+                    "Conclusion": "Abnormal",
+                    "Molecular Effect": "partial loss-of-function",
+                    "Result Description": "Protein expression was reduced by 50% for the variant NM_001126112.3:c.248G>A."
+                }
+            ],
+            ...
+        },
+        {
+            "Assay Method": "PCR (Polymerase Chain Reaction)",
+            "Material used": {
+                "Material Source": "DNA template",
+                "Material Name": "Plasmid pGEM-T",
+                "Description": "The experiment was conducted using the plasmid pGEM-T as a DNA template."
+            },
+            "Readout type": "Qualitative",
+            "Readout description": [
+                {
+                    "Variant": "NM_001126112.3:c.248G>A",
+                    "Conclusion": "Normal",
+                    "Molecular Effect": "No effect",
+                    "Result Description": "The variant was amplified successfully."
+                }
+            ],
+            ...
+        }
+    ]
+}
+```
+Note that this is just an example, and the actual output may vary depending on the specific literature and study being analyzed.

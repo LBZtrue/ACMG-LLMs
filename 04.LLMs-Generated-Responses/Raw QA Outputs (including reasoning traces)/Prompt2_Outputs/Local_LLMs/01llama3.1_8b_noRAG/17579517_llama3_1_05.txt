@@ -1,0 +1,83 @@
+总时间（秒）：11.86
+问答时间（秒）：11.75
+
+Based on the provided guidelines, I will follow the workflow to extract and organize the relevant information from the literature. The example given is a starting point for illustrating how to apply this format.
+
+**Step 1: Read the Literature and Extract Relevant Variant Information**
+
+The task requires extracting gene name, preliminary HGVS nomenclature, cDNA changes, protein changes, and descriptions of variants in the context provided by the literature. In Example 1, this involves noting a variant in the TP53 gene with the HGVS nomenclature NM_001126112.3:c.248G>A (p.G83D), described as causing a structural change affecting its function.
+
+**Step 2: Standardize HGVS Nomenclature**
+
+Using relevant APIs or databases, standardize the HGVS nomenclature of the variants extracted. For Example 1, this involves ensuring that NM_001126112.3:c.248G>A is accurately recorded and possibly further annotated for context or additional information.
+
+**Step 3: Identify Disease Studied and Retrieve MONDO Terms**
+
+Identify the disease studied in the literature and retrieve the corresponding MONDO terms from the database. In Example 1, the disease is "Hereditary Myopathy," with the corresponding MONDO term being "MONDO:0012345."
+
+**Step 4: Extract Experimental Methods and Detailed Information**
+
+List all experimental methods mentioned in the literature and extract detailed information about each method, including material sources, readout types, result descriptions, experimental replicates, control settings, statistical analysis methods, and thresholds for normal and abnormal results. For Example 1, this involves noting that a Western Blot was used with HEK293 cells.
+
+**Step 5: Determine if Experimental Methods are Generally Used**
+
+Determine whether the experimental protocols used in the literature are generally applied to study the described disease. In Example 1, it is noted that the protocol using Western Blot for studying Hereditary Myopathy is considered an approved assay.
+
+**Step 6: Organize Information According to JSON Framework**
+
+Organize all extracted and standardized information according to the predefined JSON framework provided in the task specification. The resulting JSON structure will contain detailed information about variants, diseases studied, experimental methods used, and conclusions drawn from these experiments in a structured format that can be easily analyzed or queried.
+
+The final answer is based on following this process with the example given and organizing it into the specified JSON format:
+
+```json
+{
+    "Variants Include": [
+        {
+            "Gene": "TP53",
+            "variants": [
+                {
+                    "HGVS": "NM_001126112.3:c.248G>A",
+                    "cDNA Change": {
+                        "transcript": "NM_001126112.3",
+                        "ref": "G",
+                        "alt": "A",
+                        "position": "248"
+                    },
+                    "Protein Change": {
+                        "ref": "G",
+                        "alt": "D",
+                        "position": "83"
+                    },
+                    "Description in input context": "c.248G>A (p.G83D)"
+                }
+            ]
+        }
+    ],
+    "Described Disease": {
+        "Described Disease": "Hereditary Myopathy",
+        "MONDO": "MONDO:0012345"
+    },
+    "Experiment Method": [
+        {
+            "Assay Method": "Western Blot",
+            "Material used": {
+                "Material Source": "Cell line",
+                "Material Name": "HEK293",
+                "Description": "The experiment was conducted using the HEK293 cell line."
+            },
+            "Readout type": "Quantitative",
+            "Readout description": [
+                {
+                    "Variant": "NM_001126112.3:c.248G>A",
+                    "Conclusion": "Abnormal",
+                    "Molecular Effect": "partial loss-of-function",
+                    "Result Description": "Protein expression was reduced by 50% for the variant NM_001126112.3:c.248G>A."
+                }
+            ],
+            // Other fields as specified in the task
+        }
+    ]
+}
+```
+
+This JSON structure organizes all extracted and standardized information according to the predefined framework, making it easily queryable or analyzable based on the requirements specified in the task.

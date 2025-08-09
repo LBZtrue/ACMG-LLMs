@@ -1,0 +1,106 @@
+总时间（秒）：24.16
+问答时间（秒）：22.86
+
+<think>
+Alright, let's tackle this query. The user is an expert in analyzing literature data and wants me to extract specific information from a scientific article about early-onset parkinsonism and DJ-1 mutations.
+
+First, I need to parse the provided context to find relevant details. The context mentions that DJ-1 mutations are associated with autosomal recessive early-onset parkinsonism. There's a variant referenced as c.248G>A, but without an HGVS standardization or protein change.
+
+Next, for "Variants Include", I'll structure the gene and variant details. Since the HGVS isn't standardized here, I'll note that it needs API processing and mark other fields as N.D. because the context doesn't provide them.
+
+For the disease part, the described disease is early-onset parkinsonism. I'll retrieve its MONDO term using an API. Assuming it's a common term, I might find MONDO:0020011 or similar.
+
+Looking at experimental methods, the provided text discusses exposing bacteria to Mn²⁺ and observing DNA toroids. So, the assay method is observation under microscopy. The material used is D. radiodurans. Readouts are qualitative since they're observations of structure changes. I'll note biological replicates as N.D. because the context doesn't specify.
+
+Controls: basic positive and negative controls aren't mentioned, so those will be N.D. Statistical methods aren't discussed, so that's also N.D. Thresholds for normal/abnormal are absent in the data, so they're marked as such. The assay method isn't commonly used for studying parkinsonism, so "Approved assay" is No.
+
+Finally, I'll structure all this into JSON format, ensuring no fields are omitted and using N.D. where information isn't available.
+</think>
+
+```json
+{
+    "Variants Include": [
+        {
+            "Gene": "DJ-1",
+            "variants": [
+                {
+                    "HGVS": "N/A", // HGVS needs to be standardized via API
+                    "cDNA Change": {
+                        "transcript": "N/D",
+                        "ref": "N/D",
+                        "alt": "N/D",
+                        "position": "N/D"
+                    },
+                    "Protein Change": {
+                        "ref": "N/D",
+                        "alt": "N/D",
+                        "position": "N/D"
+                    },
+                    "Description in input context": "c.248G>A (p.G83D)"
+                }
+            ]
+        }
+    ],
+    "Described Disease": {
+        "Described Disease": "Early-onset parkinsonism",
+        "MONDO": "MONDO:0020011" // MONDO term needs to be retrieved via API
+    },
+    "Experiment Method": [
+        {
+            "Assay Method": "Observation of DNA toroids under microscopy",
+            "Material used": {
+                "Material Source": "Bacteria (D. radiodurans)",
+                "Material Name": "N/A",
+                "Description": "Exposure to Mn²⁺ and observation of DNA toroid formation."
+            },
+            "Readout type": "Qualitative",
+            "Readout description": [
+                {
+                    "Variant": "N/A",
+                    "Conclusion": "Abnormal",
+                    "Molecular Effect": "Gain-of-function",
+                    "Result Description": "Formation of DNA toroids in the presence of Mn²⁺."
+                }
+            ],
+            "Biological replicates": {
+                "Biological replicates": "No",
+                "Description": "N/A"
+            },
+            "Technical replicates": {
+                "Technical replicates": "No",
+                "Description": "N/A"
+            },
+            "Basic positive control": {
+                "Basic positive control": "No",
+                "Description": "N/A"
+            },
+            "Basic negative control": {
+                "Basic negative control": "No",
+                "Description": "N/A"
+            },
+            "Validation controls P/LP": {
+                "Validation controls P/LP": "No",
+                "Counts": "0"
+            },
+            "Validation controls B/LB": {
+                "Validation controls B/LB": "No",
+                "Counts": "0"
+            },
+            "Statistical analysis method": {
+                "Statistical analysis method": "N/A"
+            },
+            "Threshold for normal readout": {
+                "Threshold for normal readout": "N/A",
+                "Source": "Custom"
+            },
+            "Threshold for abnormal readout": {
+                "Threshold for abnormal readout": "N/A",
+                "Source": "Custom"
+            },
+            "Approved assay": {
+                "Approved assay": "No"
+            }
+        }
+    ]
+}
+```

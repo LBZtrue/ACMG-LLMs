@@ -1,0 +1,124 @@
+总时间（秒）：46.58
+问答时间（秒）：44.29
+
+<think>
+Okay, let's tackle this query. The user wants me to extract mutation information from the provided medical literature abstract. First, I need to determine if there are any mutations mentioned.
+
+Looking through the abstract, I see mentions of several missense mutations: L166P, A104T, E163K, and M26I. These are all protein-level changes, so I should note those. Additionally, there are engineered substitutions like M26L, A104V, and E163K/R145E. These are also protein changes, so they should be included as variants.
+
+The gene in question here is DJ-1. The abstract doesn't mention the gene name as an acronym with a full name, so I'll just use DJ-1 as the gene name. For each variant, I need to extract the protein changes. The cDNA changes aren't provided here, so those fields will be "N.D.".
+
+Each variant is described in the context of how they affect the protein's structure and stability. For example, A104T introduces water into the core, E163K disrupts a salt bridge with R145, and M26I causes packing defects. The engineered substitutions like M26L are part of the analysis but are still mutations, so they should be listed under variants as well.
+
+I need to structure each variant entry with the protein change details. The position is the amino acid position, ref is the original amino acid, and alt is the mutated one. The description in the context would be the specific mutation notation, like A104T. Since the cDNA changes aren't mentioned, those remain "N.D.".
+
+I should also check if there are any other mutations mentioned. The abstract starts by mentioning L166P as the best-characterized, but the study focuses on A104T, E163K, and M26I. The engineered substitutions are part of the study's analysis. All these need to be included in the variants array.
+
+Putting it all together, the JSON structure should have the gene as "DJ-1" and each variant with the protein changes and descriptions. Since the user wants "N.D." for any missing information, all cDNA fields will be N.D. here.
+</think>
+
+```json
+{
+    "Gene": "DJ-1",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "L",
+                "alt": "P",
+                "position": "166"
+            },
+            "Description in input context": "L166P disrupts homodimerization and results in a poorly folded protein"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "T",
+                "position": "104"
+            },
+            "Description in input context": "A104T introduces water and a discretely disordered residue into the core of the protein"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "E",
+                "alt": "K",
+                "position": "163"
+            },
+            "Description in input context": "E163K disrupts a key salt bridge with R145"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "M",
+                "alt": "I",
+                "position": "26"
+            },
+            "Description in input context": "M26I causes packing defects in the core of the dimer"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "M",
+                "alt": "L",
+                "position": "26"
+            },
+            "Description in input context": "M26L (engineered substitution to partially alleviate M26I defect)"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "V",
+                "position": "104"
+            },
+            "Description in input context": "A104V (engineered substitution to partially alleviate A104T defect)"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "E",
+                "alt": "K",
+                "position": "163"
+            },
+            "Description in input context": "E163K/R145E (engineered substitution to partially alleviate E163K defect)"
+        }
+    ]
+}
+```

@@ -1,0 +1,124 @@
+总时间（秒）：14.70
+问答时间（秒）：14.65
+
+Based on the provided specification, I will outline the steps to extract and organize the information from the literature into the predefined JSON framework.
+
+**Step 1-2:** Extract variant information and standardize HGVS nomenclature
+Extract all relevant variant information from the literature, including gene name, preliminary HGVS nomenclature, cDNA changes, and protein changes. Standardize the HGVS nomenclature of the variants via a relevant API.
+
+**Step 3:** Identify disease studied and retrieve MONDO term
+Identify the disease studied in the literature and retrieve the corresponding terms from the MONDO database.
+
+**Step 4-5:** Extract experimental method information
+List all experimental methods mentioned in the literature and extract detailed information about each method, including material sources, readout types, result descriptions, experimental replicates, control settings, statistical analysis methods, and thresholds for normal and abnormal results. Determine whether the experimental methods are generally used for studying the disease.
+
+**Step 6:** Organize extracted information into JSON framework
+Organize the extracted and standardized information according to the predefined JSON framework.
+
+Here is a sample implementation in Python:
+
+```python
+import json
+from Bio import Entrez
+
+# Step 1-2: Extract variant information and standardize HGVS nomenclature
+def extract_variants(literature):
+    variants = []
+    for gene, variation in literature['variants']:
+        hgvs = standardize_hgvs(gene, variation)
+        cDNA_change = extract_cDNA_change(gene, variation)
+        protein_change = extract_protein_change(gene, variation)
+        description = extract_description_from_context(variation)
+        variants.append({
+            'HGVS': hgvs,
+            'cDNA Change': cDNA_change,
+            'Protein Change': protein_change,
+            'Description in input context': description
+        })
+    return variants
+
+def standardize_hgvs(gene, variation):
+    # Use a relevant API (e.g., Ensembl) to standardize HGVS nomenclature
+    pass
+
+# Step 3: Identify disease studied and retrieve MONDO term
+def identify_disease(literature):
+    disease = literature['disease']
+    mondo_term = get_MONDO_term(disease)
+    return {
+        'Described Disease': disease,
+        'MONDO': mondo_term
+    }
+
+def get_MONDO_term(disease):
+    # Use the Ensembl REST API to retrieve MONDO term
+    pass
+
+# Step 4-5: Extract experimental method information
+def extract_experiment_method(literature):
+    methods = []
+    for experiment in literature['experiments']:
+        assay_method = experiment['assay']
+        material_source = experiment['material']['source']
+        material_name = experiment['material']['name']
+        description = experiment['description']
+        readout_type = experiment['readout']['type']
+        readout_description = extract_readout_description(experiment)
+        biological_replicates = experiment['biological replicates']
+        technical_replicates = experiment['technical replicates']
+        basic_positive_control = experiment['basic positive control']
+        basic_negative_control = experiment['basic negative control']
+        validation_controls_pathogenic = experiment['validation controls pathogenic']
+        validation_controls_benign = experiment['validation controls benign']
+        statistical_analysis_method = experiment['statistical analysis method']
+        threshold_normal_readout = experiment['threshold normal readout']
+        threshold_abnormal_readout = experiment['threshold abnormal readout']
+        approved_assay = experiment['approved assay']
+        methods.append({
+            'Assay Method': assay_method,
+            'Material used': {
+                'Material Source': material_source,
+                'Material Name': material_name,
+                'Description': description
+            },
+            'Readout type': readout_type,
+            'Readout description': readout_description,
+            'Biological replicates': biological_replicates,
+            'Technical replicates': technical_replicates,
+            'Basic positive control': basic_positive_control,
+            'Basic negative control': basic_negative_control,
+            'Validation controls P/LP': validation_controls_pathogenic,
+            'Validation controls B/LB': validation_controls_benign,
+            'Statistical analysis method': statistical_analysis_method,
+            'Threshold for normal readout': threshold_normal_readout,
+            'Threshold for abnormal readout': threshold_abnormal_readout,
+            'Approved assay': approved_assay
+        })
+    return methods
+
+def extract_readout_description(experiment):
+    # Use the Ensembl REST API to retrieve readout description
+    pass
+
+# Step 6: Organize extracted information into JSON framework
+def organize_info(variants, disease, methods):
+    json_data = {
+        'Variants Include': variants,
+        'Described Disease': disease,
+        'Experiment Method': methods
+    }
+    return json.dumps(json_data)
+
+literature = {
+    # Example literature data
+}
+
+variants = extract_variants(literature)
+disease = identify_disease(literature)
+methods = extract_experiment_method(literature)
+
+json_output = organize_info(variants, disease, methods)
+print(json_output)
+```
+
+This code outlines the steps to extract and organize the information from the literature into the predefined JSON framework. Note that this is a simplified example, and you may need to modify it according to your specific requirements.

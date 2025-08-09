@@ -1,0 +1,42 @@
+总时间（秒）：15.33
+问答时间（秒）：15.09
+
+<think>
+Okay, let's tackle this query. The user wants to extract mutation information from a given medical literature paragraph. The example they provided shows that they need specific details like gene names, cDNA changes, protein changes, and descriptions. 
+
+First, I need to read through the input text carefully. The paragraph mentions several mutations. The main ones I see are L166P in DJ-1, which is linked to familial Parkinson's disease. There's also mention of the L166P mutation disrupting protein folding and function. Another part talks about the ubiquitin-proteasome system degrading the L166P mutant DJ-1. 
+
+I need to check if there are other mutations mentioned. The text also refers to the DJ-1L166P mutant protein being unstable and forming higher-order complexes. Additionally, the missense mutation (L166P) in DJ-1 is linked to Parkinson's. 
+
+Now, I should structure the JSON output. The gene here is DJ-1. The variants would include the L166P mutation. The cDNA change isn't specified, so I'll use N.D. for transcript, ref, alt, and position. The protein change has ref as L, alt as P, position 166. The description in the context is "L166P" and mentions the association with Parkinson's. 
+
+Wait, the example uses c.248G>A as the cDNA change. In the input text, there's no specific cDNA notation, only the protein change. So for cDNA Change, all fields should be N.D. The protein change is L166P. 
+
+Also, the description in the input context should include the details from the text, like "linked to familial Parkinson’s disease" and "causative for recessive Parkinson’s disease". 
+
+I need to make sure all the JSON fields are correctly filled. The variants array will have one entry with the L166P mutation. The other parts like the ubiquitin-proteasome degradation are part of the description, so they should be included in the "Description in input context" field. 
+
+Double-checking, the user's example includes the description from the input context. So in this case, the description should mention that the mutation is causative for recessive Parkinson's and is degraded via the ubiquitin-proteasome system. 
+
+Alright, that should cover all the necessary information. I'll structure the JSON accordingly, ensuring that any missing fields are marked as N.D.
+</think>
+
+{
+    "Gene": "DJ-1",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "L",
+                "alt": "P",
+                "position": "166"
+            },
+            "Description in input context": "L166P mutation linked to familial Parkinson’s disease; disrupts DJ-1 protein folding and function; causative for recessive Parkinson’s disease; degraded through the ubiquitin–proteasome system; forms higher-order protein complexes; associated with reduced protein stability and impaired homo-oligomerization."
+        }
+    ]
+}

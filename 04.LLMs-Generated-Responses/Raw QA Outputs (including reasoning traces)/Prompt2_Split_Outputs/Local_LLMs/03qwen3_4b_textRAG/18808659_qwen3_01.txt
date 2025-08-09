@@ -1,0 +1,73 @@
+总时间（秒）：9.57
+问答时间（秒）：7.27
+
+<think>
+Okay, let's tackle this query. The user provided a medical literature abstract and wants me to extract mutation information following the specified JSON format.
+
+First, I need to read through the abstract carefully. The background mentions three missense mutations in the α-syn gene: A30P, A53T, and E46K. These are associated with familial PD. The study also talks about the effects of these mutations on α-syn's membrane binding.
+
+Looking at the structure, the key points are the gene name (α-syn), the specific mutations, and their descriptions. The mutations are A30P, A53T, and E46K. Each of these is a missense mutation, which means they involve a single amino acid change.
+
+I need to map each mutation to the required fields. For each variant, the cDNA change and protein change should be noted. However, the abstract doesn't specify the exact cDNA positions for these mutations. It only mentions the amino acid changes (A30P, A53T, E46K). 
+
+In the example provided, the cDNA change is given as c.248G>A, but in this case, the abstract doesn't provide that detail. So, for the cDNA change, the transcript and position would be "N.D." since they aren't mentioned. The protein change is straightforward from the mutation names. For instance, A30P would be a change from Alanine to Proline at position 30.
+
+The description in the input context is the mutation name itself, like "A30P", "A53T", etc. Since the abstract doesn't mention the cDNA positions, those fields should be N.D. The gene is α-syn, so that's clear.
+
+I need to make sure that each mutation is listed in the variants array. The abstract mentions all three mutations, so all three should be included. The description in the input context is the mutation name, and the protein change is derived from that. The cDNA change is not provided, so it's N.D.
+
+So the JSON should have the gene as α-syn, and three variants with their respective protein changes and descriptions. The cDNA changes for each are N.D. because the abstract doesn't specify them. The example given in the question uses "N.D." for the transcript and position when not present, so that's the approach here.
+
+I need to check if there are any other mutations mentioned. The abstract also talks about A30P being mitigated by protease-sensitive factors, but that's about the effect, not the mutation itself. The key mutations are the three mentioned in the first sentence. No other mutations are discussed. So the three variants are all that's needed.
+
+Therefore, the correct extraction is the three mutations with the protein changes and the description as given, and cDNA changes as N.D. for each.
+</think>
+
+{
+    "Gene": "α-syn",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "P",
+                "position": "30"
+            },
+            "Description in input context": "A30P"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "T",
+                "position": "53"
+            },
+            "Description in input context": "A53T"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt"::
+                "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "E",
+                "alt": "K",
+                "position": "46"
+            },
+            "Description in input context": "E46K"
+        }
+    ]
+}

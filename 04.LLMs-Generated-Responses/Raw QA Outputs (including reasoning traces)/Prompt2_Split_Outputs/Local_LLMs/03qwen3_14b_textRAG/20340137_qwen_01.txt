@@ -1,0 +1,40 @@
+总时间（秒）：11.19
+问答时间（秒）：9.80
+
+<think>
+Okay, let's see. The user wants me to extract mutation information from the provided medical literature paragraph. First, I need to look through the text to find any mentions of mutations.
+
+Looking at the abstract, the key part is where they mention the p.Ala53Thr mutation. That's a protein change, right? The gene involved is SNCA. The mutation is described as p.Ala53Thr, which means alanine at position 53 is replaced by threonine. 
+
+Now, checking the structure of the JSON required. The gene should be SNCA. Then, the variants array needs to have the cDNA change and protein change. However, the text here only mentions the protein change, not the cDNA change. The example shows that if something isn't mentioned, like the transcript or cDNA position, it should be N.D. 
+
+So, the cDNA change details are not provided in the text, so those fields should be N.D. The protein change has ref as Ala, alt as Thr, position 53. The description in the input context is p.Ala53Thr. 
+
+I need to make sure I don't add any extra information not present. The text doesn't mention the transcript or cDNA position, so those stay as N.D. The gene is definitely SNCA. The variants array should have one entry with the protein change and the description. 
+
+Double-checking the example given. In the example, the cDNA change has transcript as N.D., which matches our case here. The protein change has ref and alt as G and D, position 83. Similarly, here, ref is Ala, alt is Thr, position 53. 
+
+Everything seems to line up. The mutation is clearly mentioned, so the output should include that. No other mutations are discussed in the abstract. The rest of the text talks about allelic imbalance and epigenetic regulation, but not other mutations. 
+
+So the final JSON should have Gene: SNCA, variants with cDNA Change all N.D., and Protein Change with the details provided.
+</think>
+
+{
+    "Gene": "SNCA",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "Ala",
+                "alt": "Thr",
+                "position": "53"
+            },
+            "Description in input context": "p.Ala53Thr"
+        }
+    ]
+}

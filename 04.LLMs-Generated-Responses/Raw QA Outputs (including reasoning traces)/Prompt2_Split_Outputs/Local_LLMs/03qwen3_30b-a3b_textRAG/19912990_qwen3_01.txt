@@ -1,0 +1,40 @@
+总时间（秒）：8.97
+问答时间（秒）：7.82
+
+<think>
+Okay, let's tackle this query. The user wants me to act as a Medical Literature Data Mining Expert. The task is to determine if the given text has mutation information and extract it in JSON format. If not, return "N.D.".
+
+First, I'll read the provided context carefully. The abstract mentions "I2020T mutant LRRK2" and "wild-type LRRK2". The introduction talks about the Sagamihara family patients having the "I2020T mutation in the kinase domain". There's also a mention of "LRRK2 mutations" in general.
+
+So, the gene here is LRRK2. The specific mutation is I2020T. The cDNA change isn't explicitly given, but the protein change is I2020T. The position is 2020, with I (Isoleucine) changing to T (Threonine). The context also mentions other mutations, but the example given is I2020T. 
+
+Wait, the user's example had cDNA and protein changes with positions. Here, the text says "I2020T" which is a protein change. The cDNA change isn't specified here. So in the JSON, cDNA Change would have N.D. for transcript, ref, alt, position. But the protein change has ref I, alt T, position 2020. The description in the input is "I2020T".
+
+Also, the introduction mentions "23 LRRK2 mutations in various domains", but specific details about other mutations aren't given. So only the I2020T is mentioned with details. The rest are general.
+
+So, the JSON should have Gene: LRRK2, variants with the I2020T mutation. The cDNA Change is N.D. since it's not specified. Protein Change has ref I, alt T, position 2020. Description is "I2020T".
+
+I need to make sure that all fields are filled. If something isn't mentioned, use N.D. So the transcript in cDNA Change is N.D., same with ref, alt, position for cDNA. But the protein change's position is 2020. The description in the input is "I2020T".
+
+Yes, that seems correct. I don't see any other mutations mentioned with specific details. The rest are general mentions of mutations, but not specific variants. So the extracted info should be only for I2020T.
+</think>
+
+{
+    "Gene": "LRRK2",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "I",
+                "alt": "T",
+                "position": "2020"
+            },
+            "Description in input context": "I2020T"
+        }
+    ]
+}

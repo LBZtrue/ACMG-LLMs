@@ -1,0 +1,126 @@
+总时间（秒）：14.69
+问答时间（秒）：12.14
+
+<think>
+Okay, so I'm looking at this query where the user wants me to extract information related to mutations from a paragraph of medical literature. The context provided is about LRRK2 and its role in Parkinson's disease, including some specific mutations.
+
+First, I need to understand what the user is asking for. They want a JSON response that lists gene names, cDNA changes, protein changes, and mutation descriptions only if those terms are explicitly mentioned in the text. If something isn't present, it should be marked as "N.D.".
+
+Looking at the given paragraph, I see several mentions of mutations related to LRRK2. For example, there's R1441C, Y1699C, and I2020T. These are specific point mutations in the gene. The paragraph also discusses how these mutations affect phosphorylation at certain serine residues (Ser 910 and Ser 935) and disrupt interactions with 14-3-3 proteins.
+
+I need to extract each mutation, its cDNA change, protein change if applicable, and any description provided. Each mutation is listed as a separate variant in the output JSON.
+
+So, for R1441C, it's an amino acid substitution from alanine to cysteine at position 1441. Similarly, Y1699C is a cysteine substitution from threonine. I2020T changes tryptophan to phenylalanine.
+
+The paragraph mentions that some mutations have elevated kinase activity: R1728H (double the normal), G2019S (triple), and T2031S (quadruple). These are additional details about the mutations' effects on function, so I should include those in their respective entries.
+
+I also notice that there's a mention of five out of six common pathogenic mutations having reduced phosphorylation at Ser 910/935 and disrupted 14-3-3 binding. This is another mutation-related point that needs to be included for each of those specific mutations.
+
+I need to structure this into the JSON format, making sure not to omit any fields even if some values are N.D., like when there's no description provided beyond what's in the text.
+
+So, putting it all together, I'll create an array under "variants" with each mutation as its own object, including gene name, cDNA and protein changes where available, and any relevant descriptions.
+</think>
+
+```json
+{
+    "Gene": "LRRK2",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "R1441",
+                "alt": "C"
+               ,
+                "position": "1441"
+            },
+            "Protein Change": {
+                "ref": "R1441",
+                "alt": "C"
+                ,
+                "position": "1441"
+            },
+            "Description in input context": "R1441C mutation."
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "Y1699",
+                "alt": "C"
+                ,
+                "position": "1699"
+            },
+            "Protein Change": {
+                "ref": "Y1699",
+                "alt": "C"
+                ,
+                "position": "1699"
+            },
+            "Description in input context": "Y1699C mutation."
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "I2020",
+                "alt": "T"
+                ,
+                "position": "2020"
+            },
+            "Protein Change": {
+                "ref": "I2020",
+                "alt": "T"
+                ,
+                "position": "2020"
+            },
+            "Description in input context": "I2020T mutation."
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "R1728",
+                "alt": "H"
+                ,
+                "position": "1728"
+            },
+            "Protein Change": {
+                "ref": "R1728",
+                "alt": "H"
+                ,
+                "position": "1728"
+            },
+            "Description in input context": "R1728H mutation. Elevated kinase activity (double the normal)."
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "G2019",
+                "alt": "S"
+                ,
+                "position": "2019"
+            },
+            "Protein Change": {
+                "ref": "G2019",
+                "alt": "S"
+                ,
+                "position": "2019"
+            },
+            "Description in input context": "G2019S mutation. Elevated kinase activity (triple the normal)."
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "T2031",
+                "alt": "S"
+                ,
+                "position": "2031"
+            },
+            "Protein Change": {
+                "ref": "T2031",
+                "alt": "S"
+                ,
+                "position": "2031"
+            },
+            "Description in input context": "T2031S mutation. Elevated kinase activity (quadruple the normal)."
+        }
+    ]
+}
+```

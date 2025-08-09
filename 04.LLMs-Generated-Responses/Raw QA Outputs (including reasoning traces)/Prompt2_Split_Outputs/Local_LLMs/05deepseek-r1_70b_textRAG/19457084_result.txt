@@ -1,0 +1,74 @@
+总时间（秒）：5873.41
+问答时间（秒）：52.80
+
+Okay, so I need to figure out how to extract mutation information from the given text. The user has provided a detailed prompt about their role as a professional medical literature data mining expert, and they want me to analyze a specific paragraph to extract mutation-related data.
+
+First, I should read the provided paragraph carefully. It mentions the A30P and A53T mutations of α-synuclein. A30P is described as enhancing the stability of α-synuclein against proteasomal degradation, while A53T doesn't have a significant effect. There's also a mention of an E46K mutation, but the text cuts off, so I don't have details on that.
+
+Now, looking at the JSON template, I need to structure the information under "Gene" and "variants". Each variant should have "cDNA Change", "Protein Change", and "Description in input context".
+
+For the A30P mutation:
+- Gene is α-synuclein.
+- cDNA Change: The position is 30, ref is A, alt is P. Transcript isn't mentioned, so it's N.D.
+- Protein Change: Same as cDNA since it's a single amino acid substitution.
+- Description is as stated in the text.
+
+For A53T:
+- Similar structure, but the effect is different; no significant effect is mentioned.
+  
+E46K is mentioned, but there's no description provided, so I can't extract details for it. Since the user wants all variants listed, I should include it even if some fields are N.D.
+
+I need to make sure each variant is an object within the variants array. Also, any missing information should be marked as "N.D.".
+
+So, putting it all together, the JSON should list α-synuclein with three variants: A30P, A53T, and E46K. Each with their respective cDNA and protein changes, and descriptions where available.
+</think>
+
+```json
+{
+    "Gene": "SNCA",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "A",
+                "alt": "P",
+                "position": "30"
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "P",
+                "position": "30"
+            },
+            "Description in input context": "A30P mutation enhanced the stability of α-synuclein against proteasomal degradation"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "A",
+                "alt": "T",
+                "position": "53"
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "T",
+                "position": "53"
+            },
+            "Description in input context": "A53T mutation had no significant effect"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "E",
+                "alt": "K",
+                "position": "46"
+            },
+            "Protein Change": {
+                "ref": "E",
+                "alt": "K",
+                "position": "46"
+            },
+            "Description in input context": "N.D."
+        }
+    ]
+}
+```

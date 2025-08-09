@@ -1,0 +1,72 @@
+总时间（秒）：28.56
+问答时间（秒）：26.83
+
+<think>
+Okay, let's start by reading through the provided abstract carefully. The user wants me to extract mutation information if present.
+
+First, the abstract mentions three point mutations in α-Synuclein associated with early-onset familial PD: A30P, E46K, and A53T. These are the key mutations here. 
+
+I need to map these to the JSON structure. The gene is α-Synuclein, which is often referred to as SNCA in gene nomenclature. The user's example used "TP53" as the gene name, so for consistency, I should use the standard gene symbol here. 
+
+Each mutation is a single amino acid substitution. The format is A30P, which means at position 30, Alanine (A) is replaced by Proline (P). Similarly for E46K (Glutamic acid to Lysine at position 46) and A53T (Alanine to Threonine at position 53). 
+
+Since the question is about mutations, I need to check if these are described in terms of cDNA changes. However, the abstract only mentions the protein changes (p.A30P, p.E46K, p.A53T). There's no mention of cDNA changes like c.90G>C (for example), so for "cDNA Change", the transcript, ref, alt, and position would be N.D. 
+
+Each variant should be an object in the "variants" array. The "Description in input context" would be the mutation name as given in the text. 
+
+I need to make sure that all fields are filled. Since there's no cDNA information provided, those fields are N.D. The gene is SNCA, the protein changes are as listed, and the descriptions are the mutation names from the text. 
+
+Double-checking the constraints: only extract information directly mentioned. The abstract does mention these three mutations, so they should be included. Other parts of the abstract discuss proteasome and liposomes but those aren't mutation-related. 
+
+So the final JSON should have the gene SNCA, three variants each with their protein changes and descriptions, and N.D. for cDNA changes.
+</think>
+
+```json
+{
+    "Gene": "SNCA",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "P",
+                "position": "30"
+            },
+            "Description in input context": "A30P"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "E",
+                "alt": "K",
+                "position": "46"
+            },
+            "Description in input context": "E46K"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "T",
+                "position": "53"
+            },
+            "Description in input context": "A53T"
+        }
+    ]
+}
+```

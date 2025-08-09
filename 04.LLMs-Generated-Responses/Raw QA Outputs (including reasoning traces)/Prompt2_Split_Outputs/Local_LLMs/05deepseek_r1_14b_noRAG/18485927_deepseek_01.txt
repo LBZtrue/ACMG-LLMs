@@ -1,0 +1,98 @@
+总时间（秒）：21.84
+问答时间（秒）：21.73
+
+<think>
+Alright, let me try to figure out how to approach this query. The user is a professional medical literature data mining expert looking to extract mutation information from given text. They provided a detailed context with references and a table, along with specific instructions on the output format.
+
+First, I need to understand the task clearly. The goal is to determine if the input text contains any mutation-related information. If it does, extract details like gene names, cDNA changes, protein changes, and descriptions. If not, return "N.D." for all fields except where specific info isn't present.
+
+Looking at the provided table (Table 4), I see that it lists average distances during MD simulations for various mutants of the wild Uld. Each mutant has a name like K27N, R33Q, etc., which are standard representations of amino acid substitutions. These correspond to mutations where one residue is changed to another.
+
+I should identify each mutation in the table and extract the relevant information. For example, K27N means Lysine at position 27 is changed to Asparagine. Similarly, R33Q is Arginine to Glutamine at position 33, and so on.
+
+Next, I need to create a JSON structure that lists each gene (though in this case, all mutations seem to be in the same protein, possibly Parkin), their cDNA changes (which might not be explicitly given but can be inferred from the amino acid changes), protein changes, and descriptions as per the table.
+
+I notice that for each mutant, there are interactions described with other residues. These aren't direct mutation effects but rather how the mutations affect interactions. However, since the user wants all mutation info, including these details might be necessary if they're part of the description.
+
+I should also consider cases where some mutations don't have certain fields filled in the table. For example, K48A seems to have similar data for wild and mutant, which might mean no change or perhaps a placeholder. I'll need to handle such cases by marking them as N.D. if not applicable.
+
+Finally, compiling all this into the specified JSON format while ensuring accuracy is crucial. Each variant should be an object within the variants array, with appropriate fields filled in based on the table data. Any missing details should indeed be marked as "N.D." to maintain consistency and completeness.
+</think>
+
+```json
+{
+    "Gene": "Parkin",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "K",
+                "alt": "N",
+                "position": "27"
+            },
+            "Protein Change": {
+                "ref": "Lys",
+                "alt": "Asn",
+                "position": "27"
+            },
+            "Description in input context": "K27N"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "R",
+                "alt": "Q",
+                "position": "33"
+            },
+            "Protein Change": {
+                "ref": "Arg",
+                "alt": "Gln",
+                "position": "33"
+            },
+            "Description in input context": "R33Q"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "R",
+                "alt": "P",
+                "position": "42"
+            },
+            "Protein Change": {
+                "ref": "Arg",
+                "alt": "Pro",
+                "position": "42"
+            },
+            "Description in input context": "R42P"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "K",
+                "alt": "A",
+                "position": "48"
+            },
+            "Protein Change": {
+                "ref": "Lys",
+                "alt": "Ala",
+                "position": "48"
+            },
+            "Description in input context": "K48A"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "V",
+                "alt": "E",
+                "position": "56"
+            },
+            "Protein Change": {
+                "ref": "Val",
+                "alt": "Glu",
+                "position": "56"
+            },
+            "Description in input context": "V56E"
+        }
+    ]
+}
+```

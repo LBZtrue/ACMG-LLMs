@@ -1,0 +1,74 @@
+总时间（秒）：6.50
+问答时间（秒）：4.60
+
+<think>
+Okay, let's tackle this query. The user provided a paragraph from a medical literature abstract and wants to know if it contains mutation information. They need the extracted details in a specific JSON format.
+
+First, I'll read the abstract carefully. The main points mention Lewy bodies, α-synuclein mutations like E46K, A30P, A53T, and A30P/A53T. The study examines aggregation processes, secondary structure changes, oligomerization, and uses various techniques. 
+
+Now, looking for mutation-related terms. The paragraph lists the mutations: E46K, A30P, A53T, and A30P/A53T. Each has a description, like "accelerate fibril formation" or "decelerate them." The gene names are αS (α-synuclein). 
+
+I need to extract gene names, cDNA changes, protein changes, and descriptions. The user's example shows how to structure the JSON. For each mutation, I'll note the gene, the cDNA change (if specified), the protein change (if given), and the description from the text.
+
+Wait, the text mentions "E46K αS" and similar mutations. The cDNA changes are not explicitly stated, but the mutations are listed with their positions. The protein changes are also not detailed, but the mutations are described as causing specific effects. 
+
+In the example, the user's answer includes the gene, variants with cDNA and protein changes, and descriptions. So, for each mutation, I need to check if the cDNA and protein positions are provided. The text doesn't mention cDNA changes explicitly, only the mutations themselves. However, the mutations are listed with their positions, like E46K, which is a cDNA change (since it's a point mutation). But the user's example shows that if the cDNA is not mentioned, it's N.D. 
+
+In the given text, the mutations are listed as E46K, A30P, A53T, and A30P/A53T. The positions are given (E46K, A30P, etc.), but the cDNA changes are not explicitly stated. The protein changes are also not detailed. So, for each mutation, the cDNA and protein changes would be N.D. unless specified. 
+
+The description in the input context mentions that these mutations accelerate or decelerate aggregation. So the description part would be the effect on aggregation. 
+
+Putting it all together, the JSON should include each mutation with gene, variants (cDNA and protein changes as N.D.), and the description. The user's example shows that even if cDNA is not mentioned, it's N.D. So here, since the mutations are listed with positions but no cDNA changes, they are N.D. 
+
+Therefore, the extracted information would list each mutation with the gene, no cDNA or protein changes, and the description of their effects on aggregation.
+</think>
+
+```json
+{
+    "Gene": "αS",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "E46K αS accelerated the kinetics of the secondary structure change and oligomerization"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "A30P αS decelerated them"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "A53T αS (A30P/A53T αS) had opposite effects"
+        }
+    ]
+}
+```

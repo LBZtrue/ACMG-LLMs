@@ -1,0 +1,99 @@
+总时间（秒）：18.14
+问答时间（秒）：16.53
+
+<think>
+Okay, let's tackle this query. The user wants me to act as a Professional Medical Literature Data Mining Expert. The task is to determine if the provided text has mutation information and extract it accordingly. 
+
+First, I'll read through the given abstract and introduction carefully. The main focus is on LRRK2 variants associated with Parkinson's disease. The abstract mentions specific variants like rs34778348:G4A; p.G2385R and rs33949390:G4C; p.R1628P. There's also mention of rs7133914:G4C; p.R1398H and rs7308720:C4A: p.N551K. 
+
+I need to check if these are mutations. The terms like p.G2385R, p.R1628P, p.R1398H, and p.N551K are protein changes. The cDNA changes are listed as G4A, G4C, etc. The gene involved is LRRK2. 
+
+The introduction talks about LRRK2 as a causative gene, and the abstract mentions specific mutations. So there's definitely mutation information here. 
+
+Now, structuring the JSON. The Gene is LRRK2. For each variant, I need to parse the cDNA and protein changes. For example, rs34778348:G4A; p.G2385R would have cDNA Change with position 4, ref G, alt A. The protein change is position 2385, ref G, alt R. Similarly for the others. 
+
+Wait, the rs numbers are identifiers, but the user's example didn't include them. The example had c.248G>A, so maybe the cDNA Change should have the transcript as N.D. unless specified. The input text here doesn't mention specific transcripts, so transcript is N.D. 
+
+Also, the abstract mentions rs7133914:G4C; p.R1398H and rs7308720:C4A: p.N551K. So each of these variants needs to be in the variants array. 
+
+I need to make sure all the variants mentioned are included. Let me list them:
+
+1. rs34778348:G4A; p.G2385R
+2. rs33949390:G4C; p.R1628P
+3. rs7133914:G4C; p.R1398H
+4. rs7308720:C4A: p.N551K
+
+Wait, the last one in the abstract is rs7308720:C4A: p.N551K. The user's example had p.G83D, so the protein change here is p.N551K. 
+
+Each of these variants should be in the variants array. The Description in input context would be the full rs and p. notation. 
+
+I need to check if all the fields are filled. The transcript is N.D. since the text doesn't specify a transcript. The cDNA Change's position is the number after the colon, like 4 for G4A. The protein change's position is the number after the p., like 2385 for G2385R. 
+
+So, for each variant, the JSON entries would be structured accordingly. 
+
+I should also check if there are any other mutations mentioned. The abstract also mentions the G2019S mutation was absent, but that's not present in the Han Chinese population. However, the user's focus is on the variants that are present. 
+
+So the final JSON should have the Gene as LRRK2 and the four variants listed. The rest of the fields like transcript are N.D. as per the example.
+</think>
+
+{
+    "Gene": "LRRK2",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "G",
+                "alt": "A",
+                "position": "4"
+            },
+            "Protein Change": {
+                "ref": "G",
+                "alt": "R",
+                "position": "2385"
+            },
+            "Description in input context": "rs34778348:G4A; p.G2385R"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "G",
+                "alt": "C",
+                "position": "4"
+            },
+            "Protein Change": {
+                "ref": "R",
+                "alt": "P",
+                "position": "1628"
+            },
+            "Description in input context": "rs33949390:G4C; p.R1628P"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "G",
+                "alt": "C",
+                "position": "4"
+            },
+            "Protein Change": {
+                "ref": "R",
+                "alt": "H",
+                "position": "1398"
+            },
+            "Description in input context": "rs7133914:G4C; p.R1398H"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "C",
+                "alt": "A",
+                "position": "4"
+            },
+            "Protein Change": {
+                "ref": "N",
+                "alt": "K",
+                "position": "551"
+            },
+            "Description in input context": "rs7308720:C4A; p.N551K"
+        }
+    ]
+}

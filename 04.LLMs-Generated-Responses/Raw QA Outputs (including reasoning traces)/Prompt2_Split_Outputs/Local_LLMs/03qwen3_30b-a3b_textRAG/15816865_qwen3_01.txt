@@ -1,0 +1,40 @@
+总时间（秒）：8.78
+问答时间（秒）：7.24
+
+<think>
+Okay, let's tackle this query. The user wants me to act as a Medical Literature Data Mining Expert. The task is to determine if the given text has mutation information and extract it in JSON format. If not, return "N.D.".
+
+First, I need to read the provided context carefully. The abstract mentions "mutations in the parkin gene" and refers to "PD-linked mutations in parkin". Then there's a list of 22 parkin point mutants. The text also talks about "missense/nonsense mutations reported to date". 
+
+So, the key points here are the gene name "parkin", and the mention of mutations. The user's example shows that when there's a mutation, we need to extract gene, variants with cDNA and protein changes, and descriptions.
+
+Looking at the text, the main mutation-related info is about parkin gene mutations. However, the specific cDNA or protein changes aren't detailed here. The text says "22 in total, which represent the majority of parkin missense/nonsense mutations reported to date". But there's no specific cDNA or protein changes listed. The examples in the user's prompt have specific entries like c.248G>A (p.G83D), but here, the context doesn't provide such specifics. 
+
+So, the gene is "parkin". The variants would be the 22 point mutants, but since the exact cDNA or protein changes aren't given, those fields would be "N.D." The description in the input context is "parkin point mutants (22 in total)".
+
+Therefore, the JSON should have "Gene": "parkin", and under variants, each entry would have N.D. for transcript, ref, alt, position, etc., with the description as "parkin point mutants (22 in total)".
+
+I need to make sure that if the information isn't present, I use "N.D." for the respective fields. Since the text doesn't specify individual mutations beyond the count, all the specific variant details are N.D. except the gene and the general description.
+</think>
+
+```json
+{
+    "Gene": "parkin",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "parkin point mutants (22 in total)"
+        }
+    ]
+}
+```

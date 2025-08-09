@@ -1,0 +1,58 @@
+总时间（秒）：10.48
+问答时间（秒）：9.52
+
+<think>
+Okay, let's tackle this query. The user wants me to act as a Medical Literature Data Mining Expert. The task is to check if the provided text has mutation information and extract it in JSON format. If not, return "N.D.".
+
+First, I'll read the input text carefully. The abstract mentions "compound heterozygous PINK1 mutations" and lists two specific mutations: p.A244G and p.V317I. The second paragraph also talks about PINK1 mutations in the context of autosomal recessive parkinsonism.
+
+I need to identify if there are any mutations described. The key terms here are "mutations" and the specific protein changes. The text explicitly states both mutations. Now, I need to parse these into the required JSON structure.
+
+Looking at the examples, the JSON requires Gene, variants, each with cDNA Change (transcript, ref, alt, position), Protein Change (ref, alt, position), and Description. However, the input text here only provides the protein changes (p.A244G and p.V317I) but not the cDNA changes. The example had both, but in this case, the text doesn't mention the cDNA details. So for cDNA Change, I should put "N.D." unless specified. The description in the input is "p.A244G and p.V317I".
+
+Wait, the user's example had c.248G>A (p.G83D), which includes both cDNA and protein changes. Here, the text only has the protein changes. So in the JSON, the cDNA Change would be N.D., but the Protein Change would have the details. Also, the gene is PINK1.
+
+So the extracted info would have Gene: "PINK1", and variants with each mutation. Each variant's cDNA Change is N.D., and Protein Change has the ref, alt, position. The description is the p.A244G and p.V317I.
+
+I need to make sure that all fields are filled. Since the cDNA changes aren't mentioned, those are N.D. The protein changes are present. Also, check if there are multiple variants. The text mentions both mutations, so two entries in the variants array.
+
+Double-checking the text: "Both mutations (p.A244G and p . Both mutations (p.A244G and p.V317I)" – seems like a typo, but the second mutation is p.V317I. So two variants. Each with their protein changes.
+
+So the JSON should have Gene as PINK1, variants array with two entries. Each entry has cDNA Change as N.D., Protein Change with the respective details, and Description as the p.A244G and p.V317I.
+
+I think that's it. No other mutations mentioned. The rest of the text discusses clinical features, not other mutations. So the answer should be the JSON with those details.
+</think>
+
+{
+    "Gene": "PINK1",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "G",
+                "position": "244"
+            },
+            "Description in input context": "p.A244G"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "V",
+                "alt": "I",
+                "position": "317"
+            },
+            "Description in input context": "p.V317I"
+        }
+    ]
+}

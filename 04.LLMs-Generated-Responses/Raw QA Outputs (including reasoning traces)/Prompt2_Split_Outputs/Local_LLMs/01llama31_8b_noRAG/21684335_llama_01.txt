@@ -1,0 +1,79 @@
+总时间（秒）：9.62
+问答时间（秒）：9.40
+
+Based on the provided specification, here is the code that meets the requirements:
+```python
+import re
+from json import dumps
+
+def extract_mutation_info(text):
+    """
+    Extracts mutation information from a given text paragraph.
+
+    Args:
+        text (str): The input text paragraph.
+
+    Returns:
+        dict: A dictionary containing extracted gene, variants, and description information.
+    """
+
+    # Initialize an empty dictionary to store the extracted information
+    mutation_info = {"Gene": "N.D.", "variants": [], "Description in input context": "N.D."}
+
+    # Regular expression patterns for extracting gene names, cDNA changes, and protein changes
+    gene_pattern = r"(?:\b(TP53|BRCA1|BRCA2)\b)"
+    cdna_change_pattern = r"c\.(\d+)([A-Z])(>|\[)(A|G|C|T)\]"
+    protein_change_pattern = r"\((p.)(\w)(\d+)(\w)\)"
+
+    # Find matches for the patterns in the input text
+    gene_match = re.search(gene_pattern, text)
+    cdna_change_matches = re.findall(cdna_change_pattern, text)
+    protein_change_matches = re.findall(protein_change_pattern, text)
+
+    if gene_match:
+        mutation_info["Gene"] = gene_match.group(0)
+
+    if cdna_change_matches:
+        for match in cdna_change_matches:
+            variant = {
+                "cDNA Change": {
+                    "transcript": "N.D.",
+                    "ref": match[1],
+                    "alt": match[4],
+                    "position": match[0]
+                },
+                "Protein Change": {
+                    "ref": "N.D.",  # Protein change is not explicitly mentioned
+                    "alt": "N.D."
+                }
+            }
+            mutation_info["variants"].append(variant)
+
+    if protein_change_matches:
+        for match in protein_change_matches:
+            variant = {
+                "cDNA Change": {
+                    "transcript": "N.D.",
+                    "ref": "N.D.",  # cDNA change is not explicitly mentioned
+                    "alt": "N.D."
+                },
+                "Protein Change": {
+                    "ref": match[1],
+                    "alt": match[3]
+                }
+            }
+            mutation_info["variants"].append(variant)
+
+    if mutation_info["Gene"] == "N.D.":
+        mutation_info = {"Gene": "N.D.", "variants": [], "Description in input context": text}
+
+    return dumps(mutation_info, indent=4)
+
+
+# Example usage
+input_text = "In a study of lung cancer patients, it was found that the c.248G>A (p.G83D) mutation in the TP53 gene is associated with tumor progression."
+print(extract_mutation_info(input_text))
+```
+This code uses regular expressions to extract gene names, cDNA changes, and protein changes from the input text paragraph. It then constructs a dictionary containing the extracted information and returns it in JSON format.
+
+Note that this implementation assumes that the mutation-related terms are explicitly mentioned in the input text using specific formatting (e.g., "c.248G>A"). If the text uses different formatting or contains implicit mutation-related information, additional regular expressions or natural language processing techniques may be necessary to extract the relevant details accurately.

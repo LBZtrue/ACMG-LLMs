@@ -1,0 +1,52 @@
+总时间（秒）：14.77
+问答时间（秒）：14.67
+
+<think>
+Alright, I'm looking at the query where the user wants to extract mutation information from a given text. The example they provided is about TP53 gene mutations in lung cancer, which shows how detailed extraction should look. 
+
+First, I need to analyze the provided text carefully. It's a paragraph discussing medical literature related to Parkinson’s disease and mutations in the alpha-synuclein gene. I remember that mutations are often mentioned with terms like 'mutation', 'Ala53Thr', or gene names followed by specific changes.
+
+I'll start by scanning for any gene names, which here is 'alpha-synuclein'. Then, look for any mutation descriptions. The text mentions "Ala30Pro" and "Ala53Thr" mutations. These are clear indicators of specific amino acid changes. 
+
+Next, I need to parse the details: gene name, cDNA changes (if provided), protein changes, and their context. In this case, 'Ala30Pro' refers to an alanine at position 30 changing to proline, and 'Ala53Thr' is alanine at position 53 becoming threonine. The text also links these mutations to Parkinson’s disease, which provides the context for their significance.
+
+I should structure this information into a JSON format as per the user's example. Each mutation will be an object within the 'variants' array, containing cDNA and protein changes where possible. Since the example provided didn't have cDNA details, I'll mark those as "N.D." but in this case, specific mutations are given without transcript info, so I might leave it as is or note that it's not available.
+
+Finally, ensuring accuracy by double-checking the text to make sure I didn't miss any other mutation mentions. It seems all relevant information has been captured.
+</think>
+
+```json
+{
+    "Gene": "alpha-synuclein",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "A",
+                "alt": "P",
+                "position": "30"
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "P",
+                "position": "30"
+            },
+            "Description in input context": "Ala30Pro mutation"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "A",
+                "alt": "T",
+                "position": "53"
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "T",
+                "position": "53"
+            },
+            "Description in input context": "Ala53Thr mutation"
+        }
+    ]
+}
+```

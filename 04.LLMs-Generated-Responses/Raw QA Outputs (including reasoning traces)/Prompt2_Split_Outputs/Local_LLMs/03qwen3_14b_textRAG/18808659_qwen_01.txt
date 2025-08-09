@@ -1,0 +1,66 @@
+总时间（秒）：17.66
+问答时间（秒）：14.65
+
+<think>
+Okay, let's see. The user provided a paragraph from a research article and wants me to extract mutation information. The task is to check if there are any mutations mentioned and extract details like gene names, cDNA changes, protein changes, and descriptions.
+
+Looking at the abstract first. The background mentions three missense mutations in the α-syn gene: A30P, A53T, and E46K. These are associated with familial PD. The results section talks about the A30P and A53T mutants. The conclusion refers to Wt and PD-linked mutations again.
+
+So the mutations mentioned are A30P, A53T, and E46K. The gene is α-syn, which is the same as SNCA. The user's example uses TP53, so here it would be SNCA. The variants are missense mutations. The positions are 30, 53, and 46. The amino acid changes are A to P, A to T, and E to K respectively.
+
+I need to structure this into JSON. For each mutation, include the gene, then variants with cDNA change (but the text doesn't mention cDNA positions, only protein positions). Wait, the example had cDNA changes with positions, but here the input only mentions protein changes. The user instruction says to extract cDNA changes if present, otherwise N.D. Since the text doesn't provide cDNA details, those fields should be N.D. The protein changes are specified as A30P, etc. The description in the input context would be the exact terms from the text.
+
+So the JSON should have the gene as "SNCA" (since α-syn is the common name, but the gene symbol is SNCA). Each variant will have cDNA change with N.D. for transcript, ref, alt, position. Protein change will have ref, alt, position. The description is the mutation name from the text.
+
+I need to make sure all fields are present and filled with N.D. where not mentioned. The user's example had "transcript": "N.D.", so I should follow that structure. Also, check if there are any other mutations mentioned. The text also mentions A30P in the results, but that's already covered in the background. So the three mutations are all in the background section.
+
+So the final JSON should list all three mutations with their respective protein changes and descriptions. The gene is SNCA, and cDNA details are N.D. for each variant.
+</think>
+
+{
+    "Gene": "SNCA",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "P",
+                "position": "30"
+            },
+            "Description in input context": "A30P"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "T",
+                "position": "53"
+            },
+            "Description in input context": "A53T"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "E",
+                "alt": "K",
+                "position": "46"
+            },
+            "Description in input context": "E46K"
+        }
+    ]
+}

@@ -1,0 +1,92 @@
+总时间（秒）：23.05
+问答时间（秒）：21.35
+
+<think>
+Okay, let's tackle this query. The user wants me to act as a Medical Literature Data Mining Expert. The task is to determine if the given text has mutation info and extract it in JSON. If not, return "N.D.".
+
+First, I'll read the provided abstract carefully. The main topic is LRRK2 mutations and Parkinson's disease. The user's example shows how to structure the JSON with Gene, variants, etc.
+
+Looking at the text: "Autosomal dominant mutations in the human Leucine-Rich Repeat Kinase 2 (LRRK2) gene..." So the gene is LRRK2. Then there's a mention of the most prevalent mutation, G2019S. The text says "G2019S" is the mutation. 
+
+Now, I need to parse this into the JSON structure. The cDNA change would be c.2019G>A, since G2019S implies a glycine to serine change at position 2019. But wait, the input text doesn't explicitly state the cDNA change. The example had "c.248G>A (p.G83D)", but here the text only mentions "G2019S". So the cDNA change isn't specified here. The protein change is p.G2019S. 
+
+The user's example had transcript as "N.D." if not mentioned. So in this case, the cDNA change's transcript isn't provided, so it's "N.D." The ref and alt for cDNA would be G and S? Wait, no. The cDNA change is usually in the form of c. followed by the position, then the reference and alternate. But the text only says G2019S. So maybe the cDNA change is c.2019G>A (since G to S would be a codon change, but without the exact nucleotide change, it's hard to say. However, the user's example had "c.248G>A" which is the cDNA change, and "p.G83D" as the protein change. 
+
+But in the given text, the mutation is written as G2019S. So the protein change is p.G2019S. However, the cDNA change isn't explicitly stated. So in the JSON, the cDNA Change would have "transcript": "N.D.", "ref": "G", "alt": "S", "position": "2019"? Wait, but the position in the cDNA change is 2019, but the protein change is also 2019. However, the user's example had the position as 248 for cDNA and 83 for protein. So here, the cDNA position would be 2019, and the protein position is also 2019. But the problem is that the text doesn't specify the cDNA change, only the protein change. So according to the user's constraints, I should only extract what's explicitly mentioned. 
+
+The input text says "the most prevalent LRRK2 mutation, G2019S". So the mutation is G2019S, which is a protein change. The cDNA change isn't mentioned here. So in the JSON, for cDNA Change, the transcript is N.D., and the ref and alt would be "G" and "S" but the position is 2019? Wait, but without knowing the exact cDNA change, maybe I shouldn't assume. The example had "c.248G>A" which is the cDNA change, but here the text doesn't have that. So maybe the cDNA Change should be N.D., and the protein change is G2019S. 
+
+So the JSON would have Gene: "LRRK2", variants with cDNA Change as N.D., and Protein Change with ref G, alt S, position 2019. The Description in input context is "G2019S". 
+
+Also, the text mentions other mutations like "G2019S" is responsible for 40% of familial PD in North African Arabs and 30% in Ashkenazi Jews. But the user's task is to extract mutation details. The other parts are about prevalence, not the mutation itself. 
+
+So the final JSON should include the gene, the variant with protein change, and the description. The cDNA change is not specified, so N.D. for transcript, and the ref and alt would be G and S, but the position is 2019. Wait, but in the example, the position is a number. So in the cDNA Change, the position is 2019, but the ref and alt are G and S? But that's not correct. Because the cDNA change would be something like c.2019G>A, but the text only mentions the protein change. So perhaps the cDNA Change is N.D., and the protein change is p.G2019S. 
+
+So the JSON should be:
+
+{
+  "Gene": "LRRK2",
+  "variants": [
+    {
+      "cDNA Change": {
+        "transcript": "N.D.",
+        "ref": "N.D.",
+        "alt": "N.D.",
+        "position": "N.D."
+      },
+      "Protein Change": {
+        "ref": "G",
+        "alt": "S",
+        "position": "2019"
+      },
+      "Description in input context": "G2019S"
+    }
+  ]
+}
+
+Wait, but in the example, the cDNA Change had transcript as N.D., but the ref, alt, and position were filled. But in this case, the cDNA change isn't mentioned, so all fields under cDNA Change should be N.D. So the cDNA Change's transcript, ref, alt, position are all N.D. But the user's example had "transcript": "N.D.", but the ref, alt, position were filled. Wait, in the example, the input was "c.248G>A (p.G83D)", so the cDNA Change had transcript as N.D., ref G, alt A, position 248. So in this case, since the text doesn't mention the cDNA change, but only the protein change, the cDNA Change would have all N.D. But the user's instruction says to extract specific gene names, cDNA changes, protein changes, and mutation descriptions. If the cDNA change isn't mentioned, then it's N.D. So the cDNA Change's transcript, ref, alt, position are all N.D. But the protein change is G2019S. So the JSON would have:
+
+{
+  "Gene": "LRRK2",
+  "variants": [
+    {
+      "cDNA Change": {
+        "transcript": "N.D.",
+        "ref": "N.D.",
+        "alt": "N.D.",
+        "position": "N.D."
+      },
+      "Protein Change": {
+        "ref": "G",
+        "alt": "S",
+        "position": "2019"
+      },
+      "Description in input context": "G2019S"
+    }
+  ]
+}
+
+But maybe the user expects that the cDNA change is inferred. However, the user's constraints say to extract only what's directly mentioned. Since the text doesn't mention the cDNA change, only the protein change, then the cDNA Change fields should be N.D. So that's the correct approach.
+</think>
+
+```json
+{
+    "Gene": "LRRK2",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "G",
+                "alt": "S",
+                "position": "2019"
+            },
+            "Description in input context": "G2019S"
+        }
+    ]
+}
+```

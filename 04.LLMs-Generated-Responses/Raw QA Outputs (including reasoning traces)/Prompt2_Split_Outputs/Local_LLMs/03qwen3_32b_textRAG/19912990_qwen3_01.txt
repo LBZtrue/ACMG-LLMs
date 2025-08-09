@@ -1,0 +1,36 @@
+总时间（秒）：19.65
+问答时间（秒）：18.53
+
+<think>
+Okay, let's tackle this. The user wants me to extract mutation information from the provided medical literature text. First, I need to check if the text mentions any mutations.
+
+Looking at the abstract and introduction, there's a lot about LRRK2 and Parkinson's disease. In the abstract, they mention "I2020T mutant LRRK2" and compare it to the wild-type. The introduction also states that the Sagamihara family patients have the I2020T mutation in the kinase domain. 
+
+So the gene here is clearly LRRK2. The mutation is I2020T. Now, the cDNA change: the example in the user's prompt uses c. notation, but here it's given as I2020T. The 'I' is the amino acid isoleucine at position 2020, replaced by threonine (T). So the protein change is p.I2020T. 
+
+For the cDNA change, the example uses c. followed by position and nucleotide change. However, in the text, they don't specify the cDNA change (like c.6058A>C), only the protein change. So in the cDNA Change fields, transcript, ref, alt, and position would be N.D. since they aren't provided. The protein change has ref as I, alt as T, position 2020. 
+
+The description in the context is "I2020T mutation in the kinase domain". So I need to structure the JSON accordingly, making sure to use N.D. where information isn't present. Also, check if there are other mutations mentioned. The introduction says there are 23 LRRK2 mutations reported, but the specific one discussed here is I2020T. So only that one should be extracted.
+</think>
+
+```json
+{
+    "Gene": "LRRK2",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "I",
+                "alt": "T",
+                "position": "2020"
+            },
+            "Description in input context": "I2020T mutation in the kinase domain"
+        }
+    ]
+}
+```

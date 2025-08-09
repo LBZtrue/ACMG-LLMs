@@ -1,0 +1,180 @@
+总时间（秒）：24.75
+问答时间（秒）：23.27
+
+<think>
+Okay, let's tackle this query. The user wants me to act as a Medical Literature Data Mining Expert, specifically looking for mutation information in the provided text. The input is an abstract about α-synuclein mutations.
+
+First, I need to read through the abstract carefully. The main focus is on mutations like E46K, A53T, and Glu 83 substitutions. The user's instructions say to extract gene names, cDNA changes, protein changes, and descriptions. But I need to check if the text provides these details.
+
+Looking at the abstract: It mentions "E46K mutation" and "A53T mutation". Also, "substitution of Glu 46 for an Ala" and "mutation of Glu 83 to a Lys or Ala". However, the text doesn't provide the cDNA changes (like transcript names or specific nucleotide changes) or the exact positions in terms of codons. The protein changes are given as E46K, A53T, etc., but the cDNA changes aren't specified. 
+
+The example given in the user's prompt shows that when cDNA changes are not present, "N.D." should be used. The Gene here is α-synuclein, but the official gene name might be SNCA. However, the text refers to it as "␣-synuclein" and "␣-Syn 1". The user's example uses "TP53" as the gene, so I should check if the gene name is mentioned. The abstract says "␣-synuclein" but doesn't explicitly state the gene symbol. However, in the context, maybe it's implied. But since the text doesn't mention the gene name like SNCA, I should put "N.D." for Gene unless the text specifies it. Wait, the second paragraph mentions "␣-Syn 1" but not the gene name. So Gene would be N.D. here.
+
+For variants, the mutations listed are E46K, A53T, Glu46Ala, Glu83Lys, Glu83Ala. The protein changes are straightforward. But the cDNA changes aren't provided. The positions are 46, 83, but the text doesn't mention the transcript or nucleotide changes. So for cDNA Change, transcript is N.D., ref and alt are not given. The protein change's ref and alt are the amino acids, and position is given. The Description in input context is the exact terms used, like "E46K", "A53T", etc.
+
+So structuring the JSON: Gene is N.D. because the text doesn't mention the gene symbol. Variants would include each mutation. For each, cDNA Change has transcript N.D., ref and alt as N.D. since not specified. Protein Change has ref (E for E46, G for Glu83?), alt (K, A, etc.), and position. The description is the exact term from the text.
+
+Wait, the user's example has "c.248G>A (p.G83D)" as the description. Here, the text mentions "E46K" which is p.E46K, but the cDNA change isn't given. So in the JSON, for each variant, the cDNA Change would have transcript as N.D., ref and alt as N.D., and position as N.D. because the text doesn't specify. But the protein change's position is given (e.g., 46, 83). 
+
+So the final JSON would have Gene as N.D., and variants with protein changes and descriptions. The cDNA changes are N.D. since the text doesn't provide them. The user's example shows that even if cDNA isn't present, the protein change is extracted. So in this case, for each mutation, the protein change's ref and alt are the original and mutated amino acids, position is the number, and description is the term from the text.
+
+I need to make sure that all fields are filled. So for each variant, the cDNA Change object has transcript, ref, alt, position as N.D. The Protein Change has ref, alt, position. The Description is the exact mutation term. 
+
+So the extracted info would be:
+
+{
+  "Gene": "N.D.",
+  "variants": [
+    {
+      "cDNA Change": {
+        "transcript": "N.D.",
+        "ref": "N.D.",
+        "alt": "N.D.",
+        "position": "N.D."
+      },
+      "Protein Change": {
+        "ref": "E",
+        "alt": "K",
+        "position": "46"
+      },
+      "Description in input context": "E46K"
+    },
+    {
+      "cDNA Change": {
+        "transcript": "N.D.",
+        "ref": "N.D.",
+        "alt": "N.D.",
+        "position": "N.D."
+      },
+      "Protein Change": {
+        "ref": "A",
+        "alt": "T",
+        "position": "53"
+      },
+      "Description in input context": "A53T"
+    },
+    {
+      "cDNA Change": {
+        "transcript": "N.D.",
+        "ref": "N.D.",
+        "alt": "N.D.",
+        "position": "N.D."
+      },
+      "Protein Change": {
+        "ref": "E",
+        "alt": "A",
+        "position": "46"
+      },
+      "Description in input context": "E46A"
+    },
+    {
+      "cDNA Change": {
+        "transcript": "N.D.",
+        "ref": "N.D.",
+        "alt": "N.D.",
+        "position": "N.D."
+      },
+      "Protein Change": {
+        "ref": "E",
+        "alt": "K",
+        "position": "83"
+      },
+      "Description in input context": "E83K"
+    },
+    {
+      "cDNA Change": {
+        "transcript": "N.D.",
+        "ref": "N.D.",
+        "alt": "N.D.",
+        "position": "N.D."
+      },
+      "Protein Change": {
+        "ref": "E",
+        "alt": "A",
+        "position": "83"
+      },
+      "Description in input context": "E83A"
+    }
+  ]
+}
+
+But wait, the original text mentions "substitution of Glu 46 for an Ala" which is E46A, and "mutation of Glu 83 to a Lys or Ala" which are E83K and E83A. The user's example uses p.G83D, so here it's p.E46K, p.E46A, p.E83K, p.E83A. However, the text doesn't specify the exact cDNA changes, so those fields are N.D. The Gene is not mentioned as a specific symbol like SNCA, so it's N.D.
+
+I think that's correct. The answer should be the JSON with these entries.
+</think>
+
+{
+    "Gene": "N.D.",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "E",
+                "alt": "K",
+                "position": "46"
+            },
+            "Description in input context": "E46K"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "T",
+                "position": "53"
+            },
+            "Description in input context": "A53T"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "E",
+                "alt": "A",
+                "position": "46"
+            },
+            "Description in input context": "E46A"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "E",
+                "alt": "K",
+                "position": "83"
+            },
+            "Description in input context": "E83K"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "E",
+                "alt": "A",
+                "position": "83"
+            },
+            "Description in input context": "E83A"
+        }
+    ]
+}

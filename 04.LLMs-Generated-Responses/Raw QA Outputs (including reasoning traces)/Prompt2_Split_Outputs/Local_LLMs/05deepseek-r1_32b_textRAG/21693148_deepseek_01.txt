@@ -1,0 +1,70 @@
+总时间（秒）：28.29
+问答时间（秒）：26.55
+
+<think>
+Okay, let's try to figure out how to approach this query. The user wants me to extract mutation information from a given text paragraph. I remember that the goal is to determine if there are any mutations mentioned and then extract specific details about each one.
+
+First, I'll read through the abstract provided. It mentions UCH-L1 and talks about some mutations. Specifically, it notes D30K, C90S, and I93M. These seem like protein changes because they're in the format of amino acid substitutions at specific positions.
+
+The next step is to parse each mutation. For example, D30K means aspartic acid at position 30 changed to lysine. Similarly, C90S is cysteine at position 90 changing to serine, and I93M is isoleucine at position 93 becoming methionine.
+
+I also notice that the abstract mentions these mutations affecting secretion or being associated with Parkinson's disease. However, there's no mention of cDNA changes like nucleotide positions or reference/alternate alleles, so those fields will be "N.D." since they aren't provided in the text.
+
+Now, looking at the Introduction section, it talks about a-synuclein mutations A30P and A53T. These are also protein changes without any cDNA details given. So each variant here will have their respective amino acid substitutions but no cDNA info.
+
+I need to structure this into JSON format as specified. Each gene and its variants should be listed with the available information, filling in "N.D." where data isn't present. 
+
+I also need to make sure I don't miss any mutations. The abstract mentions three UCH-L1 mutations and two a-synuclein mutations. I'll list each separately under their respective genes.
+
+Finally, ensuring that all fields are included even if some information is missing by using "N.D." will help maintain the structure as required.
+</think>
+
+```json
+{
+    "Gene": "UCH-L1",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "D",
+                "alt": "K",
+                "position": "30"
+            },
+            "Description in input context": "D30K UCH-L1, which lacks ubiquitin binding activity"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "C",
+                "alt": "S",
+                "position": "90"
+            },
+            "Description in input context": "C90S UCH-L1, which lacks hydrolase activity"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "I",
+                "alt": "M",
+                "position": "93"
+            },
+            "Description in input context": "The Parkinson's disease-associated mutation I93M in UCH-L1 decreased the secretion of I93M UCH-L1"
+        }
+    ]
+}
+```

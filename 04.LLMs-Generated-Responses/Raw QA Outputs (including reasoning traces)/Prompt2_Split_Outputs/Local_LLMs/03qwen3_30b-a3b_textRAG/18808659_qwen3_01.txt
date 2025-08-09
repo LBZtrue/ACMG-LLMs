@@ -1,0 +1,72 @@
+总时间（秒）：15.21
+问答时间（秒）：12.56
+
+<think>
+Okay, let's tackle this query. The user wants me to act as a Medical Literature Data Mining Expert, specifically looking for mutation information in the provided text. The input here is the abstract of a study about alpha-synuclein and Parkinson's disease.
+
+First, I need to carefully read the abstract to check for any mention of mutations. The user mentioned that if there's no mutation info, I should return "N.D.".
+
+Looking at the abstract, the first part mentions "Three missense mutations (A30P, A53T and E46K) in the α-syn gene are associated with rare autosomal dominant forms of familial PD." So here, the genes involved are the α-syn gene, and the specific mutations are A30P, A53T, E46K. These are missense mutations, which means they result in a different amino acid in the protein. 
+
+Next, the abstract talks about "A30P α-syn" and "A53T α-syn" in the context of their binding to synaptic membranes. The mutations are listed as A30P, A53T, and E46K. The user's example shows that when there's a cDNA change and protein change, they need to be extracted. However, in this case, the abstract doesn't provide the cDNA details like "c.248G>A" but rather the protein changes directly. 
+
+The question is whether to include the "cDNA Change" fields. Since the input text doesn't mention the cDNA changes (like specific nucleotide positions), those fields should be "N.D." The protein changes are given as A30P, A53T, E46K. The positions here are 30, 53, 46, and the amino acids are A to P, A to T, E to K. 
+
+So for each variant, the "cDNA Change" would have transcript as N.D., ref and alt as N.D., and position as N.D. because the text doesn't provide that info. The "Protein Change" would have ref and alt as the amino acids, and position as the number. The "Description in input context" would be the exact mutation names mentioned.
+
+I need to structure this into JSON. The Gene is "α-syn" or "SNCA"? The abstract refers to it as α-synuclein (α-syn) and the gene as α-syn gene. In literature, the gene is often called SNCA. However, the text here says "α-syn gene", so maybe just use "α-syn" as the gene name. But sometimes, the official symbol is SNCA. However, since the text doesn't specify the gene symbol, just the name, I'll go with "α-syn" as per the text.
+
+So the JSON would have "Gene": "α-syn", and variants with each mutation. Each variant's cDNA Change is N.D., and Protein Change has ref, alt, position. The Description is the exact terms from the text.
+
+Wait, the example given in the user's prompt has "TP53" as the gene. Here, the gene is referred to as "α-syn gene", so maybe the Gene field is "α-syn" or "SNCA". Since the text doesn't use the official symbol, I'll stick with "α-syn" as per the text. But sometimes, in such contexts, the gene symbol is SNCA. However, without explicit mention, it's safer to use what's in the text.
+
+So, the final JSON should have the three mutations, each with their protein changes. The cDNA changes are not mentioned, so they are N.D. The protein changes are A30P, etc. The description is the same as the mutation names.
+</think>
+
+{
+    "Gene": "α-syn",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "P",
+                "position": "30"
+            },
+            "Description in input context": "A30P"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "T",
+                "position": "53"
+            },
+            "Description in input context": "A53T"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "E",
+                "alt": "K",
+                "position": "46"
+            },
+            "Description in input context": "E46K"
+        }
+    ]
+}

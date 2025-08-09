@@ -1,0 +1,132 @@
+总时间（秒）：14.61
+问答时间（秒）：14.55
+
+Based on the provided specifications, here is a Python script that implements the required functionality:
+
+```python
+import json
+from Bio import SeqIO
+import requests
+
+def extract_variants(literature):
+    variants = []
+    for line in literature.split('\n'):
+        if 'variant' in line.lower():
+            gene, hgvs = parse_variant(line)
+            variants.append({
+                "Gene": gene,
+                "variants": [
+                    {
+                        "HGVS": hgvs,
+                        "cDNA Change": parse_cdna_change(hgvs),
+                        "Protein Change": parse_protein_change(hgvs),
+                        "Description in input context": line
+                    }
+                ]
+            })
+    return variants
+
+def standardize_hgvs(variants):
+    api_url = 'https://api.example.com/standardize_hgvs'
+    for variant in variants:
+        response = requests.post(api_url, json={'hgvs': variant['variants'][0]['HGVS']})
+        if response.status_code == 200:
+            standardized_hgvs = response.json()['hgvs']
+            variant['variants'][0]['HGVS'] = standardized_hgvs
+
+def parse_variant(line):
+    # Assuming the line is in the format 'Gene:HGVS'
+    parts = line.split(':')
+    return parts[0].strip(), parts[1].strip()
+
+def parse_cdna_change(hgvs):
+    transcript, variation = hgvs.split(':')
+    ref, alt, position = variation.split('.')
+    return {
+        "transcript": transcript,
+        "ref": ref,
+        "alt": alt,
+        "position": position
+    }
+
+def parse_protein_change(hgvs):
+    # Assuming the HGVS format is 'transcript:protein_position/ref_alt'
+    parts = hgvs.split(':')
+    protein_ref, protein_alt = parts[1].split('/')
+    position = int(protein_alt[-1])
+    return {
+        "ref": protein_ref,
+        "alt": protein_alt[:-1],
+        "position": position
+    }
+
+def extract_disease(literature):
+    disease_name = None
+    for line in literature.split('\n'):
+        if 'disease' in line.lower():
+            disease_name = line.strip()
+    return {
+        "Described Disease": disease_name,
+        "MONDO": requests.get(f'https://api.monodo.org/v1/disease/{disease_name}').json()['id']
+    }
+
+def extract_experimental_methods(literature):
+    methods = []
+    for line in literature.split('\n'):
+        if 'assay method' in line.lower():
+            parts = line.strip().split(':')
+            assay_method = parts[0].strip()
+            material_source, material_name, description = parse_material(parts[1])
+            readout_type = parse_readout(line)
+            methods.append({
+                "Assay Method": assay_method,
+                "Material used": {
+                    "Material Source": material_source,
+                    "Material Name": material_name,
+                    "Description": description
+                },
+                "Readout type": readout_type,
+                # ...
+            })
+    return methods
+
+def parse_material(material_line):
+    parts = material_line.split(':')
+    return parts[0].strip(), ':'.join(parts[1:])
+
+def parse_readout(readout_line):
+    if 'quantitative' in readout_line.lower():
+        return 'Quantitative'
+    else:
+        return 'Qualitative'
+
+# Assuming the literature is a string containing the text
+literature = '''
+TP53:c.248G>A (p.G83D) - This variant causes a structural change in the protein, affecting its function.
+Hereditary Myopathy - MONDO:0012345
+
+Western Blot - Cell line:HEK293 - The experiment was conducted using the HEK293 cell line.
+
+Quantitative
+Variant:NM_001126112.3:c.248G>A - Conclusion:Abnormal - Molecular Effect:partial loss-of-function - Result Description:Protein expression was reduced by 50% for the variant NM_001126112.3:c.248G>A.
+'''
+
+variants = extract_variants(literature)
+standardize_hgvs(variants)
+
+disease = extract_disease(literature)
+methods = extract_experimental_methods(literature)
+
+# Combine extracted data into JSON
+json_data = {
+    "Variants Include": variants,
+    "Described Disease": disease,
+    "Experiment Method": methods
+}
+
+print(json.dumps(json_data, indent=4))
+```
+
+This script assumes that the literature is a string containing the text. The `extract_variants`, `standardize_hgvs`, and other functions are implemented as per the provided specifications.
+
+Note: This is just an example implementation, you may need to adjust it according to your specific requirements. Also, please make sure to replace the placeholder API URL with the actual one for standardizing HGVS nomenclature.

@@ -1,0 +1,50 @@
+总时间（秒）：16.33
+问答时间（秒）：16.13
+
+<think>
+Alright, I need to figure out how to respond to the user's query about extracting mutation information from a given medical text. The user provided a sample JSON output when mutations are found and "N.D." if not. They also gave an example to illustrate.
+
+First, I should understand what exactly is required. The task is to act as a professional data miner for biomedical literature, focusing on mutations. The user wants me to extract gene names, cDNA changes, protein changes, and descriptions from the text. If no mutation info is found, return "N.D.".
+
+Looking at the sample input provided in the context, it's a paragraph discussing various studies related to DJ-1 mutations and their effects in Parkinson's disease. The user wants me to parse this and extract any mutation details present.
+
+I'll start by carefully reading through each paragraph of the text. I'm looking for terms like "mutations," "mutant," or specific mentions of gene names followed by variant details, such as c.xxxx or p.x changes.
+
+In the provided context, several paragraphs mention DJ-1 mutations, particularly a missense mutation at L166P (c.498C>T). This is highlighted in multiple references, such as paragraph 23 and others. Additionally, other studies discuss various aspects of these mutations, including their effects on protein interaction and disease mechanisms.
+
+I need to extract the gene name, which appears to be DJ-1. The cDNA change would involve identifying any specific base pair changes mentioned, like c.498C>T, and the corresponding protein change p.Leu166Pro. There are also references to parkin mutations (c.275-277delGTA), so I should include that as well.
+
+Each variant entry in the JSON needs to specify the gene, cDNA changes with transcript info if available, and the protein change along with a brief description from the context. If any part of this information isn't present, it should be marked as "N.D.".
+
+I'll structure my response according to the example provided, ensuring each mutation is correctly captured under the variants array. I also need to note where in the input context each piece of information was found for clarity.
+
+In summary, my approach involves:
+1. Identifying all mutation-related terms in the text.
+2. Extracting gene names and specific mutation details (cDNA and protein changes).
+3. Organizing this info into a JSON format as specified.
+4. Ensuring that any missing data is marked with "N.D.".
+
+Now, I'll proceed to extract the relevant information from the provided context and structure it accordingly in the JSON format.
+</think>
+
+```json
+{
+    "Gene": "DJ-1",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "C",
+                "alt": "T",
+                "position": "498"
+            },
+            "Protein Change": {
+                "ref": "Leu",
+                "alt": "Pro",
+                "position": "166"
+            },
+            "Description in input context": "L166P (c.498C>T)"
+        }
+    ]
+}
+```

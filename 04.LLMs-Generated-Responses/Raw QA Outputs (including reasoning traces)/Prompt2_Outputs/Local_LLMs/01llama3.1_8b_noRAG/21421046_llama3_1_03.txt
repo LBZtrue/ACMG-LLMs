@@ -1,0 +1,79 @@
+总时间（秒）：8.93
+问答时间（秒）：8.83
+
+Based on the provided specification, I will outline the steps to extract and organize the information from the literature into the predefined JSON framework.
+
+**Step 1: Extract variant information**
+
+* Read the literature and identify all variants mentioned.
+* For each variant:
+	+ Record the gene name.
+	+ Extract the preliminary HGVS nomenclature (e.g., NM_001126112.3:c.248G>A).
+	+ Identify the cDNA changes (transcript, reference nucleotide, alternative nucleotide, position).
+	+ Identify the protein changes (reference amino acid, alternative amino acid, position).
+
+**Step 2: Standardize HGVS nomenclature**
+
+* Use a relevant API to standardize the HGVS nomenclature for each variant.
+
+**Step 3: Identify disease and retrieve MONDO term**
+
+* Read the literature and identify the disease studied.
+* Retrieve the corresponding MONDO term from the database.
+
+**Step 4: Extract experimental method information**
+
+* List all experimental methods mentioned in the literature.
+* For each method:
+	+ Record the name of the assay (e.g., Western Blot).
+	+ Identify the material used (source, name, description).
+	+ Determine the readout type (quantitative/qualitative).
+	+ Extract result descriptions for each variant mentioned.
+
+**Step 5: Organize information into JSON framework**
+
+* Create a JSON object with the following structure:
+```json
+{
+    "Variants Include": [
+        {
+            "Gene": "TP53",
+            "variants": [
+                {
+                    "HGVS": "NM_001126112.3:c.248G>A",
+                    "cDNA Change": {...},
+                    "Protein Change": {...},
+                    "Description in input context": "c.248G>A (p.G83D)"
+                }
+            ]
+        }
+    ],
+    "Described Disease": {
+        "Described Disease": "Hereditary Myopathy",
+        "MONDO": "MONDO:0012345"
+    },
+    "Experiment Method": [
+        {
+            "Assay Method": "Western Blot",
+            "Material used": {...},
+            "Readout type": "Quantitative",
+            "Readout description": [...],
+            ...
+        }
+    ]
+}
+```
+**Step 6: Fill in additional fields**
+
+* For each experimental method:
+	+ Determine whether biological replicates were performed.
+	+ Determine whether technical replicates were performed.
+	+ Identify the basic positive and negative controls.
+	+ Identify validation controls for pathogenic/likely pathogenic variants.
+	+ Identify validation controls for benign/likely benign variants.
+	+ Record the statistical analysis method used.
+	+ Determine the threshold for normal readout (if not described in the literature, use a standard value).
+	+ Determine the threshold for abnormal readout (if not described in the literature, use a standard value).
+	+ Indicate whether the experimental protocol is generally used for studying this disease.
+
+The final JSON object will contain all extracted and standardized information.

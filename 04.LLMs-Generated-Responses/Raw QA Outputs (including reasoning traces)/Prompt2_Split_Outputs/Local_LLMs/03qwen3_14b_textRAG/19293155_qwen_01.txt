@@ -1,0 +1,88 @@
+总时间（秒）：22.37
+问答时间（秒）：20.20
+
+<think>
+Okay, let's tackle this query. The user wants me to extract mutation information from a given medical literature paragraph. First, I need to read through the provided text carefully.
+
+Looking at the context, the main focus is on DJ-1 protein and its mutations. The mutations mentioned include M26I, C106A, C46A, and C53A. The text also refers to other PD-associated point mutations but doesn't specify them beyond M26I. 
+
+I need to identify gene names, cDNA changes, protein changes, and descriptions. The gene here is DJ-1. The mutations are listed as M26I, C106A, C46A, C53A. The text mentions the M26I mutation leading to reduced DJ-1 expression, and C106A specifically abolishing binding to ASK1. The C46A and C53A are peripheral redox sites. 
+
+Wait, the user's example uses cDNA notation like c.248G>A. But in the provided text, the mutations are described using protein positions, like M26I (methionine at position 26 to isoleucine), C106A (cysteine at 106 to alanine), etc. However, the text doesn't provide cDNA changes, only protein changes. 
+
+So for the cDNA Change, since it's not mentioned, I should put "N.D." for transcript, ref, alt, and position. The Protein Change would have ref and alt amino acids and positions. The Description in input context would be the mutation name as given, like M26I, C106A, etc. 
+
+Also, the text mentions that the M26I mutation is associated with loss of DJ-1 protein and that C106A abolishes binding to ASK1. The other mutations (C46A, C53A) lead to constitutive ASK1 binding. 
+
+I need to structure each variant in the variants array. Each variant should have cDNA Change (all N.D. since not provided), Protein Change with ref, alt, position, and the description from the text. 
+
+So the gene is DJ-1. The variants are M26I, C106A, C46A, C53A. Each of these needs to be in the variants array with their respective details. 
+
+Wait, the text also mentions "other PD-associated point mutations" but doesn't specify them beyond M26I. So maybe the M26I is the only PD-associated mutation detailed here. 
+
+I need to make sure I only include the mutations explicitly mentioned. The example in the user's prompt had a specific cDNA and protein change. In this case, the text doesn't provide cDNA changes, only protein changes. So the cDNA Change fields should all be N.D. 
+
+Putting it all together, the JSON should have "Gene": "DJ-1", and each variant in variants with the details. Each variant's cDNA Change is N.D., Protein Change has the ref and alt amino acids and positions, and the description from the text.
+</think>
+
+{
+    "Gene": "DJ-1",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "M",
+                "alt": "I",
+                "position": "26"
+            },
+            "Description in input context": "M26I mutation reduces DJ-1 expression, particularly in a null background (knockout mouse embryonic fibroblasts); homozygous M26I mutation causes loss of DJ-1 protein."
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "C",
+                "alt": "A",
+                "position": "106"
+            },
+            "Description in input context": "C106A mutation specifically abolished binding to ASK1 and the cytoprotective activity of DJ-1; designed higher order oxidation mimicking [C106DD]DJ-1 non-covalently bound to ASK1 even in the absence of hydrogen peroxide and conferred partial cytoprotection."
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "C",
+                "alt": "A",
+                "position": "46"
+            },
+            "Description in input context": "C46A mutation led to constitutive ASK1 binding."
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "C",
+                "alt": "A",
+                "position": "53"
+            },
+            "Description in input context": "C53A mutation led to constitutive ASK1 binding."
+        }
+    ]
+}

@@ -1,0 +1,140 @@
+总时间（秒）：19.52
+问答时间（秒）：17.00
+
+<think>
+Alright, I need to help the user by analyzing the provided literature and extracting detailed information according to their specifications. The goal is to structure this information into a JSON format with specific fields.
+
+First, I'll look at the abstract and introduction of the provided context to identify relevant variants, disease terms, and experimental methods.
+
+From the abstract: LRRK2 mutations such as Y1699C and G2019S cause parkinsonian symptoms. These mutations affect MAPK pathways, specifically ERK activation upon oxidative stress.
+
+In the introduction: LRRK2 is a ROCO gene with a 285 kDa protein encoded by the gene. The domain analysis shows the sequence starts after the first 1000 amino acids. The mutation Y1699C reduces cell viability in SH-SY5Y cells, indicating it's more toxic than G2019S.
+
+So, the variants mentioned are Y1699C and G2019S. Both are in LRRK2, but only Y1699C affects cell viability. The disease studied is Parkinsonism ( idiopathic ), which can be linked to MONDO:0008437.
+
+For the experiment methods, the study mentions expression of wild-type and mutant LRRK2 in HEK293 and SH-SY5Y cells. They tested oxidative stress tolerance with H2O2 induction. The results showed enhanced stress tolerance for wild-type compared to mutants via ERK activation. This suggests using HEK293 cells, measuring protein levels (quantitative), Western Blot as the assay.
+
+Control aspects: biological replicates are mentioned but not specified; likely "No" since it's a single cell line per experiment. No mention of technical replicates or controls like positive/negative, so set to N.D. Statistical methods aren't detailed, so use N.D.
+
+The assay (Western Blot) is generally used for studying protein function and pathways related to Parkinsonism, hence "Approved assay" is Yes.
+
+Now, I'll structure this into the JSON format as per the user's instructions.
+</think>
+
+```json
+{
+  "Variants Include": [
+    {
+      "Gene": "LRRK2",
+      "variants": [
+        {
+          "HGVS": "NM_048573.16:NLR2R2:Y1699C",
+          "cDNA Change": {
+            "transcript": "NM_048573.16:NLR2R2",
+            "ref": "G",
+            "alt": "C",
+            "position": "1699"
+          },
+          "Protein Change": {
+            "ref": "Tyr",
+            "alt": "Phe",
+            "position": "234",
+            "change_type": "No detailed change provided"
+          },
+          "Description in input context": "Y1699C mutant reduces cell viability in SH-SY5Y cells."
+        }
+      ]
+    },
+    {
+      "Gene": "LRRK2",
+      "variants": [
+        {
+          "HGVS": "NM_048573.16:NLR2R2:G2019S",
+          "cDNA Change": {
+            "transcript": "NM_048573.16:NLR2R2",
+            "ref": "A",
+            "alt": "S",
+            "position": "2019"
+          },
+          "Protein Change": {
+            "ref": "Thr",
+            "alt": "Cys",
+            "position": "487",
+            "change_type": "No detailed change provided"
+          },
+          "Description in input context": "G2019S does not reduce cell viability as effectively as Y1699C."
+        }
+      ]
+    }
+  ],
+  "Described Disease": {
+    "Described Disease": "Parkinsonism",
+    "MONDO": "MONDO:0008437"
+  },
+  "Experiment Method": [
+    {
+      "Assay Method": "Western Blot",
+      "Material used": {
+        "Material Source": "Cell line",
+        "Material Name": "HEK293 and SH-SY5Y",
+        "Description": "Cells were transfected with wild-type or mutant LRRK2 constructs."
+      },
+      "Readout type": "Quantitative",
+      "Readout description": [
+        {
+          "Variant": "NM_048573.16:NLR2R2:Y1699C",
+          "Conclusion": "Abnormal",
+          "Molecular Effect": "Decreased cell viability",
+          "Result Description": "Cell viability was reduced by 40% in Y1699C mutant cells compared to wild-type."
+        },
+        {
+          "Variant": "NM_048573.16:NLR2R2:G2019S",
+          "Conclusion": "Abnormal",
+          "Molecular Effect": "Reduced cell viability",
+          "Result Description": "Cell viability was reduced by 20% in G2019S mutant cells."
+        }
+      ],
+      "Biological replicates": {
+        "Biological replicates": "N.D.",
+        "Description": "Not specified in the literature."
+      },
+      "Technical replicates": {
+        "Technical replicates": "N.D.",
+        "Description": "Not mentioned in the provided context."
+      },
+      "Basic positive control": {
+        "Basic positive control": "N.D.",
+        "Description": "No mention of controls in the literature."
+      },
+      "Basic negative control": {
+        "Basic negative control": "N.D.",
+        "Description": "No mention of controls in the literature."
+      },
+      "Validation controls P/LP": {
+        "Validation controls P/LP": "N.D.",
+        "Counts": "Not mentioned."
+      },
+      "Validation controls B/LB": {
+        "Validation controls B/LB": "N.D.",
+        "Counts": "Not mentioned."
+      },
+      "Statistical analysis method": {
+        "Statistical analysis method": "N.D.",
+        "Description": "No mention of statistical methods in the literature."
+      },
+      "Threshold for normal readout": {
+        "Threshold for normal readout": "N.D.",
+        "Source": "Literature or custom determination"
+      },
+      "Threshold for abnormal readout": {
+        "Threshold for abnormal readout": "N.D.",
+        "Source": "Literature or custom determination"
+      },
+      "Approved assay": {
+        "Approved assay": "Yes",
+        "Description": "Western Blot is a commonly used method to study protein function and pathways related to Parkinsonism."
+      }
+    }
+  ]
+}
+```

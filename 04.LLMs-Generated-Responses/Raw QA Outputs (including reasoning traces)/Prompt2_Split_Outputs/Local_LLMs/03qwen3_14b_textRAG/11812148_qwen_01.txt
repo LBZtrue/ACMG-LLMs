@@ -1,0 +1,64 @@
+总时间（秒）：14.21
+问答时间（秒）：12.52
+
+<think>
+Okay, let's tackle this query. The user wants me to extract mutation information from the provided medical literature text. First, I need to carefully read through the text to find any mentions of mutations.
+
+Looking at the abstract and introduction, I see two mutations mentioned: A30P and A53T. These are both in the a-Synuclein gene. The A30P mutation is discussed in the context of familial Parkinson's disease, and the A53T is also linked to Parkinson's. There's also a double mutant A53T/A30P mentioned. 
+
+Next, I need to structure this information into the required JSON format. The gene is a-Synuclein, which should be noted as "a-Syn" in the gene field. For each variant, I need to capture the protein change. The A30P mutation changes alanine (A) at position 30 to proline (P), and A53T changes alanine to threonine (T) at position 53. The double mutant combines both. 
+
+The description in the input context should include the specific mutations and their association with Parkinson's disease. For the cDNA change, the text doesn't mention transcript details, so I'll put "N.D." there. The protein changes are clear from the text. 
+
+I should make sure not to include any other information not directly related to mutations. The double mutant is a combination of the two, so it's another variant to list. Each variant should be in a separate object within the variants array. 
+
+Double-checking the constraints: only mutation-related info, accurate, and "N.D." where not mentioned. Looks good. Now, formatting the JSON accordingly.
+</think>
+
+{
+    "Gene": "a-Synuclein",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "P",
+                "position": "30"
+            },
+            "Description in input context": "A30P mutant a-Syn is defective in binding to phospholipid vesicles and linked to familial Parkinson's disease"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "T",
+                "position": "53"
+            },
+            "Description in input context": "A53T substitution is linked to Parkinson's disease and displays normal membrane-binding activity comparable to wild-type a-Syn"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "Double mutant A53T/A30P a-Syn showed defective membrane binding similar to A30P protein"
+        }
+    ]
+}

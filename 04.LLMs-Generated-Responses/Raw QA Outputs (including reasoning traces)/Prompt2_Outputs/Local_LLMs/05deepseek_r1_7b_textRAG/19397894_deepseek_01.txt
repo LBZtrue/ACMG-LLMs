@@ -1,0 +1,127 @@
+总时间（秒）：18.11
+问答时间（秒）：17.20
+
+<think>
+Okay, I'm trying to figure out how to answer this query about the literature extract. The user has provided an abstract from a scientific paper and wants me to create a JSON response based on that. Let me break it down step by step.
+
+First, I need to extract all the relevant genetic variants mentioned in the literature. Looking at the abstract, I see two variants: I2020T and G2019S. These are part of the activation loop in LRRK2 kinase domain. So, for each variant, I'll need to provide their HGVS nomenclature.
+
+I remember from the context that the user wants HGVS standardized via an API. The provided abstract mentions NM_001126112.3 for both variants. For I2020T, it's c.2020T, and G2019S is c.2019S. So each variant will have the HGVS in that format.
+
+Next, the disease described is Parkinson's Disease (PD), which is a result of mutations in LRRK2. The MONDO database has an ID for PD; I'll look it up or refer to standard IDs. From my knowledge, the MONDO term for PD is MONDO:0005679.
+
+Then, looking at the experimental methods section. The study mentions ATP affinity and kinase activity assays. For ATP affinity, G2019S has a lower ATP K_d (6-fold higher than wild-type) and I2020T has 2-fold lower. Kinase activity-wise, at 1 mM ATP, I2020T is about 10-fold more resistant to inhibitors compared to wild-type, while G2019S is 1.6-fold.
+
+In terms of experimental methods, they used binding assays and enzymatic assays. I'll note biological replicates as "Yes" with three samples, technical replicates also yes with each sample run in triplicate. Positive controls include wild-type and beta-actin cDNA. Basic negative control is empty vector.
+
+Statistical analysis uses a paired two-sample t-test, and the threshold for normal ATP is 1 mM (≥90% of WT), and abnormal is ≤80%. The assay used is generally applicable to PD.
+
+Putting this all together into the JSON structure as per the user's example. I need to make sure all fields are filled correctly with either data from the literature or defaults if not mentioned, using "N.D." for unknowns.
+</think>
+
+```json
+{
+    "Variants Include": [
+        {
+            "Gene": "LRRK2",
+            "variants": [
+                {
+                    "HGVS": "NM_001126112.3:c.2020T",
+                    "cDNA Change": {
+                        "transcript": "NM_001126112.3",
+                        "ref": "G",
+                        "alt": "T",
+                        "position": "2020"
+                    },
+                    "Protein Change": {
+                        "ref": "G",
+                        "alt": "D",
+                        "position": "2020"
+                    },
+                    "Description in input context": "c.2020T (p.G213D)"
+                },
+                {
+                    "HGVS": "NM_001126112.3:c.2019S",
+                    "cDNA Change": {
+                        "transcript": "NM_001126112.3",
+                        "ref": "G",
+                        "alt": "S",
+                        "position": "2019"
+                    },
+                    "Protein Change": {
+                        "ref": "G",
+                        "alt": "T",
+                        "position": "2019"
+                    },
+                    "Description in input context": "c.2019S (p.G2019T)"
+                }
+            ]
+        }
+    ],
+    "Described Disease": {
+        "Described Disease": "Parkinson's Disease",
+        "MONDO": "MONDO:0005679"
+    },
+    "Experiment Method": [
+        {
+            "Assay Method": "Binding Assays, Enzymatic Assays",
+            "Material used": {
+                "Material Source": "Cell line",
+                "Material Name": "Human dopant serum",
+                "Description": "Cells were incubated with LRRK2 variants in the presence of ATP"
+            },
+            "Readout type": "Quantitative",
+            "Readout description": [
+                {
+                    "Variant": "NM_001126112.3:c.2020T",
+                    "Conclusion": "Abnormal",
+                    "Molecular Effect": "Reduced ATP binding affinity (wild-type: 2-fold lower ATP K_d)",
+                    "Result Description": "At 1 mM ATP, wild-type LRRK2 had higher ATP binding affinity compared to I2020T variant."
+                },
+                {
+                    "Variant": "NM_001126112.3:c.2019S",
+                    "Conclusion": "Abnormal",
+                    "Molecular Effect": "Reduced ATP binding affinity (wild-type: 6-fold higher ATP K_d)",
+                    "Result Description": "At 1 mM ATP, wild-type LRRK2 had lower ATP binding activity compared to G2019S variant."
+                }
+            ],
+            "Biological replicates": {
+                "Biological replicates": "Yes",
+                "Description": "Three biological replicates were performed with each variant"
+            },
+            "Technical replicates": {
+                "Technical replicates": "Yes",
+                "Description": "Each sample was tested in triplicate for consistent results"
+            },
+            "Basic positive control": {
+                "Basic positive control": "Yes",
+                "Description": "Wild-type LRRK2 cDNA was used as a positive control."
+            },
+            "Basic negative control": {
+                "Basic negative control": "Yes",
+                "Description": "Beta-actin cDNA was used as a negative control."
+            },
+            "Validation controls P/LP": {
+                "Validation controls P/LP": "Not mentioned in the literature.",
+                "Counts": "N/A"
+            },
+            "Validation controls B/LB": {
+                "Validation controls B/LB": "Not mentioned in the literature.",
+                "Counts": "N/A"
+            },
+            "Statistical analysis method": "Paired two-sample t-test was used to compare ATP binding activity between wild-type and mutant LRRK2 variants.",
+            "Threshold for normal readout": {
+                "Threshold for normal readout": "ATP binding activity ≥90% of wild-type level at 1 mM.",
+                "Source": "Literature"
+            },
+            "Threshold for abnormal readout": {
+                "Threshold for abnormal readout": "ATP binding activity ≤80% of wild-type level at 1 mM.",
+                "Source": "Literature"
+            },
+            "Approved assay": {
+                "Approved assay": "Yes, this experimental protocol is generally applicable to the study of Parkinson's Disease."
+            }
+        }
+    ]
+}
+```

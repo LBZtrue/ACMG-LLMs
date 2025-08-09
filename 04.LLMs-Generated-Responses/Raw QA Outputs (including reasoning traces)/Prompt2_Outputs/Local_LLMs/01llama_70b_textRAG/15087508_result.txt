@@ -1,0 +1,119 @@
+总时间（秒）：1910.21
+问答时间（秒）：70.45
+
+```python
+import requests
+import json
+from pprint import pprint
+
+def standardize_hgvs(hgvs):
+    # Replace this with your chosen API for standardizing HGVS nomenclature
+    # Alternatively, you can use the following API provided by the US National Library of Medicine (NLM):
+    # https://mutalyzer.nl/json/annotate?hgvs_notation={hgvs}&assembly_name=GRCh37
+    url = f"https://mutalyzer.nl/json/annotate?hgvs_notation={hgvs}&assembly_name=GRCh37"
+    response = requests.get(url)
+    data = response.json()
+    return data["reference"]
+
+def get_mondo_term(disease):
+    # Replace this with your chosen method for retrieving MONDO terms
+    # Alternatively, you can use the following API provided by the Monarch Initiative:
+    # https://api.monarchinitiative.org/api/search/entity?prefix={disease}
+    url = f"https://api.monarchinitiative.org/api/search/entity?prefix={disease}"
+    response = requests.get(url)
+    data = response.json()
+    return data[0]["id"]
+
+def determine_normal_threshold(literature):
+    # Replace this with your chosen method for determining normal thresholds
+    # Alternatively, you can use the following approach which assumes that normal thresholds are mentioned in the literature:
+    # Search for keywords related to normal thresholds (e.g., "normal", "control", etc.) and extract the relevant information
+    pass
+
+def determine_abnormal_threshold(literature):
+    # Replace this with your chosen method for determining abnormal thresholds
+    # Alternatively, you can use the following approach which assumes that abnormal thresholds are mentioned in the literature:
+    # Search for keywords related to abnormal thresholds (e.g., "abnormal", "disease", etc.) and extract the relevant information
+    pass
+
+def determine_approved_assay(literature):
+    # Replace this with your chosen method for determining approved assays
+    # Alternatively, you can use the following approach which assumes that approved assays are mentioned in the literature:
+    # Search for keywords related to approved assays (e.g., "recommended", "standard", etc.) and extract the relevant information
+    pass
+
+def extract_information(literature):
+    # Extract information from the literature based on the provided JSON format
+    # Replace this with your chosen method for extracting information
+    # Alternatively, you can use the following approach which assumes that information is mentioned in the literature:
+    # Search for keywords related to each field in the JSON format (e.g., "gene", "variant", "disease", etc.) and extract the relevant information
+    pass
+
+def fill_json_template(literature):
+    # Fill in the JSON template with the extracted information
+    json_data = {
+        "Variants Include": [
+            {
+                "Gene": "",
+                "variants": [
+                    {
+                        "HGVS": "",
+                        "cDNA Change": {
+                            "transcript": "",
+                            "ref": "",
+                            "alt": "",
+                            "position": ""
+                        },
+                        "Protein Change": {
+                            "ref": "",
+                            "alt": "",
+                            "position": ""
+                        },
+                        "Description in input context": ""
+                    }
+                ]
+            }
+        ],
+        "Described Disease": {
+            "Described Disease": "",
+            "MONDO": ""
+        },
+        "Experiment Method": [
+            {
+                "Assay Method": "",
+                "Material used": {
+                    "Material Source": "",
+                    "Material Name": "",
+                    "Description": ""
+                },
+                "Readout type": "",
+                "Readout description":[
+                    {
+                        "Variant": "",
+                        "Conclusion": "",
+                        "Molecular Effect": "",
+                        "Result Description": ""
+                    }
+                ],
+                "Biological replicates": {
+                    "Biological replicates": "",
+                    "Description": ""
+                },
+                "Technical replicates": {
+                    "Technical replicates": "",
+                    "Description": ""
+                },
+                "Basic positive control": {
+                    "Basic positive control": "",
+                    "Description": ""
+                },
+                "Basic negative control": {
+                    "Basic negative control": "",
+                    "Description": ""
+                },
+                "Validation controls P/LP": {
+                    "Validation controls P/LP": "",
+                    "Counts": ""
+                },
+                "Validation controls B/LB": {
+                    "Validation controls B

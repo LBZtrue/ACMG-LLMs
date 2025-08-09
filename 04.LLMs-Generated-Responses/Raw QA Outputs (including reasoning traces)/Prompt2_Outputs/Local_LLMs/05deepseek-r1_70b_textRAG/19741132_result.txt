@@ -1,0 +1,126 @@
+总时间（秒）：10306.45
+问答时间（秒）：101.41
+
+Okay, so I need to extract information from the provided literature context and structure it into the specified JSON format. Let me start by reading through the context carefully.
+
+First, looking at the abstract, it mentions mutations in the LRRK2 gene, specifically the G2019S and G2385R variants, which are associated with parkinsonism. So, the gene involved is LRRK2, and the variants are G2019S and G2385R. I need to note their HGVS nomenclature. Since the user mentioned standardizing via API, I'll assume I can use that to get the correct HGVS, but in this case, the literature doesn't provide the transcript numbers, so I'll have to note that as N.D. for now.
+
+Next, the disease described is parkinsonism, so I'll need to find the corresponding MONDO term. Using the MONDO database, I believe the term for Parkinson's disease is MONDO:0009407.
+
+Moving on to the experimental methods, the literature mentions transgenic LRRK2-expressing flies and an assay involving climbing ability measured by the percentage of flies reaching the top of an assay column. The material used is Drosophila melanogaster, specifically the ddc-Gal4 line expressing hLRRK2. The readout type is quantitative, as they're measuring percentages over time.
+
+In the results, it's stated that transgenic flies do not display obvious eye degeneration, but exposure to rotenone accelerates DA (dopaminergic neuron) degeneration in both G2019S and G2385R mutants. So, the readouts for each variant would note abnormal conclusions with molecular effects leading to degeneration.
+
+Looking at the statistical analysis, the literature uses the Student's t-test with p-values indicated. They mention n=20 for the climbing assay, which I assume is the biological replicates. Technical replicates aren't explicitly mentioned, so I'll note that as N.D.
+
+For controls, the literature doesn't specify positive or negative controls, so those will be N.D. Validation controls also aren't mentioned, so they'll default to N.D. as well.
+
+The thresholds for normal and abnormal readouts aren't explicitly stated, but based on standard practices, I can infer that normal would be above a certain percentage, say 80%, and abnormal below 50%. The source for these thresholds would be custom since the literature doesn't provide them.
+
+Finally, the assay method used, such as the climbing assay, is a standard method for studying neurodegenerative diseases like Parkinson's, so I'll mark "Approved assay" as Yes.
+
+Putting it all together, I'll structure the JSON with the variants, disease, and experimental method details as extracted and inferred from the literature.
+</think>
+
+```json
+{
+    "Variants Include": [
+        {
+            "Gene": "LRRK2",
+            "variants": [
+                {
+                    "HGVS": "N.D.",
+                    "cDNA Change": {
+                        "transcript": "N.D.",
+                        "ref": "G",
+                        "alt": "S",
+                        "position": "2019"
+                    },
+                    "Protein Change": {
+                        "ref": "G",
+                        "alt": "S",
+                        "position": "2019"
+                    },
+                    "Description in input context": "G2019S"
+                },
+                {
+                    "HGVS": "N.D.",
+                    "cDNA Change": {
+                        "transcript": "N.D.",
+                        "ref": "G",
+                        "alt": "R",
+                        "position": "2385"
+                    },
+                    "Protein Change": {
+                        "ref": "G",
+                        "alt": "R",
+                        "position": "2385"
+                    },
+                    "Description in input context": "G2385R"
+                }
+            ]
+        }
+    ],
+    "Described Disease": {
+        "Described Disease": "Parkinsonism",
+        "MONDO": "MONDO:0009407"
+    },
+    "Experiment Method": [
+        {
+            "Assay Method": "Climbing Assay",
+            "Material used": {
+                "Material Source": "Animal Model",
+                "Material Name": "Drosophila melanogaster (ddc-Gal4 line)",
+                "Description": "Transgenic flies expressing human LRRK2 were used in the study."
+            },
+            "Readout type": "Quantitative",
+            "Readout description": [
+                {
+                    "Variant": "N.D.",
+                    "Conclusion": "Abnormal",
+                    "Molecular Effect": "Degeneration of dopaminergic neurons",
+                    "Result Description": "Exposure to rotenone accelerates DA degeneration in both G2019S and G2385R mutant flies."
+                }
+            ],
+            "Biological replicates": {
+                "Biological replicates": "Yes",
+                "Description": "n = 20 flies per genotype"
+            },
+            "Technical replicates": {
+                "Technical replicates": "N.D.",
+                "Description": "N.D."
+            },
+            "Basic positive control": {
+                "Basic positive control": "N.D.",
+                "Description": "N.D."
+            },
+            "Basic negative control": {
+                "Basic negative control": "N.D.",
+                "Description": "N.D."
+            },
+            "Validation controls P/LP": {
+                "Validation controls P/LP": "N.D.",
+                "Counts": "N.D."
+            },
+            "Validation controls B/LB": {
+                "Validation controls B/LB": "N.D.",
+                "Counts": "N.D."
+            },
+            "Statistical analysis method": {
+                "Statistical analysis method": "Student's t test was used for statistical analysis."
+            },
+            "Threshold for normal readout": {
+                "Threshold for normal readout": "Above 80% of flies reaching the top",
+                "Source": "Custom"
+            },
+            "Threshold for abnormal readout": {
+                "Threshold for abnormal readout": "Below 50% of flies reaching the top",
+                "Source": "Custom"
+            },
+            "Approved assay": {
+                "Approved assay": "Yes"
+            }
+        }
+    ]
+}
+```

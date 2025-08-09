@@ -1,0 +1,58 @@
+总时间（秒）：29.45
+问答时间（秒）：27.80
+
+<think>
+Okay, let me start by reading through the provided context and question carefully. The user wants me to extract mutation information from the given medical literature text. My role is to determine if the text contains mutation details and then extract them in the specified JSON format.
+
+First, I need to scan the abstract and introduction for any mention of mutations. The abstract mentions "A53T substitution" and "S87N substitutions." These look like protein changes because they follow the format of a single-letter amino acid code followed by position and another amino acid. The gene in question here is α-synuclein, which is often abbreviated as αSyn or α-synuclein. 
+
+In the abstract, the A53T substitution is noted to dominate growth kinetics, and the lag phase is influenced by both A53T and S87N. These are mutations in the human-mouse chimeras being studied. The protein changes are A53T and S87N. 
+
+Looking at the structure of the required JSON, I need to map these findings. The gene is α-synuclein, but the exact symbol might be SNCA (since α-synuclein is encoded by the SNCA gene). However, the text doesn't explicitly mention the gene symbol, just the protein name. But in the example provided, they used the gene name as in the text. Since the text refers to α-synuclein, I should use that as the gene name unless specified otherwise. 
+
+The variants section requires cDNA changes and protein changes. The text only mentions protein changes (A53T and S87N). There's no mention of cDNA changes (like nucleotide positions) in the provided text. Therefore, for the cDNA Change fields, I should use "N.D." as instructed. 
+
+The description in the input context should capture the specific mutations mentioned. For A53T, the description would be "A53T substitution," and for S87N, "S87N substitution." 
+
+I need to ensure that each variant is listed as separate entries in the variants array. The protein changes will have the reference and alternate amino acids, and positions. Since there are two mutations, there will be two entries in the variants array. 
+
+I should also check if there's any other mutation mentioned in the introduction part. The introduction talks about αSyn aggregation and PD but doesn't specify any mutations beyond what's in the abstract. So, only the two mentioned in the abstract are relevant here.
+
+Putting it all together, the JSON should have the gene as "α-synuclein", two variants with their respective protein changes, and "N.D." for the cDNA changes. Each variant's description is taken directly from the text.
+</think>
+
+```json
+{
+    "Gene": "α-synuclein",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "T",
+                "position": "53"
+            },
+            "Description in input context": "A53T substitution dominates the growth kinetics"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "S",
+                "alt": "N",
+                "position": "87"
+            },
+            "Description in input context": "S87N substitution affects the lag phase in combination with A53T"
+        }
+    ]
+}
+```

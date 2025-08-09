@@ -1,0 +1,102 @@
+总时间（秒）：13.24
+问答时间（秒）：13.12
+
+Here is a summary of the workflow and example outputs based on the provided context:
+
+1. Read the literature and extract all relevant variant information, including gene name, preliminary HGVS nomenclature, cDNA changes, and protein changes.
+2. Standardize the HGVS nomenclature of the variants via relevant API.
+3. Identify the disease studied in the literature and retrieve the corresponding terms from the MONDO database.
+4. List all experimental methods mentioned in the literature and extract detailed information about each method, including material sources, readout types, result descriptions, experimental replicates, control settings, statistical analysis methods, and thresholds for normal and abnormal results.
+5. Determine whether the experimental methods are generally used for studying the disease.
+6. Organize the extracted and standardized information according to the predefined JSON framework.
+
+Examples:
+- Example 1: Assume the literature mentions a variant in the TP53 gene, c.248G>A (p.G83D), described as "This variant causes a structural change in the protein, affecting its function." The disease studied is "Hereditary Myopathy," with the corresponding MONDO term "MONDO:0012345."
+
+```json
+{
+    "Variants Include": [
+        {
+            "Gene": "TP53",
+            "variants": [
+                {
+                    "HGVS": "<standardized HGVS nomenclature>",
+                    "cDNA Change": {
+                        "transcript": "<standardized transcript>",
+                        "ref": "<standardized reference>",
+                        "alt": "<standardized alternative>",
+                        "position": "<standardized position>"
+                    },
+                    "Protein Change": {
+                        "ref": "<standardized reference>",
+                        "alt": "<standardized alternative>",
+                        "position": "<standardized position>"
+                    },
+                    "Description in input context": "c.248G>A (p.G83D)"
+                }
+            ]
+        }
+    ],
+    "Described Disease": {
+        "Described Disease": "Hereditary Myopathy",
+        "MONDO": "MONDO:0012345"
+    },
+    "Experiment Method": [
+        {
+            "Assay Method": "Western Blot",
+            "Material used": {
+                "Material Source": "Cell line",
+                "Material Name": "<standardized cell line name>",
+                "Description": "The experiment was conducted using <standardized cell line name>."
+            },
+            "Readout type": "<readout type>",
+            "Readout description": [
+                {
+                    "Variant": "<standardized HGVS nomenclature>",
+                    "Conclusion": "<conclusion>",
+                    "Molecular Effect": "<molecular effect>",
+                    "Result Description": "<result description>"
+                }
+            ],
+            "Biological replicates": {
+                "Biological replicates": "<number of biological replicates if known, otherwise 'N.D.'>",
+                "Description": "<description of biological replicates>"
+            },
+            "Technical replicates": {
+                "Technical replicates": "<number of technical replicates if known, otherwise 'N.D.'>",
+                "Description": "<description of technical replicates>"
+            },
+            "Basic positive control": {
+                "Basic positive control": "<whether a basic positive control was set up or not>",
+                "Description": "<description of the positive control if it was used>"
+            },
+            "Basic negative control": {
+                "Basic negative control": "<whether a basic negative control was set up or not>",
+                "Description": "<description of the negative control if it was used>"
+            },
+            "Validation controls P/LP": {
+                "Validation controls P/LP": "<whether validation controls for pathogenic/likely pathogenic variants were included or not>",
+                "Counts": "<number of validation controls>"
+            },
+            "Validation controls B/LB": {
+                "Validation controls B/LB": "<whether validation controls for benign/likely benign variants were included or not>",
+                "Counts": "<number of validation controls>"
+            },
+            "Statistical analysis method": {
+                "Statistical analysis method": "<description of the statistical analysis method used in the experimental protocol>"
+            },
+            "Threshold for normal readout": {
+                "Threshold for normal readout": "<threshold for normal results if known, otherwise determine it based on your own knowledge>",
+                "Source": "<source of the threshold>"
+            },
+            "Threshold for abnormal readout": {
+                "Threshold for abnormal readout": "<threshold for abnormal results if known, otherwise determine it based on your own knowledge>",
+                "Source": "<source of the threshold>"
+            },
+            "Approved assay": {
+                "Approved assay": "<whether the experimental protocol used in the literature is generally used for studying this disease or not>"
+            }
+        }
+    ]
+}
+```

@@ -1,0 +1,126 @@
+总时间（秒）：17.89
+问答时间（秒）：16.22
+
+<think>
+Okay, let's tackle this query. The user wants me to act as a Medical Literature Data Mining Expert, specifically looking for mutations in the provided text. The input here is the abstract and introduction of a study about PINK1 and Parkinson's disease.
+
+First, I need to carefully read through the text to spot any mention of mutations. The user's instructions say to extract gene names, cDNA changes, protein changes, and mutation descriptions. If there's no info, return "N.D.".
+
+Looking at the abstract: "PDlinked PINK1 G309D, L347P, and W437X mutations." That's a key part. So the gene is PINK1. The mutations listed are G309D, L347P, W437X. Let me parse these. 
+
+G309D: That's a protein change where the amino acid at position 309 (Glycine) is replaced by Aspartic acid. Similarly, L347P is Leucine to Proline at position 347. W437X is a stop codon, maybe a nonsense mutation. 
+
+But the text doesn't specify cDNA changes, just the protein changes. The input context mentions "PDlinked PINK1 G309D, L347P, and W437X mutations." So the "Description in input context" would be those exact terms. 
+
+The cDNA changes aren't explicitly given here. The user's example had c.248G>A, but here it's just G309D, etc. So for cDNA Change, the transcript would be N.D. since it's not provided. The protein change would have the ref and alt amino acids and position. 
+
+I need to structure this into JSON. Check if there are other mutations mentioned. The introduction talks about genetic studies and mitochondrial complex I, but no specific mutations. Only the abstract has the PINK1 mutations. 
+
+So the Gene is PINK1. Variants would be the three mutations. Each variant has the protein change details. The cDNA Change is N.D. because the text doesn't provide the cDNA notation. The description is the exact terms from the text. 
+
+I need to make sure not to add anything not in the text. The answer should be a JSON with Gene and variants array. Each variant has cDNA Change (transcript N.D.), Protein Change with ref, alt, position, and Description. 
+
+Double-checking the example: the user's example had transcript as N.D. when not specified. So here, since the text doesn't mention cDNA, that's N.D. The protein changes are given as G309D, etc. So the positions are 309, 347, 437. The protein changes are G→D, L→P, W→X (which is a stop). 
+
+So the JSON should look like:
+
+{
+  "Gene": "PINK1",
+  "variants": [
+    {
+      "cDNA Change": {
+        "transcript": "N.D.",
+        "ref": "N.D.",
+        "alt": "N.D.",
+        "position": "N.D."
+      },
+      "Protein Change": {
+        "ref": "G",
+        "alt": "D",
+        "position": "309"
+      },
+      "Description in input context": "G309D"
+    },
+    {
+      "cDNA Change": {
+        "transcript": "N.D.",
+        "ref": "N.D.",
+        "alt": "N.D.",
+        "position": "N.D."
+      },
+      "Protein Change": {
+        "ref": "L",
+        "alt": "P",
+        "position": "347"
+      },
+      "Description in input context": "L347P"
+    },
+    {
+      "cDNA Change": {
+        "transcript": "N.D.",
+        "ref": "N.D.",
+        "alt": "N.D.",
+        "position": "N.D."
+      },
+      "Protein Change": {
+        "ref": "W",
+        "alt": "X",
+        "position": "437"
+      },
+      "Description in input context": "W437X"
+    }
+  ]
+}
+
+Wait, but in the example, the cDNA Change had transcript, ref, alt, position. But in the input text, there's no cDNA info. So all those fields should be N.D. The protein change has ref, alt, position. For W437X, the ref is W, alt is X (stop), position 437. 
+
+Yes, that's correct. So the JSON structure is as above. The user's example had "transcript": "N.D." even when there was no transcript info. So that's consistent.
+</think>
+
+{
+    "Gene": "PINK1",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "G",
+                "alt": "D",
+                "position": "309"
+            },
+            "Description in input context": "G309D"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "L",
+                "alt": "P",
+                "position": "347"
+            },
+            "Description in input context": "L347P"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "W",
+                "alt": "X",
+                "position": "437"
+            },
+            "Description in input context": "W437X"
+        }
+    ]
+}

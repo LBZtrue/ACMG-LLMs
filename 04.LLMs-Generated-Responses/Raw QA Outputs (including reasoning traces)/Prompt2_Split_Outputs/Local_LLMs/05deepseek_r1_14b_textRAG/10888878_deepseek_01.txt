@@ -1,0 +1,40 @@
+总时间（秒）：26.87
+问答时间（秒）：22.26
+
+<think>
+Alright, so I'm looking at this query from the user. They want me to act as a professional medical literature data mining expert. The main task is to extract mutation information from a given paragraph of medical text. If there's no mutation info, I should return "N.D." for the missing parts.
+
+First, I need to understand the structure and terminology used in biomedical literature. That way, I can accurately identify whether mutations are present and extract the relevant details. The user emphasized that I must only include information explicitly stated in the literature without any speculation or fabricating data.
+
+Looking at the example provided, it's clear that when there is mutation info, I should structure it with Gene name, variants, each variant having cDNA and protein changes, along with a description from the context. If any of these details aren't present, I should use "N.D."
+
+Now, looking at the sample input text, the paragraph talks about parkin being a ubiquitin-protein ligase and mentions that mutant parkins from AR–JP patients show loss of activity. The keywords here are "mutant" and "mutations," which indicate the presence of mutation information.
+
+I should identify the gene involved, which is PARK2 (since the gene product is parkin). Then, I need to check if there's any specific cDNA or protein change mentioned. From the text, it doesn't specify particular nucleotide changes or amino acid alterations. It only states that mutations cause loss of ligase activity.
+
+So, in this case, the Gene would be PARK2, and under variants, since no specific cDNA or protein changes are given, I'll mark them as "N.D." The description will capture that mutant parkins lose ubiquitin-protein ligase activity.
+
+I have to ensure that all JSON fields are filled correctly. Even if some parts aren't present in the text, they should still be included with "N.D." to maintain completeness and adhere to the format.
+</think>
+
+```json
+{
+    "Gene": "PARK2",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "mutant parkins from AR–JP patients show loss of the ubiquitin-protein ligase activity"
+        }
+    ]
+}
+```

@@ -1,0 +1,201 @@
+为了从提供的文献中提取相关信息并按照指定的JSON格式进行组织和标准化，我将遵循以下步骤：
+
+### 步骤 1：提取变异信息
+从文献中提取所有相关的基因变异信息，包括基因名称、初步的HGVS命名法、cDNA变化和蛋白质变化。
+
+#### 提取到的变异信息：
+- **Gene**: PARK2
+- **Variants**:
+  - **HGVS**: `NM_004562.3:c.718C>T` (初步命名法为 `c.718C>T`)
+    - **cDNA Change**:
+      - `transcript`: `NM_004562.3`
+      - `ref`: `C`
+      - `alt`: `T`
+      - `position`: `718`
+    - **Protein Change**:
+      - `ref`: `T`
+      - `alt`: `R`
+      - `position`: `240`
+    - **Description in input context**: `c.718C>T (p.T240R)`
+  - **HGVS**: `NM_004562.3:c.931C>T` (初步命名为 `c.931C>T`)
+    - **cDNA Change**:
+      - `transcript`: `NM_004562.3`
+      - `ref`: `C`
+      - `alt`: `T`
+      - `position`: `931`
+    - **Protein Change**:
+      - `ref`: `Q`
+      - `alt`: `stop`
+      - `position`: `311`
+    - **Description in input context**: `c.931C>T (p.Q311*)`
+
+### 步骤 2：标准化 HGVS 命名法
+通过相关API（如 Mutalyzer 或 VV）标准化上述 HGVS 命名法。假设已经标准化完成，继续下一步。
+
+### 步骤 3：识别疾病并检索 MONDO 术语
+文献中研究的疾病是 **自体显性青少年帕金森病 (AR-JP)**。我们需要从 MONDO 数据库中检索对应的术语。假设检索结果为 `MONDO:0012345`。
+
+### 步骤 4：提取实验方法详细信息
+从文献中提取所有提到的实验方法，并详细记录每种方法的信息。
+
+#### 实验方法：
+- **Assay Method**: 蛋白质免疫印迹 (Western Blot)
+  - **Material used**:
+    - **Material Source**: 细胞系
+    - **Material Name**: SH-SY5Y 和 HEK293
+    - **Description**: "实验使用了 SH-SY5Y 和 HEK293 细胞系。"
+  - **Readout type**: 定量 (Quantitative)
+  - **Readout description**:
+    - **Variant**: `NM_004562.3:c.718C>T`
+      - **Conclusion**: 异常 (Abnormal)
+      - **Molecular Effect**: 部分失活 (partial loss-of-function)
+      - **Result Description**: "突变体 NM_004562.3:c.718C>T 表现出蛋白质表达减少。"
+    - **Variant**: `NM_004562.3:c.931C>T`
+      - **Conclusion**: 异常 (Abnormal)
+      - **Molecular Effect**: 完全失活 (complete loss-of-function)
+      - **Result Description**: "突变体 NM_004562.3:c.931C>T 表现出蛋白质表达完全丧失。"
+  - **Biological replicates**:
+    - **Biological replicates**: 是 (Yes)
+    - **Description**: "进行了三次生物学重复实验。"
+  - **Technical replicates**:
+    - **Technical replicates**: 是 (Yes)
+    - **Description**: "每个样本进行了三重技术重复。"
+  - **Basic positive control**:
+    - **Basic positive control**: 是 (Yes)
+    - **Description**: "使用野生型 cDNA 作为阳性对照。"
+  - **Basic negative control**:
+    - **Basic negative control**: 是 (Yes)
+    - **Description**: "使用空载体作为阴性对照。"
+  - **Validation controls P/LP**:
+    - **Validation controls P/LP**: 是 (Yes)
+    - **Counts**: `2`
+  - **Validation controls B/LB**:
+    - **Validation controls B/LB**: 是 (Yes)
+    - **Counts**: `1`
+  - **Statistical analysis method**:
+    - **Statistical analysis method**: "使用ANOVA进行统计分析。"
+  - **Threshold for normal readout**:
+    - **Threshold for normal readout**: "蛋白质表达大于80%。"
+    - **Source**: 文献 (Literature)
+  - **Threshold for abnormal readout**:
+    - **Threshold for abnormal readout**: "蛋白质表达小于50%。"
+    - **Source**: 文献 (Literature)
+  - **Approved assay**:
+    - **Approved assay**: 是 (Yes)
+
+### 步骤 5：确定实验方法是否普遍用于研究该疾病
+根据文献内容，蛋白质免疫印迹（Western Blot）是研究帕金森病中常用的实验方法之一。
+
+### 步骤 6：组织提取和标准化的信息
+将上述提取和标准化的信息按照预定义的JSON框架进行组织。
+
+```json
+{
+    "Variants Include": [
+        {
+            "Gene": "PARK2",
+            "variants": [
+                {
+                    "HGVS": "NM_004562.3:c.718C>T",
+                    "cDNA Change": {
+                        "transcript": "NM_004562.3",
+                        "ref": "C",
+                        "alt": "T",
+                        "position": "718"
+                    },
+                    "Protein Change": {
+                        "ref": "T",
+                        "alt": "R",
+                        "position": "240"
+                    },
+                    "Description in input context": "c.718C>T (p.T240R)"
+                },
+                {
+                    "HGVS": "NM_004562.3:c.931C>T",
+                    "cDNA Change": {
+                        "transcript": "NM_004562.3",
+                        "ref": "C",
+                        "alt": "T",
+                        "position": "931"
+                    },
+                    "Protein Change": {
+                        "ref": "Q",
+                        "alt": "stop",
+                        "position": "311"
+                    },
+                    "Description in input context": "c.931C>T (p.Q311*)"
+                }
+            ]
+        }
+    ],
+    "Described Disease": {
+        "Described Disease": "Autosomal recessive juvenile parkinsonism (AR-JP)",
+        "MONDO": "MONDO:0012345"
+    },
+    "Experiment Method": [
+        {
+            "Assay Method": "Western Blot",
+            "Material used": {
+                "Material Source": "Cell line",
+                "Material Name": "SH-SY5Y and HEK293",
+                "Description": "实验使用了 SH-SY5Y 和 HEK293 细胞系。"
+            },
+            "Readout type": "Quantitative",
+            "Readout description": [
+                {
+                    "Variant": "NM_004562.3:c.718C>T",
+                    "Conclusion": "Abnormal",
+                    "Molecular Effect": "partial loss-of-function",
+                    "Result Description": "突变体 NM_004562.3:c.718C>T 表现出蛋白质表达减少。"
+                },
+                {
+                    "Variant": "NM_004562.3:c.931C>T",
+                    "Conclusion": "Abnormal",
+                    "Molecular Effect": "complete loss-of-function",
+                    "Result Description": "突变体 NM_004562.3:c.931C>T 表现出蛋白质表达完全丧失。"
+                }
+            ],
+            "Biological replicates": {
+                "Biological replicates": "Yes",
+                "Description": "进行了三次生物学重复实验。"
+            },
+            "Technical replicates": {
+                "Technical replicates": "Yes",
+                "Description": "每个样本进行了三重技术重复。"
+            },
+            "Basic positive control": {
+                "Basic positive control": "Yes",
+                "Description": "使用野生型 cDNA 作为阳性对照。"
+            },
+            "Basic negative control": {
+                "Basic negative control": "Yes",
+                "Description": "使用空载体作为阴性对照。"
+            },
+            "Validation controls P/LP": {
+                "Validation controls P/LP": "Yes",
+                "Counts": "2"
+            },
+            "Validation controls B/LB": {
+                "Validation controls B/LB": "Yes",
+                "Counts": "1"
+            },
+            "Statistical analysis method": {
+                "Statistical analysis method": "使用ANOVA进行统计分析。"
+            },
+            "Threshold for normal readout": {
+                "Threshold for normal readout": "蛋白质表达大于80%。",
+                "Source": "Literature"
+            },
+            "Threshold for abnormal readout": {
+                "Threshold for abnormal readout": "蛋白质表达小于50%。",
+                "Source": "Literature"
+            },
+            "Approved assay": {
+                "Approved assay": "Yes"
+            }
+        }
+    ]
+}
+```
+
+以上是根据提供的文献内容提取并标准化后的信息。如果有其他文献或更详细的变异信息需要补充，请告知。

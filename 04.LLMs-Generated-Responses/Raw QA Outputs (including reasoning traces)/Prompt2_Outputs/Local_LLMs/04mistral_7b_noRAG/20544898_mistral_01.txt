@@ -1,0 +1,100 @@
+总时间（秒）：11.94
+问答时间（秒）：11.87
+
+Based on the provided context, workflow, and examples, here is a summary of my task:
+
+1. Given a piece of literature that discusses variants in a specific gene and their associated experimental protocols, extract all relevant information about the variants, such as the gene name, preliminary HGVS nomenclature, cDNA changes, protein changes, and any related descriptions.
+2. Standardize the HGVS nomenclature of the variants using a relevant API.
+3. Identify the disease studied in the literature.
+4. List all experimental methods mentioned in the literature, and for each method, extract detailed information about the material sources, readout types, result descriptions (including conclusions, molecular effects, and specific results), experimental replicates (biological and technical), control settings, statistical analysis methods, thresholds for normal and abnormal results, and whether the experimental protocol is generally used for studying the identified disease.
+5. Organize the extracted information according to a predefined JSON structure.
+
+Here's an example of how the output might look for a given piece of literature:
+
+```json
+{
+    "Variants Include": [
+        {
+            "Gene": "TP53",
+            "variants": [
+                {
+                    "HGVS": "<standardized_HGVS>",
+                    "cDNA Change": {
+                        "transcript": "<standardized_transcript>",
+                        "ref": "<standardized_reference>",
+                        "alt": "<standardized_alternate>",
+                        "position": "<standardized_position>"
+                    },
+                    "Protein Change": {
+                        "ref": "<standardized_protein_reference>",
+                        "alt": "<standardized_protein_alternate>",
+                        "position": "<standardized_protein_position>"
+                    },
+                    "Description in input context": "<variant_description>"
+                }
+            ]
+        }
+    ],
+    "Described Disease": {
+        "Described Disease": "<disease_name>",
+        "MONDO": "<MONDO_term>"
+    },
+    "Experiment Method": [
+        {
+            "Assay Method": "<assay_method>",
+            "Material used": {
+                "Material Source": "<material_source>",
+                "Material Name": "<material_name>",
+                "Description": "<material_description>"
+            },
+            "Readout type": "<readout_type>",
+            "Readout description": [
+                {
+                    "Variant": "<variant_HGVS>",
+                    "Conclusion": "<conclusion>",
+                    "Molecular Effect": "<molecular_effect>",
+                    "Result Description": "<result_description>"
+                }
+            ],
+            "Biological replicates": {
+                "Biological replicates": "<number_of_biological_replicates>",
+                "Description": "<biological_replicate_description>"
+            },
+            "Technical replicates": {
+                "Technical replicates": "<number_of_technical_replicates>",
+                "Description": "<technical_replicate_description>"
+            },
+            "Basic positive control": {
+                "Basic positive control": "<positive_control_status>",
+                "Description": "<positive_control_description>"
+            },
+            "Basic negative control": {
+                "Basic negative control": "<negative_control_status>",
+                "Description": "<negative_control_description>"
+            },
+            "Validation controls P/LP": {
+                "Validation controls P/LP": "<validation_controls_P_L_P_status>",
+                "Counts": "<number_of_validation_controls>"
+            },
+            "Validation controls B/LB": {
+                "Validation controls B/LB": "<validation_controls_B_L_B_status>",
+                "Counts": "<number_of_validation_controls>"
+            },
+            "Statistical analysis method": {
+                "Statistical analysis method": "<statistical_analysis_method>"
+            },
+            "Threshold for normal readout": {
+                "Threshold for normal readout": "<threshold_for_normal_readout>",
+                "Source": "<source_of_threshold>"
+            },
+            "Threshold for abnormal readout": {
+                "Threshold for abnormal readout": "<threshold_for_abnormal_readout>",
+                "Source": "<source_of_threshold>"
+            },
+            "Approved assay": {
+                "Approved assay": "<assay_approval_status>"
+            }
+        }
+    ]
+}
+```

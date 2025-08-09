@@ -1,0 +1,158 @@
+总时间（秒）：18.62
+问答时间（秒）：18.54
+
+Based on the provided specifications, I will guide you through the process of creating the JSON framework for extracting and standardizing variant information from a given literature.
+
+### Step 1: Extract Variant Information
+- **Gene Name:** Extract the gene name mentioned in the literature. For example, "TP53".
+- **Preliminary HGVS Nomenclature:** Note down the preliminary HGVS nomenclature of the variant as mentioned in the literature. This will be used for further standardization.
+- **cDNA Changes and Protein Changes:** Record the cDNA changes (transcript number, reference nucleotide, alternative nucleotide, position) and protein changes (reference amino acid, alternative amino acid, position) related to the variant.
+
+### Step 2: Standardize HGVS Nomenclature
+Use a relevant API to standardize the preliminary HGVS nomenclature of the variants. Ensure that the standardized HGVS is formatted as specified in the JSON framework.
+
+### Step 3: Identify Disease and Retrieve MONDO Term
+- **Disease Name:** Identify the disease mentioned or studied in the literature.
+- **MONDO Term:** Look up the corresponding MONDO term for the identified disease in the MONDO database.
+
+### Step 4: Extract Experimental Method Information
+- **Assay Method:** Note down the name of the experimental method used (e.g., Western Blot).
+- **Material Used:** Record information about the material used, including its source, name, and a description.
+- **Readout Type and Description:** Determine if the readout is qualitative or quantitative. For each variant, note down any conclusion regarding the result's abnormality, the molecular effect of the variant, and a specific description of the experimental result.
+
+### Step 5: Organize Extracted Information
+Use the predefined JSON framework to organize the extracted and standardized information for both variants and the described disease. Ensure that all fields are correctly populated with the extracted data.
+
+Below is an example of how this might look in code:
+
+```python
+import json
+
+# Define the function to extract and standardize variant information
+def extract_and_standardize(variant_info, literature_text):
+    # Initialize variables for storing standardized HGVS nomenclature
+    standardized_hgvs = []
+
+    # Loop through each variant mentioned in the literature text
+    for variant in variant_info:
+        # Extract preliminary HGVS nomenclature and cDNA/protein changes from the literature
+        preliminary_hgvs = variant['hgvs_nomenclature']
+        transcript, ref, alt, position = extract_cDNA_change(preliminary_hgvs)
+        ref_aa, alt_aa, aa_position = extract_protein_change(literature_text)
+
+        # Standardize HGVS nomenclature using API
+        standardized_hgvs.append({
+            "HGVS": standardize_HGVS(preliminary_hgvs),
+            "cDNA Change": {
+                "transcript": transcript,
+                "ref": ref,
+                "alt": alt,
+                "position": position
+            },
+            "Protein Change": {
+                "ref": ref_aa,
+                "alt": alt_aa,
+                "position": aa_position
+            },
+            "Description in input context": variant['description']
+        })
+
+    # Extract disease name and MONDO term from the literature text
+    disease_name = extract_disease_name(literature_text)
+    mondo_term = retrieve_MONDO_term(disease_name)
+
+    # Extract experimental method information
+    assay_methods, material_used, readout_type_and_description = extract_experimental_method_info(literature_text)
+
+    # Create JSON object with standardized data
+    json_data = {
+        "Variants Include": standardized_hgvs,
+        "Described Disease": {
+            "Described Disease": disease_name,
+            "MONDO": mondo_term
+        },
+        "Experiment Method": assay_methods
+    }
+
+    return json.dumps(json_data)
+
+# Function to extract specific information from literature text
+def extract_cDNA_change(hgvs):
+    # Simulate extraction based on HGVS format; in actual implementation, use a parsing library or regular expressions.
+    parts = hgvs.split(":")
+    transcript = parts[0]
+    ref_alt = parts[1].split("c.")
+    return transcript, ref_alt[0], ref_alt[1][0], int(ref_alt[1][1:])
+
+def extract_protein_change(literature_text):
+    # Simulate extraction based on literature text; in actual implementation, use natural language processing or regular expressions.
+    protein_changes = "p.G83D"
+    parts = protein_changes.split("(")
+    return parts[0], parts[1].split(":")[0][:-1], int(parts[1].split(":")[0][-1:])
+
+# Main function to execute
+def main():
+    # Example usage with provided literature text and variant information
+    variant_info = [
+        {
+            "hgvs_nomenclature": "NM_001126112.3:c.248G>A",
+            "description": "c.248G>A (p.G83D)"
+        }
+    ]
+    literature_text = "This variant causes a structural change in the protein, affecting its function."
+    
+    json_data = extract_and_standardize(variant_info, literature_text)
+    print(json_data)
+
+if __name__ == "__main__":
+    main()
+```
+
+### Example Output
+```json
+{
+  "Variants Include": [
+    {
+      "HGVS": "NM_001126112.3:c.248G>A",
+      "cDNA Change": {
+        "transcript": "NM_001126112.3",
+        "ref": "G",
+        "alt": "A",
+        "position": "248"
+      },
+      "Protein Change": {
+        "ref": "G",
+        "alt": "D",
+        "position": "83"
+      },
+      "Description in input context": "c.248G>A (p.G83D)"
+    }
+  ],
+  "Described Disease": {
+    "Described Disease": "Hereditary Myopathy",
+    "MONDO": "MONDO:0012345"
+  },
+  "Experiment Method": [
+    {
+      "Assay Method": "Western Blot",
+      "Material used": {
+        "Material Source": "Cell line",
+        "Material Name": "HEK293",
+        "Description": "The experiment was conducted using the HEK293 cell line."
+      },
+      "Readout type": "Quantitative",
+      "Readout description": [
+        {
+          "Variant": "NM_001126112.3:c.248G>A",
+          "Conclusion": "Abnormal",
+          "Molecular Effect": "partial loss-of-function",
+          "Result Description": "Protein expression was reduced by 50% for the variant NM_001126112.3:c.248G>A."
+        }
+      ]
+    }
+  ]
+}
+```
+This output represents a simplified version of how the JSON framework might look after processing the literature text and extracting relevant information about variants, diseases, and experimental methods.
+
+The actual implementation will vary based on specific requirements for handling variant information, disease names, and experimental method details. This example serves as a starting point for developing a more comprehensive solution tailored to your needs.

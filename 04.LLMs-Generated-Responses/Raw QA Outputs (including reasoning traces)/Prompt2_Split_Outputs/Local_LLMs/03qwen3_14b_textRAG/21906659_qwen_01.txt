@@ -1,0 +1,36 @@
+总时间（秒）：11.87
+问答时间（秒）：10.19
+
+<think>
+Okay, let's start by looking at the user's query. They want me to act as a medical literature data mining expert, specifically focusing on extracting mutation information from a given text. The example provided uses a JSON format with specific fields like Gene, variants, cDNA Change, Protein Change, and Description in input context. If there's no mutation information, I should return "N.D." for the relevant fields.
+
+Now, looking at the input text provided by the user, the abstract mentions the A30P mutation in alpha-synuclein. The key section here is: "the pathogenetic point mutation A30P" and "mutated A30P". The gene involved is alpha-synuclein, which is also referred to as -syn in the text. The mutation is described as A30P, which corresponds to a substitution at position 30, changing alanine (A) to proline (P). 
+
+I need to map this to the JSON structure. The gene is clearly alpha-synuclein. For the variants array, there's one variant here. The cDNA change isn't specified in the text, so I should use "N.D." for transcript, ref, alt, and position. The protein change has ref as A, alt as P, and position 30. The description in the input context is "A30P".
+
+I should check if there are any other mutations mentioned. The text also refers to the triplication of the -syn gene, but that's a copy number variation, not a point mutation. The user's example focuses on point mutations, so triplication might not be relevant here. The main mutation is A30P. 
+
+So the JSON should have the Gene as "alpha-synuclein", and under variants, one entry with the protein change details. Since cDNA changes aren't mentioned, those fields are "N.D.".
+
+I need to make sure that all the required fields are included and that the data is accurate. The user's example uses "N.D." for missing information, so that's the correct approach here. No other mutations are present in the text. The answer should reflect the A30P mutation correctly.
+</think>
+
+{
+    "Gene": "alpha-synuclein",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "P",
+                "position": "30"
+            },
+            "Description in input context": "A30P mutation"
+        }
+    ]
+}

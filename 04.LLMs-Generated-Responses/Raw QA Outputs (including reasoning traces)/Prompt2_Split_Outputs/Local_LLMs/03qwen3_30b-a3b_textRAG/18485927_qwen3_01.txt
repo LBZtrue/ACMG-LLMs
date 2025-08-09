@@ -1,0 +1,106 @@
+总时间（秒）：17.35
+问答时间（秒）：15.55
+
+<think>
+Okay, let's tackle this query. The user wants me to act as a Professional Medical Literature Data Mining Expert. The task is to determine if the provided text has mutation information and extract it accordingly. 
+
+First, I need to read the given abstract carefully. The main focus is on Parkin, its Uld domain, and mutations related to AR-JP. The user provided an example where mutations are extracted with specific details like gene, cDNA changes, protein changes, etc.
+
+Looking at the abstract, the key part is: "wild Uld and its five mutants (K27N, R33Q, R42P, K48A and V56E) identified from AR-JP patients". These are the mutations mentioned. Now, I need to parse each of these mutations.
+
+Each mutation is a single amino acid change. For example, K27N means Lysine at position 27 is replaced by Asparagine. Similarly for others. However, the problem is that the abstract doesn't provide cDNA changes or transcript information. The example given in the user's prompt includes cDNA and protein changes, but in this case, the text only mentions the protein changes (like K27N) without the corresponding cDNA details. 
+
+So, according to the constraints, I should extract what's directly mentioned. The gene is Parkin. The variants are the five mutations listed. For each, the protein change is specified (e.g., K27N), but there's no mention of cDNA changes (like c.248G>A) or transcripts. Therefore, "transcript" and "cDNA Change" fields would be "N.D." as per the example. 
+
+The "Description in input context" would be the mutation names as given. Also, the abstract mentions that these mutants were identified from AR-JP patients, so the description could include that. However, the example's description is the mutation notation itself. 
+
+Wait, the user's example has "Description in input context" as "c.248G>A (p.G83D)", which is the exact notation from the text. In the given abstract, the mutations are listed as "K27N, R33Q, R42P, K48A and V56E". So the description would be each of these. 
+
+But the user's example includes both cDNA and protein changes in the description. Here, the text doesn't have cDNA changes, only protein changes. So the "Description in input context" should be the exact mutation names as presented. 
+
+So, for each variant, the "cDNA Change" would have transcript as N.D., ref and alt as N.D., position as N.D., since there's no info. The protein change would have ref and alt as the amino acids, position as the number. 
+
+Wait, the user's example has "cDNA Change" with transcript, ref, alt, position. But in the given text, there's no cDNA info. So those fields should be N.D. The protein change would have ref (K), alt (N), position (27) for K27N. 
+
+So each mutation would be an entry in the variants array. The gene is Parkin. 
+
+I need to check if there's any other mutation information. The abstract also mentions "the X-ray structure showed that the side chains of Asp39, Gln40 and Arg42..." but those are residues, not mutations. The mutations are the five listed. 
+
+Therefore, the JSON should have Gene: "Parkin", and variants with each of the five mutations. Each variant's cDNA Change is N.D., and Protein Change has the ref, alt, position. The Description in input context is the mutation name as given.
+</think>
+
+{
+    "Gene": "Parkin",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "K",
+                "alt": "N",
+                "position": "27"
+            },
+            "Description in input context": "K27N"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "R",
+                "alt": "Q",
+                "position": "33"
+            },
+            "Description in input context": "R33Q"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "R",
+                "alt": "P",
+                "position": "42"
+            },
+            "Description in input context": "R42P"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "K",
+                "alt": "A",
+                "position": "48"
+            },
+            "Description in input context": "K48A"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "V",
+                "alt": "E",
+                "position": "56"
+            },
+            "Description in input context": "V56E"
+        }
+    ]
+}

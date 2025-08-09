@@ -1,0 +1,152 @@
+总时间（秒）：15.05
+问答时间（秒）：14.98
+
+I'll guide you through the process of extracting and standardizing information from a scientific literature to fit into the predefined JSON framework.
+
+Based on the given example, I will demonstrate how to complete each step for one variant mentioned in the literature.
+
+### Step 1: Extract Relevant Variant Information
+
+From the example:
+
+- **Gene Name:** TP53
+- **Preliminary HGVS Nomenclature:** NM_001126112.3:c.248G>A (p.G83D)
+- **cDNA Change:** 
+  - Transcript: NM_001126112.3
+  - Reference nucleotide: G
+  - Alternative nucleotide: A
+  - Variant position: 248
+- **Protein Change:** 
+  - Reference amino acid: G
+  - Alternative amino acid: D
+  - Variant position: 83
+
+### Step 2: Standardize HGVS Nomenclature via API
+
+Using a relevant HGVS API, standardizing the provided variant:
+
+- The preliminary nomenclature is NM_001126112.3:c.248G>A (p.G83D). Let's assume after using an HGVS API, it becomes **NM_001126112.3:c.248G>A**.
+
+### Step 3: Identify Disease and Retrieve MONDO Term
+
+From the example:
+
+- **Described Disease:** Hereditary Myopathy
+- **MONDO Term:** MONDO:0012345 (Assumed to be retrieved from the MONDO database)
+
+### Step 4: Extract Experimental Method Details
+
+For the Western Blot assay:
+
+- **Assay Method:** Western Blot
+- **Material used:**
+  - Source: Cell line
+  - Material Name: HEK293
+  - Description: The experiment was conducted using the HEK293 cell line.
+- **Readout type:** Quantitative
+- **Readout description:**
+
+  For Variant NM_001126112.3:c.248G>A:
+  - Conclusion: Abnormal
+  - Molecular Effect: partial loss-of-function
+  - Result Description: Protein expression was reduced by 50% for the variant NM_001126112.3:c.248G>A.
+
+### Step 5: Determine if Experimental Method is Generally Used
+
+Assuming after analysis, it is determined that Western Blot is indeed a commonly used assay for studying Hereditary Myopathy:
+
+- **Approved assay:** Yes
+
+### Putting It All Together in the JSON Format
+
+Here's how the extracted and standardized information would look in the predefined JSON format based on the example provided:
+
+```json
+{
+    "Variants Include": [
+        {
+            "Gene": "TP53",
+            "variants": [
+                {
+                    "HGVS": "NM_001126112.3:c.248G>A",
+                    "cDNA Change": {
+                        "transcript": "NM_001126112.3",
+                        "ref": "G",
+                        "alt": "A",
+                        "position": "248"
+                    },
+                    "Protein Change": {
+                        "ref": "G",
+                        "alt": "D",
+                        "position": "83"
+                    },
+                    "Description in input context": "c.248G>A (p.G83D)"
+                }
+            ]
+        }
+    ],
+    "Described Disease": {
+        "Described Disease": "Hereditary Myopathy",
+        "MONDO": "MONDO:0012345"
+    },
+    "Experiment Method": [
+        {
+            "Assay Method": "Western Blot",
+            "Material used": {
+                "Material Source": "Cell line",
+                "Material Name": "HEK293",
+                "Description": "The experiment was conducted using the HEK293 cell line."
+            },
+            "Readout type": "Quantitative",
+            "Readout description": [
+                {
+                    "Variant": "NM_001126112.3:c.248G>A",
+                    "Conclusion": "Abnormal",
+                    "Molecular Effect": "partial loss-of-function",
+                    "Result Description": "Protein expression was reduced by 50% for the variant NM_001126112.3:c.248G>A."
+                }
+            ],
+            "Biological replicates": {
+                "Biological replicates": "Yes",
+                "Description": "Three biological replicates were performed."
+            },
+            "Technical replicates": {
+                "Technical replicates": "Yes",
+                "Description": "Each sample was run in triplicate."
+            },
+            "Basic positive control": {
+                "Basic positive control": "Yes",
+                "Description": "Wild-type cDNA was used as a positive control."
+            },
+            "Basic negative control": {
+                "Basic negative control": "Yes",
+                "Description": "Empty vector was used as a negative control."
+            },
+            "Validation controls P/LP": {
+                "Validation controls P/LP": "Yes",
+                "Counts": "2"
+            },
+            "Validation controls B/LB": {
+                "Validation controls B/LB": "Yes",
+                "Counts": "1"
+            },
+            "Statistical analysis method": {
+                "Statistical analysis method": "ANOVA was used for statistical analysis."
+            },
+            "Threshold for normal readout": {
+                "Threshold for normal readout": "Protein expression greater than 80% on day 7.",
+                "Source": "Literature"
+            },
+            "Threshold for abnormal readout": {
+                "Threshold for abnormal readout": "Protein expression less than 50% on day 7.",
+                "Source": "Literature"
+            },
+            "Approved assay": {
+                "Approved assay": "Yes"
+            }
+        }
+    ]
+}
+```
+
+This format should match the requirements specified in the task.

@@ -1,0 +1,82 @@
+总时间（秒）：9.31
+问答时间（秒）：7.51
+
+<think>
+Okay, let's tackle this query. The user provided a medical literature abstract and wants me to extract mutation information. First, I need to read through the abstract carefully.
+
+The abstract mentions Lewy bodies and α-synuclein (αS) mutations. It lists specific mutations: E46K, A30P, and A53T in the αS gene. These are associated with autosomal dominant LBD. The text also mentions a compound mutation A30P/A53T. 
+
+I need to identify the gene name, which is αS (alpha-synuclein). Then, the variants: E46K, A30P, A53T, and A30P/A53T. Each of these is a mutation. The cDNA changes aren't explicitly mentioned here, but the protein changes are. For example, E46K is a point mutation where glutamic acid is replaced by lysine at position 46. Similarly, A30P is aspartic acid to proline at 30, and A53T is aspartic acid to threonine at 53. The compound mutation is a combination of A30P and A53T.
+
+The description in the input context refers to these mutations as causing familial LBD. The abstract doesn't mention cDNA changes directly, so the "transcript" field would be N.D. But the protein changes are clear. 
+
+I should structure the JSON with the gene as "αS" and the variants as an array. Each variant has cDNA and protein changes. Since the cDNA changes aren't specified, I'll mark them as N.D. except for the protein changes. The description in the input context is the exact text from the abstract. 
+
+Wait, the example shows that if cDNA changes are not mentioned, they should be N.D. But in this case, the mutations are described in terms of protein changes. So for each variant, the cDNA change is N.D., but the protein change is given. The compound mutation is also included. 
+
+I need to make sure all four mutations are listed: E46K, A30P, A53T, and A30P/A53T. The compound mutation is a combination, so it's a separate entry. 
+
+So the final JSON should have the gene as αS, and the variants array with each of these mutations, including their protein changes and the description from the text. All cDNA changes are N.D. because the text doesn't specify them.
+</think>
+
+{
+    "Gene": "αS",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "E",
+                "alt": "K",
+                "position": "46"
+            },
+            "Description in input context": "E46K"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "P",
+                "position": "30"
+            },
+            "Description in input context": "A30P"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "T",
+                "position": "53"
+            },
+            "Description in input context": "A53T"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "A30P/A53T"
+        }
+    ]
+}

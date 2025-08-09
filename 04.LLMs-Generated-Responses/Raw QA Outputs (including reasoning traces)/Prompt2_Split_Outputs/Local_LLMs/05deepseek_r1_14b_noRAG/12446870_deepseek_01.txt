@@ -1,0 +1,56 @@
+总时间（秒）：17.47
+问答时间（秒）：17.32
+
+<think>
+Alright, I'm faced with a query where the user wants me to extract mutation information from two paragraphs of medical literature. They provided examples of how to format the JSON output, so I need to make sure my response matches that structure.
+
+First, I'll look at the first paragraph about dyskeratosis congenita and cancer in mice deficient in ribosomal RNA modification. The paragraph discusses mutations in DKC1 causing DC but doesn't mention any specific gene changes or protein alterations related to the mutation itself. It talks about mice models with Dkc1m mutants, which might be a model of the disease, but not the actual mutation details.
+
+Next, I'll examine the second paragraph, which is about Parkinson's disease-related research involving mutations in the DCI gene. It mentions that certain mutations (c.609G>A and c.1241C>T) were found in Dutch patients, leading to specific protein changes (p.G203R and p.F417Y). This is clear mutation information that fits the extraction criteria.
+
+So, for the first paragraph, there's no specific mutation mentioned beyond DKC1 mutations causing DC. Therefore, I'll mark all fields as "N.D." except possibly noting the gene involved if needed, but since it's about the disease caused by mutations rather than detailing specific variants, maybe it's better to leave it as N.D.
+
+In the second paragraph, I can extract the gene name (DCI), the cDNA changes for each variant, and their corresponding protein changes along with the context provided. Each variant should be listed separately in the variants array under the same gene.
+
+I need to structure this into a JSON format, ensuring that any missing information is filled with "N.D.". For the first paragraph, since there are no specific mutations mentioned beyond DKC1 being mutated, I'll leave all fields as N.D. except perhaps noting that the gene involved is DKC1, but in the examples provided by the user, they included the gene name when mutation info was present, so maybe it's better to include it here too.
+
+Wait, actually, looking back at the first paragraph, it doesn't mention specific mutations like c. something or p. something, just that DKC1 mutations cause DC. So perhaps in this case, we shouldn't even list DKC1 as a gene since there's no detailed mutation info beyond that.
+
+Therefore, for both paragraphs, I'll extract only the second one where specific mutation details are present. The first paragraph doesn't provide enough information about mutations to include it in the JSON output.
+</think>
+
+```json
+{
+    "Gene": "DCI",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "G",
+                "alt": "A",
+                "position": "609"
+            },
+            "Protein Change": {
+                "ref": "G",
+                "alt": "R",
+                "position": "203"
+            },
+            "Description in input context": "c.609G>A (p.G203R)"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "C",
+                "alt": "T",
+                "position": "1241"
+            },
+            "Protein Change": {
+                "ref": "F",
+                "alt": "Y",
+                "position": "417"
+            },
+            "Description in input context": "c.1241C>T (p.F417Y)"
+        }
+    ]
+}
+```

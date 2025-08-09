@@ -1,0 +1,51 @@
+总时间（秒）：4.90
+问答时间（秒）：3.81
+
+<think>
+Okay, so I'm trying to understand how this person is going to extract mutation information from a medical literature paragraph. The user has provided a detailed JSON template, which means they want the answer structured in that specific format. They also mentioned it's all about professional data mining, so I need to ensure my approach aligns with their standards.
+
+First, let me look at the example provided. It seems like they're extracting gene names and variants related to mutations. The input text has a mutation where there’s a cDNA change and a protein change. In this case, it's TP53 (gene), c.248G>A (variant), and p.G83D (mutation). The output shows the gene name and two specific variant details.
+
+Now, applying that to the given paragraph:
+
+The paragraph talks about missense mutations in a-synuclein causing diseases like Parkinson's and dementia. It specifically mentions E46K mutation in a-synuclein being described for an inherited form of dementia with Lewy bodies. The key part here is "E46K" – that’s the cDNA change they're looking for.
+
+I need to identify all instances where mutations are described, especially those related to amino acid changes (cDNAs) in a-synuclein, as these lead directly to protein mutations. In this case, it's an E46K mutation in a-synuclein.
+
+So, my plan is:
+
+1. Read the paragraph carefully and identify mentions of missense mutations in a-synuclein.
+2. Extract gene names for a-synuclein from each mention.
+3. Identify the specific amino acid changes (cDNA) that are described as mutation changes in the a-synuclein context.
+
+In this case, the only mention is E46K in a-synuclein causing increased binding to negatively charged liposomes and similar filament assembly rates. This should be extracted with its gene name.
+
+I need to make sure I'm not missing any other mutations related to a-synuclein mentioned elsewhere in the paragraph. But from what's provided, it seems like E46K is the only relevant mutation here.
+
+Also, following the user’s instructions, if there are no relevant mutations, I should return "N.D." instead of N.A. but that doesn't apply here since we found a mutation.
+
+Finally, structuring this information according to the JSON template provided: Gene and variants.
+
+Let me make sure I don’t include anything unrelated or just extra information in case there's more mutation data elsewhere, but based on what’s given, it's only E46K.
+</think>
+
+```json
+{
+    "Gene": "a-synuclein",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "E",
+                "alt": "K",
+                "position": "46"
+            },
+            "Protein Change": {
+                "ref": "E",
+                "alt": "K",
+                "position": "46"
+            }
+        }
+    ]
+}
+```

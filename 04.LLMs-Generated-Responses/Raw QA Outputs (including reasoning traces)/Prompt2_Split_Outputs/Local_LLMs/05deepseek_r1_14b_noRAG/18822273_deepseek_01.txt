@@ -1,0 +1,42 @@
+总时间（秒）：14.22
+问答时间（秒）：13.96
+
+<think>
+Alright, let's tackle this query step by step. The user is asking me to act as a professional medical literature data mining expert, specifically extracting information related to mutations from given paragraphs of medical literature.
+
+First, I need to understand the exact requirements. The user wants me to determine if the input text contains mutation-related information and, if so, extract gene names, cDNA changes, protein changes, and their descriptions. If there's no mutation info, I should return "N.D." for any missing details.
+
+Looking at the provided example, it's clear that the output needs to be in JSON format with specific fields: Gene, variants (each containing cDNA Change, Protein Change, and a Description). Each variant can have multiple changes or just one, depending on what's present in the text.
+
+Now, considering the example given in the query, the input text is about a study where the E163K mutation affects DJ-1 protein functionality. I need to parse this information correctly. The gene here is DJ-1, and the variant details are cDNA (N.D.), Protein Change from Glu to Lys at position 163.
+
+I should ensure that any mutations are identified by looking for terms like 'mutant', 'mutation', or specific alphanumeric codes indicating genetic changes. In this case, E163K is a missense mutation, which I can denote as cDNA change with the reference allele (Glu), alternate allele (Lys), and position 163.
+
+It's important to extract only directly relevant mutation information and not include any unrelated data. Also, if certain details like the transcript are missing, I should mark them as "N.D." as per the user's instructions.
+
+I need to structure the JSON correctly, making sure each field is accurately populated based on the input text. In this case, since only protein change is mentioned, cDNA changes will be marked as N.D., and so will the description if it's not explicitly provided beyond the mutation notation.
+
+Finally, I should ensure that the output adheres strictly to the format specified, avoiding any markdown or extra information beyond what's requested.
+</think>
+
+```json
+{
+    "Gene": "DJ-1",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "E",
+                "alt": "K",
+                "position": "163"
+            },
+            "Protein Change": {
+                "ref": "E",
+                "alt": "K",
+                "position": "163"
+            },
+            "Description in input context": "mutant E163K protein"
+        }
+    ]
+}
+```

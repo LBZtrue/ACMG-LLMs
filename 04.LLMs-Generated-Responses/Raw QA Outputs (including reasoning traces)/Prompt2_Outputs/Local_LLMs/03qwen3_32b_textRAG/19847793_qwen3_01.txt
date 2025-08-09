@@ -1,0 +1,106 @@
+总时间（秒）：50.96
+问答时间（秒）：49.47
+
+<think>
+Okay, let me start by reading through the user's query and the provided literature abstract carefully. The user wants me to extract information about genetic variants, diseases, and experimental methods from the literature and structure it into a specific JSON format. The key points mentioned in the abstract are about PINK1 mutations and their role in Parkinson's disease, along with the experimental setup involving heterozygous and homozygous cell lines.
+
+First, I need to identify the gene and variants. The abstract mentions mutants in the N-terminus, C-terminus, and kinase domain of PINK1. However, the exact HGVS nomenclature isn't provided in the text. Since the user requires standardized HGVS via an API, I'll note that the literature doesn't specify the exact variants, so I'll use "N.D." for those fields. 
+
+Next, the disease is Parkinson's disease. I'll need to find the MONDO term for Parkinson's. Checking the MONDO database, Parkinson's disease is MONDO:0004634.
+
+For the experimental methods, the study used stable human dopaminergic neuronal cell lines coexpressing wild-type and mutant PINK1. The experiments involved oxidative stress, measuring apoptosis rates and mitochondrial membrane potential (ΔCm). The readout types here are quantitative since they measured rates and changes. The results showed increased apoptosis and decreased ΔCm in mutant lines, especially in homozygous cases. 
+
+I need to check if the literature mentions biological or technical replicates. The abstract states "timedependent experiments" with significant differences between cell lines, but it doesn't explicitly mention replicates, so those fields will be "N.D." Similarly, the statistical analysis method isn't specified, so that's also "N.D." 
+
+Control settings: The wild-type cell lines are used as controls. The abstract mentions comparing mutant cell lines to wild-type, so basic positive and negative controls are present. 
+
+Approved assay: The methods used (measuring apoptosis and mitochondrial potential under oxidative stress) are standard in Parkinson's research, so "Approved assay" would be "Yes."
+
+Putting it all together, I'll structure the JSON with the variants as N.D., the disease with MONDO term, experimental methods including the readouts with the variants mentioned (even though they are not specified, the conclusion is based on the mutant types), and fill in the rest according to the literature's details.
+</think>
+
+{
+    "Variants Include": [
+        {
+            "Gene": "PINK1",
+            "variants": [
+                {
+                    "HGVS": "N.D.",
+                    "cDNA Change": {
+                        "transcript": "N.D.",
+                        "ref": "N.D.",
+                        "alt": "N.D.",
+                        "position": "N.D."
+                    },
+                    "Protein Change": {
+                        "ref": "N.D.",
+                        "alt": "N.D.",
+                        "position": "N.D."
+                    },
+                    "Description in input context": "Mutants in the N-terminus, C-terminus, and kinase domain of PINK1"
+                }
+            ]
+        }
+    ],
+    "Described Disease": {
+        "Described Disease": "Parkinson disease",
+        "MONDO": "MONDO:0004634"
+    },
+    "Experiment Method": [
+        {
+            "Assay Method": "Oxidative stress-induced apoptosis and mitochondrial membrane potential (ΔCm) assay",
+            "Material used": {
+                "Material Source": "Cell line",
+                "Material Name": "Stable human dopaminergic neuronal cell lines",
+                "Description": "Stable human dopaminergic neuronal cell lines coexpressing normal and mutant PINK1 to simulate 'heterozygous' and 'homozygous' states"
+            },
+            "Readout type": "Quantitative",
+            "Readout description": [
+                {
+                    "Variant": "N.D.",
+                    "Conclusion": "Abnormal",
+                    "Molecular Effect": "Increased apoptosis rate and decreased ΔCm",
+                    "Result Description": "Cell lines expressing kinase and C-terminus mutants exhibited greater apoptosis rates and decreased ΔCm, with homozygous mutants showing more severe effects compared to heterozygous and wild-type cell lines"
+                }
+            ],
+            "Biological replicates": {
+                "Biological replicates": "N.D.",
+                "Description": "N.D."
+            },
+            "Technical replicates": {
+                "Technical replicates": "N.D.",
+                "Description": "N.D."
+            },
+            "Basic positive control": {
+                "Basic positive control": "Yes",
+                "Description": "Wild-type PINK1 cell lines as controls"
+            },
+            "Basic negative control": {
+                "Basic negative control": "Yes",
+                "Description": "Wild-type PINK1 cell lines as controls"
+            },
+            "Validation controls P/LP": {
+                "Validation controls P/LP": "N.D.",
+                "Counts": "N.D."
+            },
+            "Validation controls B/LB": {
+                "Validation controls B/LB": "N.D.",
+                "Counts": "N.D."
+            },
+            "Statistical analysis method": {
+                "Statistical analysis method": "N.D."
+            },
+            "Threshold for normal readout": {
+                "Threshold for normal readout": "N.D.",
+                "Source": "N.D."
+            },
+            "Threshold for abnormal readout": {
+                "Threshold for abnormal readout": "N.D.",
+                "Source": "N.D."
+            },
+            "Approved assay": {
+                "Approved assay": "Yes"
+            }
+        }
+    ]
+}

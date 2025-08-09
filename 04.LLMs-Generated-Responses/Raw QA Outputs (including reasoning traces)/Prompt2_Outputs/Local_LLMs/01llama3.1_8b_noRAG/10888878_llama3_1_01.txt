@@ -1,0 +1,102 @@
+总时间（秒）：14.78
+问答时间（秒）：14.60
+
+Based on the provided workflow and JSON framework, I will outline a step-by-step approach to extract relevant information from the literature and organize it according to the predefined structure.
+
+**Step 1: Extract Variant Information**
+
+* Read through the literature and identify all variants mentioned.
+* For each variant:
+	+ Record the gene name
+	+ Preliminary HGVS nomenclature (e.g., NM_001126112.3:c.248G>A)
+	+ cDNA changes (transcript, ref, alt, position)
+	+ Protein changes (ref, alt, position)
+
+**Step 2: Standardize HGVS Nomenclature**
+
+* Use a relevant API to standardize the preliminary HGVS nomenclature for each variant.
+
+**Step 3: Identify Disease and Retrieve MONDO Term**
+
+* Determine the disease studied in the literature.
+* Search the MONDO database to retrieve the corresponding term number (e.g., MONDO:0012345).
+
+**Step 4: Extract Experimental Method Information**
+
+* List all experimental methods mentioned in the literature.
+* For each method:
+	+ Record the assay method name
+	+ Material used (source, name, description)
+	+ Readout type and description
+	+ Biological replicates (yes/no/N.D. with description)
+	+ Technical replicates (yes/no/N.D. with description)
+	+ Basic positive control (yes/no/N.D. with description)
+	+ Basic negative control (yes/no/N.D. with description)
+	+ Validation controls for pathogenic/likely pathogenic variants (yes/no/N.D. with counts)
+	+ Validation controls for benign/likely benign variants (yes/no/N.D. with counts)
+	+ Statistical analysis method
+	+ Thresholds for normal and abnormal readouts (with source: Literature/Custom)
+	+ Approved assay (yes/no/N.D.)
+
+**Step 5: Organize Information in Predefined JSON Framework**
+
+* Create a dictionary or object structure according to the predefined JSON framework.
+* Populate each section with extracted information:
+	+ "Variants Include"
+	+ "Described Disease"
+	+ "Experiment Method"
+
+Here's an example of what the output might look like for the provided literature:
+
+```
+{
+    "Variants Include": [
+        {
+            "Gene": "TP53",
+            "variants": [
+                {
+                    "HGVS": "NM_001126112.3:c.248G>A",
+                    "cDNA Change": {
+                        "transcript": "NM_001126112.3",
+                        "ref": "G",
+                        "alt": "A",
+                        "position": "248"
+                    },
+                    "Protein Change": {
+                        "ref": "G",
+                        "alt": "D",
+                        "position": "83"
+                    },
+                    "Description in input context": "c.248G>A (p.G83D)"
+                }
+            ]
+        }
+    ],
+    "Described Disease": {
+        "Described Disease": "Hereditary Myopathy",
+        "MONDO": "MONDO:0012345"
+    },
+    "Experiment Method": [
+        {
+            "Assay Method": "Western Blot",
+            "Material used": {
+                "Material Source": "Cell line",
+                "Material Name": "HEK293",
+                "Description": "The experiment was conducted using the HEK293 cell line."
+            },
+            "Readout type": "Quantitative",
+            "Readout description": [
+                {
+                    "Variant": "NM_001126112.3:c.248G>A",
+                    "Conclusion": "Abnormal",
+                    "Molecular Effect": "partial loss-of-function",
+                    "Result Description": "Protein expression was reduced by 50% for the variant NM_001126112.3:c.248G>A."
+                }
+            ],
+            ...
+        }
+    ]
+}
+```
+
+Note that this example is simplified and actual output may contain more details depending on the specific literature and experimental methods mentioned.

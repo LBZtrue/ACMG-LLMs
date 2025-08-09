@@ -1,0 +1,38 @@
+总时间（秒）：11.56
+问答时间（秒）：11.47
+
+<think>
+Okay, so I'm looking at this query from the user, and it seems they want me to extract mutation information from a given medical text. The user provided an example where they extracted gene name, cDNA changes, protein changes, and descriptions. Now, the task is to do the same for the new paragraph they provided.
+
+First, I'll read through the context carefully to spot any mutation-related terms. Scanning the paragraphs, I notice mentions of mutations like "c.289A>G," "p.Y76F," and others in genes such as PINK1, DJ-1, alpha-synuclein (SNCA), and others.
+
+I'll identify each gene mentioned along with their specific mutations. For instance, the first mutation is c.289A>G leading to p.Y76F in PINK1. Another one is c.175_176insAG causing p.T59fsdel in DJ-1. I'll note all these down.
+
+I need to structure this information into a JSON format as per the example. Each variant should have its gene, cDNA changes with reference and alternate bases, position, protein changes similarly, and the description from the text. If any part isn't mentioned, like the transcript for cDNA, I'll use "N.D."
+
+I also see multiple mutations in different genes, so I'll list each one separately under the variants array. Making sure to format everything correctly without missing any details.
+
+After extracting all the necessary information, I'll compile it into the JSON structure, ensuring accuracy and completeness as per the user's instructions.
+</think>
+
+```json
+{
+    "Gene": "PINK1",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "A",
+                "alt": "G",
+                "position": "289"
+            },
+            "Protein Change": {
+                "ref": "Y",
+                "alt": "F",
+                "position": "76"
+            },
+            "Description in input context": "c.289A>G (p.Y76F)"
+        }
+    ]
+}
+```

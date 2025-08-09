@@ -1,0 +1,64 @@
+总时间（秒）：18.68
+问答时间（秒）：15.63
+
+<think>
+Okay, let's tackle this query. The user wants me to act as a medical literature data mining expert, specifically focusing on extracting mutation information from the provided abstract. 
+
+First, I need to read through the given text carefully. The abstract mentions α-synuclein (αS) and its link to Parkinson disease (PD) through three point mutations that cause early-onset autosomal dominant Parkinsonism. The mutations are PD-linked, but the exact names aren't specified here. 
+
+Looking at the structure of the abstract, the key part is: "the existence of three αS point mutations that lead to early onset autosomal dominant Parkinsonism." However, the text doesn't provide the specific gene names, cDNA changes, or protein changes for these mutations. It only refers to them as "three PD-linked αS point mutations."
+
+The user's example shows that if specific details like gene name, cDNA change, protein change, and description aren't present, we should use "N.D." for those fields. Since the abstract here doesn't mention the exact mutations (like A53T, E46K, or H50Q which are known PD mutations), but only refers to them as three point mutations, I need to extract that information as per the constraints.
+
+The task is to check if the text contains mutation info. It does mention mutations, but without specific details. So, the Gene field would be "SNCA" (since α-synuclein is encoded by SNCA), but the variants array should have entries with the details. However, since the cDNA and protein changes aren't specified, those fields would be "N.D." except for the description which is given as "three PD-linked αS point mutations."
+
+Wait, the example uses "c.248G>A (p.G83D)" as the description. In this case, the description in the input context would be "three PD-linked αS point mutations." But the user's example includes the description as the exact string from the text. So here, the description should be "three PD-linked αS point mutations."
+
+But the user's example also includes "Gene": "TP53" and the variants array. In this case, the gene is SNCA (since α-synuclein is SNCA). So the Gene field should be "SNCA". The variants array would have one entry, since there are three mutations, but the text doesn't specify each one. Wait, the text says "three PD-linked αS point mutations" but doesn't list them. So, the variants array would have one entry with the description, but the cDNA and protein changes are not provided. 
+
+Wait, the user's example has a variants array with one object. In this case, the text mentions three mutations, but they are not specified. So, perhaps each mutation would be a separate variant, but since the text doesn't list them, maybe we can only note that there are three, but without details. However, the user's example shows that even if there's a single mutation, it's listed once. Since the text here mentions three mutations but doesn't specify their exact details, the correct approach is to note that there are three mutations, but since the specifics aren't given, the cDNA and protein changes would be "N.D." and the description would be "three PD-linked αS point mutations."
+
+But the user's example includes the description as the exact string from the text. So here, the description would be "three PD-linked αS point mutations." The Gene is SNCA. The variants array would have one entry with that description, and the other fields (cDNA Change, Protein Change) would be N.D. because they aren't specified in the text. 
+
+So the final JSON would have Gene: "SNCA", and variants with one object containing the description, and cDNA Change and Protein Change as N.D. But the user's example includes the variants array with one variant. However, the text mentions three mutations, but they are not individually described. So maybe the variants array should have three entries, each with the same description but "N.D." for the other fields? Or since the text doesn't specify each mutation's details, we can only report that there are three mutations, but without individual details. 
+
+But the user's instructions say to extract specific gene names, cDNA changes, protein changes, and mutation descriptions. Since the text doesn't provide those specifics, the answer would be Gene: "SNCA", variants: [ { "description": "three PD-linked αS point mutations", ... } ] with other fields as N.D. But since the text mentions three mutations, maybe the variants array should have three entries, each with the same description. However, without individual details, each variant would have the same description and N.D. for the other fields. 
+
+Alternatively, the text states "three PD-linked αS point mutations" but doesn't list them, so the variants array can have one entry with the description, and note that there are three mutations. But the example in the user's query shows that if there's a single mutation, it's one entry. So perhaps here, since the text mentions three mutations but doesn't specify them, the variants array would have one entry with the description, and the other fields as N.D. 
+
+Therefore, the extracted information would be:
+
+Gene: "SNCA"
+
+variants: [
+    {
+        "cDNA Change": { "transcript": "N.D.", "ref": "N.D.", "alt": "N.D.", "position": "N.D." },
+        "Protein Change": { "ref": "N.D.", "alt": "N.D.", "position": "N.D." },
+        "Description in input context": "three PD-linked αS point mutations"
+    }
+]
+
+But the user's example uses "N.D." for transcript, ref, alt, position in cDNA Change when not specified. So following that, the answer would have Gene as SNCA, and variants with one entry where cDNA and protein changes are N.D., and the description as given. 
+
+So the final JSON should reflect that.
+</think>
+
+{
+    "Gene": "SNCA",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "three PD-linked αS point mutations"
+        }
+    ]
+}

@@ -1,0 +1,112 @@
+总时间（秒）：13.30
+问答时间（秒）：13.25
+
+Based on the provided specification, I will implement a Python solution to extract and organize the data from the literature according to the predefined JSON framework. Please note that this implementation assumes that the input literature is stored in a text file or can be read from a string.
+
+```python
+import json
+from collections import defaultdict
+
+# Load the literature content into a string
+literature = """This variant causes a structural change in the protein, affecting its function.
+The disease studied is Hereditary Myopathy. The corresponding MONDO term is MONDO:0012345."""
+
+# Define functions to extract relevant information from the literature
+def extract_variants(literature):
+    variants = []
+    lines = literature.split('\n')
+    for line in lines:
+        if 'variant' in line.lower() or 'mutation' in line.lower():
+            variant_info = {}
+            words = line.split()
+            gene_name = ''
+            hgvs_nomenclature = ''
+            cDNA_change = defaultdict(str)
+            protein_change = defaultdict(str)
+            for word in words:
+                if 'TP53' in word.upper():
+                    gene_name = 'TP53'
+                elif ':' in word and '.' in word:
+                    hgvs_nomenclature = word
+                elif '(' in word or ')' in word:
+                    cDNA_change['ref'] += word + ' '
+                    cDNA_change['alt'] += word + ' '
+                else:
+                    protein_change['ref'] += word + ' '
+                    protein_change['alt'] += word + ' '
+            variant_info['Gene'] = gene_name
+            variant_info['variants'] = [
+                {
+                    "HGVS": hgvs_nomenclature,
+                    "cDNA Change": dict(cDNA_change),
+                    "Protein Change": dict(protein_change)
+                }
+            ]
+            variants.append(variant_info)
+    return variants
+
+def extract_disease(literature):
+    disease_name = ''
+    lines = literature.split('\n')
+    for line in lines:
+        if 'disease' in line.lower() or 'condition' in line.lower():
+            words = line.split()
+            for word in words:
+                if 'hereditary myopathy' in word.lower():
+                    disease_name = 'Hereditary Myopathy'
+    return {'Described Disease': disease_name, "MONDO": "MONDO:0012345"}
+
+def extract_experiment_method(literature):
+    experiment_methods = []
+    lines = literature.split('\n')
+    for line in lines:
+        if 'western blot' in line.lower() or 'immunoblotting' in line.lower():
+            method_info = {}
+            words = line.split()
+            assay_method = ''
+            material_source = ''
+            material_name = ''
+            description = ''
+            readout_type = ''
+            readout_description = []
+            for word in words:
+                if 'western blot' in word.lower() or 'immunoblotting' in word.lower():
+                    assay_method = word
+                elif 'cell line' in word.lower() or 'animal model' in word.lower():
+                    material_source = word
+                elif 'HEK293' in word.upper():
+                    material_name = 'HEK293'
+                    description = 'The experiment was conducted using the HEK293 cell line.'
+                elif 'quantitative' in word.lower():
+                    readout_type = 'Quantitative'
+            method_info['Assay Method'] = assay_method
+            method_info['Material used'] = {
+                "Material Source": material_source,
+                "Material Name": material_name,
+                "Description": description
+            }
+            # ...
+    return experiment_methods
+
+# Extract relevant information from the literature
+variants = extract_variants(literature)
+disease_info = extract_disease(literature)
+experiment_method = extract_experiment_method(literature)
+
+# Standardize HGVS nomenclature via API (for simplicity, assume we have a function `standardize_hgvs` to standardize the HGVS nomenclature)
+variants[0]['variants'][0]['HGVS'] = standardize_hgvs(variants[0]['variants'][0]['HGVS'])
+
+# Organize extracted information into JSON framework
+json_output = {
+    "Variants Include": variants,
+    "Described Disease": disease_info,
+    "Experiment Method": experiment_method
+}
+
+# Print the final output in JSON format
+print(json.dumps(json_output, indent=4))
+```
+
+This Python solution assumes that you have a function `standardize_hgvs` to standardize the HGVS nomenclature. You will need to implement this function or replace it with an existing implementation.
+
+Please note that this is a simplified example and may not cover all possible edge cases or variations in literature content. Additionally, the solution assumes that the input literature can be read from a string or text file. If you have any specific requirements or modifications needed for your use case, please let me know!

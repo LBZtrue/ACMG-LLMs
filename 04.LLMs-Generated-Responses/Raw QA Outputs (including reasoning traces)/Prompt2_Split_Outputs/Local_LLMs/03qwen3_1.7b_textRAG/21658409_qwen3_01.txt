@@ -1,0 +1,70 @@
+总时间（秒）：5.46
+问答时间（秒）：4.13
+
+<think>
+Okay, let's tackle this query. The user provided a paragraph from a medical literature abstract and wants to know if it mentions mutations. The goal is to extract any mutation-related information accurately.
+
+First, I need to read through the abstract carefully. The context mentions SH-SY5Y cells, which are used in neuroblastoma research. The paragraph talks about a-Syn mutations like A30P, A53T, and E46K. These are specific mutations in the a-Syn gene. 
+
+Looking at the details, the mutations are listed as three missense mutations. Each has a specific codon change. For example, A30P is threonine (T) to proline (P) at position 30. Similarly, A53T is tyrosine (Y) at position 53, and E46K is glutamic acid (E) to lysine (K) at position 46. 
+
+The user's instructions specify that if there's mutation info, extract gene names, cDNA changes, protein changes, and descriptions. The example given in the instructions shows how to structure the JSON. 
+
+I need to make sure I capture each mutation's gene name, the specific codon changes, and the protein changes. The positions are important here. Also, the descriptions in the input context are the ones like "A30P, A53T and E46K" which are the mutation names. 
+
+I should check if there's any mention of other mutations or if the text only mentions these three. The paragraph does mention these three, so they are relevant. The rest of the text talks about the effects of these mutations, but the user's task is to extract any mutation info, so the three mentioned are the ones to focus on.
+
+Now, structuring the JSON. The gene name is a-Syn, and the variants are the three mutations. Each variant has cDNA and protein changes. The positions are provided in the text, so I need to include them. The description in the input context is the mutation names, so that's the value for the "Description in input context" field.
+
+I need to make sure the JSON is correctly formatted, with the gene and variants arrays. Each variant has the cDNA change with ref and alt, and protein change with ref and alt. The positions are from the text. 
+
+No other mutations are mentioned, so the answer should be "N.D." for anything not mentioned, but in this case, the three mutations are explicitly listed. So the answer should include those three mutations with their details.
+</think>
+
+{
+    "Gene": "a-Syn",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "G",
+                "alt": "A",
+                "position": "30"
+            },
+            "Protein Change": {
+                "ref": "T",
+                "alt": "P",
+                "position": "30"
+            },
+            "Description in input context": "A30P"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "G",
+                "alt": "T",
+                "position": "53"
+            },
+            "Protein Change": {
+                "ref": "Y",
+                "alt": "T",
+                "position": "53"
+            },
+            "Description in input context": "A53T"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "E",
+                "alt": "K",
+                "position": "46"
+            },
+            "Protein Change": {
+                "ref": "E",
+                "alt": "K",
+                "position": "46"
+            },
+            "Description in input context": "E46K"
+        }
+    ]
+}

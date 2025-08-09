@@ -1,0 +1,86 @@
+总时间（秒）：37.14
+问答时间（秒）：36.92
+
+<think>
+Okay, let's tackle this query. The user wants me to extract mutation information from a given paragraph of medical literature. First, I need to understand the input text thoroughly. Let me start by reading through the provided text carefully.
+
+Looking at the text, it's a list of references from a scientific paper. Each entry has authors, journal, year, volume, issue, pages, and a brief description. The task is to check if any of these entries mention mutations and extract details like gene names, cDNA changes, protein changes, and descriptions.
+
+Starting with the first entry: "Context: ...". This seems to be the user's instruction, not a literature entry. Then the references begin. Let's go through each reference one by one.
+
+Reference 1: "Context: ...". Again, this is part of the user's setup, not a literature entry. Moving on.
+
+Reference 2: "Dagda, R.K., Cherra, S.J. III, Kulich, S.M., Tandon, A., Park, D. and Chu, C.T. (2009) Loss of PINK1 function promotes mitophagy through effects on oxidative stress and mitochondrial fission. J. Biol. Chem., 284, 13843–13855." No mention of mutations here, just a study on PINK1 function.
+
+Reference 3: "Xiong, H., Wang, D., Chen, L., Choo, Y.S., Ma, H., Tang, C., Xia, K., Jiang, W., Ronai, Z., Zhuang, X. and Zhang, Z. (2009) Parkin, PINK1, and DJ-1 form a ubiquitin E3 ligase complex promoting unfolded protein degradation. J. Clin. Invest., 119, 650–660." Again, talks about proteins involved in a complex, no mutations mentioned.
+
+Reference 4: "Michels, A.A., Kanon, B., Konings, A.W., Ohtsuka, K., Bensaude, O. and Kampinga, H.H. (1997) Hsp70 and Hsp40 chaperone activities in the cytoplasm and the nucleus of mammalian cells. J. Biol. Chem., 272, 33283–33289." Discusses chaperone activities, no mutations.
+
+Reference 5: "Winklhofer, K.F., Henn, I.H., Kay-Jackson, P.C., Heller, U. and Tatzelt, J. (2003) Inactivation of parkin by oxidative stress and C-terminal truncations: a protective role of molecular chaperones. J. Biol. Chem., 278, 47199–47208." Here, "C-terminal truncations" might be relevant. That's a type of mutation, specifically a truncation. So, the gene is parkin, and the mutation is C-terminal truncation.
+
+Reference 6: "LaVoie, M.J., Cortese, G.P., Ostaszewski, B.L. and Schlossmacher, M.G. (2007) The effects of oxidative stress on parkin and other E3 ligases. J. Neurochem., 103, 2354–2368." Mentions oxidative stress effects on parkin but no specific mutations.
+
+Reference 7: "Lu, X.H., Fleming, S.M., Meurers, B., Ackerson, L.C., Mortazavi, F., Lo, V., Hernandez, D., Sulzer, D., Jackson, G.R., Maidment, N.T., Chesselet, M.F. and Yang, X.W. (2009) Bacterial artificial chromosome transgenic mice expressing a truncated mutant parkin exhibit age-dependent hypokinetic motor deficits, dopaminergic neuron degeneration, and accumulation of proteinase K-resistant alpha-synuclein. J. Neurosci., 29, 1962–1976." Here, "truncated mutant parkin" is mentioned. That's another mutation: truncation of parkin.
+
+Reference 8: "Bedford, L., Hay, D., Devoy, A., Paine, S., Powe, D.G., Seth, R., Gray, T., Topham, I., Fone, K., Rezvani, N. et al. (2008) Depletion of 26S proteasomes in mouse brain neurons causes neurodegeneration and Lewy-like inclusions resembling human pale bodies. J. Neurosci., 28, 8189–8198." No mutations mentioned here.
+
+Reference 9: "Chapple, J.P. and Cheetham, M.E. (2003) The chaperone environment at the cytoplasmic face of the endoplasmic reticulum can modulate rhodopsin processing and inclusion formation. J. Biol. Chem., 278, 19087–19094." No mutations.
+
+Reference 10: "Bhowmick, R., Li, M., Sun, J., Baker, S.A., Insinna, C. and Besharse, J.C. (2009) Photoreceptor IFT complexes containing chaperones, guanylyl cyclase 1 and rhodopsin. Traffic, 10, 648–663." No mutations here either.
+
+So, the two references that mention mutations are 5 and 7. In reference 5, it's a C-terminal truncation of parkin. In reference 7, it's a truncated mutant parkin. Both are mutations in the parkin gene. Now, I need to structure this into the required JSON format.
+
+For each mutation, the gene is "parkin". The cDNA change is not specified in the text, so it would be "N.D.". The protein change is "C-terminal truncation" for reference 5 and "truncated" for reference 7. However, the description in the input context should capture the exact wording from the references. Let me check again:
+
+Reference 5: "Inactivation of parkin by oxidative stress and C-terminal truncations" – the mutation is C-terminal truncations.
+
+Reference 7: "truncated mutant parkin" – the mutation is a truncation.
+
+So, for each, the description would be "C-terminal truncations" and "truncated mutant parkin" respectively. The protein change for both is "C-terminal truncation" and "truncated", but since the exact position isn't given, those fields would be "N.D.".
+
+Wait, the user's example shows that if the protein change is not mentioned, it's "N.D." So, for each mutation, even if the protein change is a truncation, but the position isn't given, we need to put "N.D." in the protein change's ref, alt, and position.
+
+So, for reference 5, the variant would have cDNA change as N.D., protein change as N.D., and the description as "C-terminal truncations".
+
+For reference 7, same structure: cDNA change N.D., protein change N.D., description "truncated mutant parkin".
+
+But the user's example shows that the protein change can have ref and alt letters, but if not present, use N.D. However, in these cases, the mutation is a truncation, which is a type of protein change but not a single amino acid substitution. So, the protein change fields would be N.D. for ref, alt, and position.
+
+Putting it all together, the JSON should have two variants, each with their respective descriptions and N.D. for cDNA and protein changes.
+</think>
+
+```json
+{
+    "Gene": "parkin",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "C-terminal truncations"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "truncated mutant parkin"
+        }
+    ]
+}
+```

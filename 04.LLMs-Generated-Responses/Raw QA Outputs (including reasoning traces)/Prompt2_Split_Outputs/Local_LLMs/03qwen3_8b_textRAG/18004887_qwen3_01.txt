@@ -1,0 +1,50 @@
+总时间（秒）：13.07
+问答时间（秒）：11.43
+
+<think>
+Okay, let's tackle this query. The user wants me to act as a medical literature data mining expert, specifically to extract mutation information from the provided abstract. The main goal is to determine if the text contains mutation details and extract relevant details like gene names, cDNA changes, protein changes, and descriptions.
+
+First, I'll read through the abstract carefully. The context mentions autosomal recessive juvenile Parkinson's disease and points out that point mutations in the E3 ligase parkin are common. The specific mutations discussed are K48A and R42P in the parkin's Ubld domain. 
+
+Looking at the structure, the abstract talks about the parkin ubiquitin-like domain (Ubld) and how the mutations affect its stability and structure. The K48A mutation is noted to have little effect on stability but might impact protein-protein interactions. The R42P mutation leads to poor expression and degradation, and the GB1-Ubld fusion protein shows that R42P causes complete unfolding.
+
+Now, I need to map this into the required JSON format. The gene here is PARKIN. The cDNA changes for K48A would be c.143G>A (assuming the position is 143, but the abstract doesn't specify the exact position, so I need to check). Wait, the abstract says "K48A" which refers to the protein change. The cDNA change would depend on the codon for lysine at position 48. Since lysine is encoded by AAA or AAG, the mutation K48A would be a change from A to T (if the original codon was AAG, changing to ATA would be Ile, but that's not the case here. Wait, maybe the exact position isn't given in the abstract. The abstract only mentions the protein change as K48A and R42P. The cDNA change isn't explicitly stated, so I should note that as N.D. unless I can infer it. However, the user's example includes the cDNA change, but in the given text, the cDNA positions aren't provided. The abstract mentions "K48A" and "R42P" as mutations in the parkin Ubld. So the gene is PARKIN, and the protein changes are K48A and R42P. The cDNA changes aren't specified, so I should set them to N.D. But wait, the example in the user's prompt shows that if the cDNA change isn't mentioned, it's set to N.D. So in this case, since the abstract doesn't mention the exact cDNA positions, I should leave those as N.D. However, the user's example includes the cDNA change as "N.D." if not specified. 
+
+Wait, the example shows that if the cDNA change isn't mentioned, it's set to N.D. So in the given abstract, the mutations are described as K48A and R42P, which are protein changes. The cDNA changes aren't provided, so they should be N.D. Similarly, the description in the input context would be the exact mutation notation as given. So the JSON should have "Gene": "PARKIN", and for each variant, cDNA Change with N.D., and Protein Change with the respective amino acid changes. Also, the description in the input context would be the exact mutation names as mentioned. 
+
+So the final JSON should list both mutations, K48A and R42P, under the PARKIN gene. Each variant would have their protein changes and the description as per the text. The cDNA changes are N.D. since the abstract doesn't specify them. The user's example uses "N.D." for cDNA change when not mentioned, so that's the way to go here.
+</think>
+
+{
+    "Gene": "PARKIN",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "Lysine",
+                "alt": "Alanine",
+                "position": "48"
+            },
+            "Description in input context": "K48A mutation in parkin's Ubld domain"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "Arginine",
+                "alt": "Proline",
+                "position": "42"
+            },
+            "Description in input context": "R42P mutation in parkin's Ubld domain"
+        }
+    ]
+}

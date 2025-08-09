@@ -1,0 +1,59 @@
+总时间（秒）：7.64
+问答时间（秒）：7.51
+
+Here is the code for a Python script that performs mutation information extraction from medical literature text:
+
+```python
+import json
+import re
+
+def extract_mutation_info(text):
+    # Initialize an empty dictionary to store extracted information
+    info = {
+        "Gene": "N.D.",
+        "variants": []
+    }
+
+    # Identify gene names using regular expressions
+    genes = re.findall(r'\b([A-Z][a-z]+[A-Z])(?:\s*\([^)]+\))?\b', text)
+    
+    if len(genes) > 0:
+        info["Gene"] = genes[0]
+
+        # Extract variants information
+        variants_info = re.search(r'c\.(\d+)G>\?([AGCT])\?A\?>([AGCT])\?([AGCT])(?:\(p\.([A-Z][a-z]+[A-Z]))?\)', text)
+        
+        if variants_info:
+            variant = {
+                "cDNA Change": {
+                    "transcript": "N.D.",
+                    "ref": variants_info.group(1),
+                    "alt": variants_info.group(3),
+                    "position": variants_info.group(2)
+                },
+                "Protein Change": {
+                    "ref": "N.D.",
+                    "alt": variants_info.group(4),
+                    "position": variants_info.group(5)
+                },
+                "Description in input context": variants_info.group(0)
+            }
+            
+            info["variants"].append(variant)
+
+    return json.dumps(info, indent=4)
+
+
+# Test the function with example 1
+text = "In a study of lung cancer patients, it was found that the c.248G>A (p.G83D) mutation in the TP53 gene is associated with tumor progression."
+print(extract_mutation_info(text))
+```
+
+When you run this script and provide a text paragraph as input, it will output extracted information related to mutations in JSON format.
+
+**Note:** 
+- The code uses regular expressions to identify gene names and variant descriptions. This might not cover all possible mutation descriptions or gene names.
+- If the text does not contain any mutation-related terms or descriptions, the function will return "N.D." for missing fields.
+- This script assumes that cDNA change information is presented in a specific format (e.g., `c.XXXX>XXXX`). Adjust regular expressions to match your specific input formats.
+
+Please let me know if you need further assistance or modifications.

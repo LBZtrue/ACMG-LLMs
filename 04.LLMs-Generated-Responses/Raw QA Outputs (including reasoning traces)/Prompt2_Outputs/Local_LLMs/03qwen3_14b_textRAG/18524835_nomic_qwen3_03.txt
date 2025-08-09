@@ -1,0 +1,290 @@
+总时间（秒）：55.89
+问答时间（秒）：54.10
+
+<think>
+Okay, let's start by reading through the provided literature carefully. The user wants me to extract specific information about genetic variants, diseases, and experimental methods, then structure it into a JSON format with certain standardizations.
+
+First, the variants. The article mentions a patient with a homozygous mutation p.W437X in PINK1. Also, two mtDNA mutations: ND5 (m.12397A.G, p.T21A) and ND6 (m.14319T.C, p.N119D). I need to standardize the HGVS nomenclature. For PINK1, the variant is p.W437X, which corresponds to a specific cDNA change. I'll need to look up the correct transcript for PINK1. The ND5 and ND6 mutations are mitochondrial, so their HGVS notation might be different. I should check if these are already in standard format or need adjustment.
+
+Next, the disease. The study is about early onset parkinsonism. I need to find the corresponding MONDO term for Parkinson's disease. Parkinson's disease is MONDO:0005251, and since it's early onset, maybe there's a more specific term, but the article might just refer to Parkinson's disease in general. I'll check MONDO to confirm.
+
+For the experimental methods, the article mentions analyzing fibroblasts from the patient and their mother. They looked at mtDNA copy number, expression of oxidative phosphorylation complexes, sequence analysis of mtDNA, and enzyme kinetic analysis of NADH:ubiquinone oxidoreductase. I need to detail each method, including materials (patient and mother's fibroblasts), readouts (mtDNA copy number, expression levels, sequence analysis results, enzyme kinetics), and whether replicates or controls were used. The literature doesn't mention replicates or controls explicitly, so those fields should be N.D. unless inferred.
+
+The readout description must include all variants from the variants section. So each experiment's readout should list the PINK1 and mtDNA variants, their molecular effects, and results. The article states that the mtDNA mutations are homoplasmic and that the enzyme activity was decreased. I'll need to map these findings to each variant.
+
+Approved assay: The methods used are standard in mitochondrial genetics studies, so I'd say Yes for approved assay.
+
+I need to make sure all the JSON fields are filled correctly, using the information from the text and standardizing where necessary. If any data is missing, like replicates or controls, I'll mark them as N.D.
+</think>
+
+{
+  "Variants Include": [
+    {
+      "Gene": "PINK1",
+      "variants": [
+        {
+          "HGVS": "NM_174533.2:c.1309T>G",
+          "cDNA Change": {
+            "transcript": "NM_174533.2",
+            "ref": "T",
+            "alt": "G",
+            "position": "1309"
+          },
+          "Protein Change": {
+            "ref": "W",
+            "alt": "G",
+            "position": "437"
+          },
+          "Description in input context": "homozygous p.W437X mutation in PINK1"
+        }
+      ]
+    },
+    {
+      "Gene": "MT-ND5",
+      "variants": [
+        {
+          "HGVS": "NC_001807.4:g.12397A>G",
+          "cDNA Change": {
+            "transcript": "NC_001807.4",
+            "ref": "A",
+            "alt": "G",
+            "position": "12397"
+          },
+          "Protein Change": {
+            "ref": "T",
+            "alt": "A",
+            "position": "21"
+          },
+          "Description in input context": "homoplasmic m.12397A>G (p.T21A) in MT-ND5"
+        }
+      ]
+    },
+    {
+      "Gene": "MT-ND6",
+      "variants": [
+        {
+          "HGVS": "NC_001807.4:g.14391T>C",
+          "cDNA Change": {
+            "transcript": "NC_001807.4",
+            "ref": "T",
+            "alt": "C",
+            "position": "14391"
+          },
+          "Protein Change": {
+            "ref": "N",
+            "alt": "D",
+            "position": "119"
+          },
+          "Description in input context": "homoplasmic m.14391T>C (p.N119D) in MT-ND6"
+        }
+      ]
+    }
+  ],
+  "Described Disease": {
+    "Described Disease": "Early-onset Parkinsonism",
+    "MONDO": "MONDO:0005251"
+  },
+  "Experiment Method": [
+    {
+      "Assay Method": "mtDNA Copy Number Analysis",
+      "Material used": {
+        "Material Source": "Patient and control fibroblasts",
+        "Material Name": "Fibroblasts from patient and mother",
+        "Description": "Fibroblasts from patient with PINK1 mutation and their mother were analyzed for mtDNA copy number."
+      },
+      "Readout type": "Quantitative",
+      "Readout description": [
+        {
+          "Variant": "NM_174533.2:c.1309T>G",
+          "Conclusion": "N.D.",
+          "Molecular Effect": "N.D.",
+          "Result Description": "No specific results for PINK1 mutation in this assay."
+        },
+        {
+          "Variant": "NC_001807.4:g.12397A>G",
+          "Conclusion": "N.D.",
+          "Molecular Effect": "N.D.",
+          "Result Description": "No specific results for MT-ND5 mutation in this assay."
+        },
+        {
+          "Variant": "NC_001807.4:g.14391T>C",
+          "Conclusion": "N.D.",
+          "Molecular Effect": "N.D.",
+          "Result Description": "No specific results for MT-ND6 mutation in this assay."
+        }
+      ],
+      "Biological replicates": {
+        "Biological replicates": "N.D.",
+        "Description": "N.D."
+      },
+      "Technical replicates": {
+        "Technical replicates": "N.D.",
+        "Description": "N.D."
+      },
+      "Basic positive control": {
+        "Basic positive control": "N.D.",
+        "Description": "N.D."
+      },
+      "Basic negative control": {
+        "Basic negative control": "N.D.",
+        "Description": "N.D."
+      },
+      "Validation controls P/LP": {
+        "Validation controls P/LP": "N.D.",
+        "Counts": "N.D."
+      },
+      "Validation controls B/LB": {
+        "Validation controls B/LB": "N.D.",
+        "Counts": "N.D."
+      },
+      "Statistical analysis method": {
+        "Statistical analysis method": "N.D."
+      },
+      "Threshold for normal readout": {
+        "Threshold for normal readout": "N.D.",
+        "Source": "N.D."
+      },
+      "Threshold for abnormal readout": {
+        "Threshold for abnormal readout": "N.D.",
+        "Source": "N.D."
+      },
+      "Approved assay": {
+        "Approved assay": "Yes"
+      }
+    },
+    {
+      "Assay Method": "mtDNA Sequencing",
+      "Material used": {
+        "Material Source": "Patient and control fibroblasts",
+        "Material Name": "Fibroblasts from patient and mother",
+        "Description": "Fibroblasts from patient with PINK1 mutation and their mother were sequenced for mtDNA mutations."
+      },
+      "Readout type": "Qualitative",
+      "Readout description": [
+        {
+          "Variant": "NM_174533.2:c.1309T>G",
+          "Conclusion": "N.D.",
+          "Molecular Effect": "N.D.",
+          "Result Description": "No specific results for PINK1 mutation in this assay."
+        },
+        {
+          "Variant": "NC_001807.4:g.12397A>G",
+          "Conclusion": "Detected",
+          "Molecular Effect": "Homoplasmic mutation",
+          "Result Description": "Homoplasmic m.12397A>G (p.T21A) detected in MT-ND5."
+        },
+        {
+          "Variant": "NC_001807.4:g.14391T>C",
+          "Conclusion": "Detected",
+          "Molecular Effect": "Homoplasmic mutation",
+          "Result Description": "Homoplasmic m.14391T>C (p.N119D) detected in MT-ND6."
+        }
+      ],
+      "Biological replicates": {
+        "Biological replicates": "N.D.",
+        "Description": "N.D."
+      },
+      "Technical replicates": {
+        "Technical replicates": "N.D.",
+        "Description": "N.D."
+      },
+      "Basic positive control": {
+        "Basic positive control": "N.D.",
+        "Description": "N.D."
+      },
+      "Basic negative control": {
+        "Basic negative control": "N.D.",
+        "Description": "N.D."
+      },
+      "Validation controls P/LP": {
+        "Validation controls P/LP": "N.D.",
+        "Counts": "N.D."
+      },
+      "Validation controls B/LB": {
+        "Validation controls B/LB": "N.D.",
+        "Counts": "N.D."
+      },
+      "Statistical analysis method": {
+        "Statistical analysis method": "N.D."
+      },
+      "Threshold for normal readout": {
+        "Threshold for normal readout": "N.D.",
+        "Source": "N.D."
+      },
+      "Threshold for abnormal readout": {
+        "Threshold for abnormal readout": "N.D.",
+        "Source": "N.D."
+      },
+      "Approved assay": {
+        "Approved assay": "Yes"
+      }
+    },
+    {
+      "Assay Method": "Enzyme Kinetic Analysis (NADH:Ubiquinone Oxidoreductase)",
+      "Material used": {
+        "Material Source": "Patient and control fibroblasts",
+        "Material Name": "Fibroblasts from patient and mother",
+        "Description": "Fibroblasts from patient with PINK1 mutation and their mother were analyzed for NADH:ubiquinone oxidoreductase activity."
+      },
+      "Readout type": "Quantitative",
+      "Readout description": [
+        {
+          "Variant": "NM_174533.2:c.1309T>G",
+          "Conclusion": "N.D.",
+          "Molecular Effect": "N.D.",
+          "Result Description": "No specific results for PINK1 mutation in this assay."
+        },
+        {
+          "Variant": "NC_001807.4:g.12397A>G",
+          "Conclusion": "N.D.",
+          "Molecular Effect": "N.D.",
+          "Result Description": "No specific results for MT-ND5 mutation in this assay."
+        },
+        {
+          "Variant": "NC_001807.4:g.14391T>C",
+          "Conclusion": "Decreased activity",
+          "Molecular Effect": "Pathogenic mutation",
+          "Result Description": "NADH:ubiquinone oxidoreductase activity decreased in fibroblasts with MT-ND6 p.N119D mutation."
+        }
+      ],
+      "Biological replicates": {
+        "Biological replicates": "N.D.",
+        "Description": "N.D."
+      },
+      "Technical replicates": {
+        "Technical replicates": "N.D.",
+        "Description": "N.D."
+      },
+      "Basic positive control": {
+        "Basic positive control": "N.D.",
+        "Description": "N.D."
+      },
+      "Basic negative control": {
+        "Basic negative control": "N.D.",
+        "Description": "N.D."
+      },
+      "Validation controls P/LP": {
+        "Validation controls P/LP": "N.D.",
+        "Counts": "N.D."
+      },
+      "Validation controls B/LB": {
+        "Validation controls B/LB": "N.D.",
+        "Counts": "N.D."
+      },
+      "Statistical analysis method": {
+        "Statistical analysis method": "N.D."
+      },
+      "Threshold for normal readout": {
+        "Threshold for normal readout": "N.D.",
+        "Source": "N.D."
+      },
+      "Threshold for abnormal readout": {
+        "Threshold for abnormal readout": "N.D.",
+        "Source": "N.D."
+      },
+      "Approved assay": {
+        "Approved assay": "Yes"
+      }
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+总时间（秒）：19.34
+问答时间（秒）：19.10
+
+<think>
+Okay, I need to figure out how to approach this query. The user is asking me to extract mutation information from a given medical text paragraph. They provided an example and some detailed instructions on the format they want.
+
+First, I'll start by reading through the context provided. It seems like it's part of a research article discussing various DJ-1 mutations in CHO cells. There are mentions of L10P, L166P, and P158DEL mutations. The table at the end lists these variants with their forward and reverse oligonucleotide sequences.
+
+My task is to identify if there's mutation information here and extract it properly. I should look for gene names, cDNA changes, protein changes, and any descriptions of the mutations in the context.
+
+Looking through each paragraph, the first mentions DJ-1 variants like L10P and P158DEL. These are point mutations where a single amino acid is changed or deleted. The table provides the specific sequences for each mutation, which I can parse to get the exact changes.
+
+For each variant:
+- L10P: From lysine (K) to proline (P), position 10.
+- L166P: From leucine (L) to proline (P), position 166.
+- P158DEL: Deletion of phenylalanine (F) at position 158.
+
+The forward and reverse oligonucleotide sequences can be used to determine the cDNA changes, but without the actual DNA sequences, I'll note that they're provided in the table. The protein changes are clear from the variant names.
+
+I need to structure this into a JSON format as per the example given. Each mutation will be an entry in the variants array with their respective cDNA and protein changes described where possible. Since the cDNA details aren't explicitly mentioned in the text but are in the table, I'll include them by referencing the sequences provided.
+
+I should make sure to use "N.D." where information isn't directly mentioned in the context but is available in the table. However, since the user's example used explicit mentions, perhaps including the sequences from the table would be better for accuracy.
+
+Also, considering the gene name is DJ-1 throughout, that will be consistent across all entries.
+
+Finally, I'll ensure the JSON structure matches what was provided in the example, making it clear and easy to understand for the user.
+</think>
+
+```json
+{
+    "Gene": "DJ-1",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "L",
+                "alt": "P",
+                "position": "10"
+            },
+            "Description in input context": "L10P"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "L",
+                "alt": "P",
+                "position": "166"
+            },
+            "Description in input context": "L166P"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "F",
+                "alt": "DEL",
+                "position": "158"
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "DEL",
+                "position": "158"
+            },
+            "Description in input context": "P158DEL"
+        }
+    ]
+}
+```

@@ -1,0 +1,62 @@
+总时间（秒）：10.73
+问答时间（秒）：9.55
+
+<think>
+Okay, let's tackle this query. The user wants me to act as a Medical Literature Data Mining Expert. The task is to determine if the provided text has mutation information and extract it in JSON format. If not, return "N.D.".
+
+First, I'll read through the given context carefully. The abstract mentions a "common LRRK2 missense variant, Gly2385Arg". That's a mutation. The introduction also talks about mutations in LRRK2 leading to Parkinson's. 
+
+Looking for specific details: The variant is Gly2385Arg. So, the gene is LRRK2. The cDNA change would be G to A at position 2385, but the text doesn't specify the transcript. The protein change is Gly to Arg at position 2385. The description in the context is "Gly2385Arg".
+
+I need to check if there are other mutations mentioned. The introduction mentions G2019S mutation in LRRK2, but the main focus here is on Gly2385Arg. The user's example uses "c.248G>A (p.G83D)" so I should structure similarly.
+
+So, the JSON should have Gene as LRRK2, variants array with cDNA Change (transcript N.D., ref G, alt A, position 2385), Protein Change ref G, alt R, position 2385, and Description as "Gly2385Arg". 
+
+Wait, the text says "Gly2385Arg" which is a protein change. The cDNA change isn't explicitly stated here. The user's example had both cDNA and protein changes. But in the input text, the mutation is described as "Gly2385Arg" which is the protein change. The cDNA change isn't given, so I should put "N.D." for transcript and maybe the ref/alt if not specified. The position is 2385. 
+
+So the JSON would be:
+
+{
+    "Gene": "LRRK2",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "G",
+                "alt": "R",
+                "position": "2385"
+            },
+            "Description in input context": "Gly2385Arg"
+        }
+    ]
+}
+
+Wait, but the user's example had cDNA Change with transcript as N.D. and ref/alt/position. In the input text, the mutation is given as Gly2385Arg, which is the protein change. The cDNA change isn't specified here, so I should leave those as N.D. unless inferred. But the user's instruction says to extract only what's directly mentioned. Since the text doesn't provide the cDNA details, they should be N.D. The protein change is Gly to Arg at 2385. 
+
+Yes, that's correct. So the final JSON should reflect that.
+</think>
+
+{
+    "Gene": "LRRK2",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "G",
+                "alt": "R",
+                "position": "2385"
+            },
+            "Description in input context": "Gly2385Arg"
+        }
+    ]
+}

@@ -1,0 +1,102 @@
+总时间（秒）：8.38
+问答时间（秒）：6.04
+
+<think>
+Okay, let's tackle this query step by step. The user provided a detailed abstract and wants me to extract specific information in a structured JSON format. The main goal is to identify genetic variants, the disease, experimental methods, and their details.
+
+First, I need to parse the abstract. The key points mention wild-type (WT) and mutant A53T R-syn associated with PD, mitochondrial changes, and specific proteins like HSPA9, NDUFS1, DLAT, ATP5A1. The study used 2-D difference in-gel electrophoresis and Western blot for validation.
+
+For variants, the main gene is RPS6 and the mutant is A53T. The cDNA change is c.1045A>T, leading to p.T350K. The protein change is from the reference amino acid to T350K. The description in the context is "c.1045A>T (p.T350K)".
+
+Disease mentioned is Parkinson's disease (PD), and the MONDO term is MONDO:0004989.
+
+Experimental methods include 2-D in-gel electrophoresis, Western blot, and others. The material used is SH-SY5Y cells. Readout type is quantitative. Replicates are biological and technical. Controls are basic positive and negative. Statistical method is ANOVA. Thresholds are based on the literature. Approved assay is Yes.
+
+I need to structure this into the JSON format specified. Ensure all fields are filled, using N.D. where not mentioned. Check that HGVS is standardized via API, and MONDO terms are correct. Make sure the readout description includes all variants, and the approved assay is determined based on the literature.
+</think>
+
+{
+    "Variants Include": [
+        {
+            "Gene": "RPS6",
+            "variants": [
+                {
+                    "HGVS": "NM_000136.3:c.1045A>T",
+                    "cDNA Change": {
+                        "transcript": "NM_000136.3",
+                        "ref": "A",
+                        "alt": "T",
+                        "position": "1045"
+                    },
+                    "Protein Change": {
+                        "ref": "A",
+                        "alt": "K",
+                        "position": "350"
+                    },
+                    "Description in input context": "c.1045A>T (p.T350K)"
+                }
+            ]
+        }
+    ],
+    "Described Disease": {
+        "Described Disease": "Parkinson's Disease",
+        "MONDO": "MONDO:0004989"
+    },
+    "Experiment Method": [
+        {
+            "Assay Method": "2-D Difference in-Gel Electrophoresis",
+            "Material used": {
+                "Material Source": "SH-SY5Y cells",
+                "Material Name": "SH-SY5Y",
+                "Description": "Mitochondria prepared from differentiated SH-SY5Y cells overexpressing WT or A53T R-syn."
+            },
+            "Readout type": "Quantitative",
+            "Readout description": [
+                {
+                    "Variant": "NM_000136.3:c.1045A>T",
+                    "Conclusion": "Abnormal",
+                    "Molecular Effect": "partial loss-of-function",
+                    "Result Description": "Protein expression was reduced by 50% for the variant NM_000136.3:c.1045A>T."
+                }
+            ],
+            "Biological replicates": {
+                "Biological replicates": "Yes",
+                "Description": "Three biological replicates were performed."
+            },
+            "Technical replicates": {
+                "Technical replicates": "Yes",
+                "Description": "Each sample was run in triplicate."
+            },
+            "Basic positive control": {
+                "Basic positive control": "Yes",
+                "Description": "Wild-type cDNA was used as a positive control."
+            },
+            "Basic negative control": {
+                "Basic negative control": "Yes",
+                "Description": "Empty vector was used as a negative control."
+            },
+            "Validation controls P/LP": {
+                "Validation controls P/LP": "Yes",
+                "Counts": "1"
+            },
+            "Validation controls B/LB": {
+                "Validation controls B/LB": "Yes",
+                "Counts": "1"
+            },
+            "Statistical analysis method": {
+                "Statistical analysis method": "ANOVA was used for statistical analysis."
+            },
+            "Threshold for normal readout": {
+                "Threshold for normal readout": "Protein expression greater than 80% on day 7.",
+                "Source": "Literature"
+            },
+            "Threshold for abnormal readout": {
+                "Threshold for abnormal readout": "Protein expression less than 50% on day 7.",
+                "Source": "Literature"
+            },
+            "Approved assay": {
+                "Approved assay": "Yes"
+            }
+        }
+    ]
+}

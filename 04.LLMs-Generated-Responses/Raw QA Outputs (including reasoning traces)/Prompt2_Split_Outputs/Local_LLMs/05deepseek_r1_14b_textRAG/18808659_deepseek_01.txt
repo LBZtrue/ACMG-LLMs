@@ -1,0 +1,74 @@
+总时间（秒）：14.76
+问答时间（秒）：12.56
+
+<think>
+Alright, I need to figure out how to extract mutation information from the given paragraph. The user is looking for mutations related to alpha-synuclein in the context of Parkinson's disease.
+
+First, I'll read through the abstract carefully. It mentions three missense mutations: A30P, A53T, and E46K. These are all associated with rare autosomal dominant forms of familial PD.
+
+I need to extract each mutation's details. Let me note down each one. For each, the variant is specified as a missense mutation. The gene here is alpha-synuclein, so that goes into the "Gene" field.
+
+Looking at each mutation:
+1. A30P: This changes alanine to proline at position 30.
+2. A53T: Alanine becomes threonine at position 53.
+3. E46K: Glutamic acid is replaced by lysine at position 46.
+
+Each of these doesn't have a specific cDNA change mentioned beyond the protein level, so in the JSON, the transcript will be N.D., and the reference and alternate amino acids are clear from the variant notation.
+
+I should structure each variant as an object within the "variants" array. Each object includes the type (missense), cDNA changes with N.D. for transcript info, and protein changes with ref/alt and positions.
+
+Make sure to leave any missing details as N.D., like the transcript field since it's not provided in the abstract. This way, the output is accurate and follows the specified format.
+</think>
+
+```json
+{
+    "Gene": "Alpha-synuclein",
+    "variants": [
+        {
+            "Type": "Missense mutation",
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "A",
+                "alt": "P",
+                "position": "30"
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "P",
+                "position": "30"
+            },
+            "Description in input context": "A30P"
+        },
+        {
+            "Type": "Missense mutation",
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "A",
+                "alt": "T",
+                "position": "53"
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "T",
+                "position": "53"
+            },
+            "Description in input context": "A53T"
+        },
+        {
+            "Type": "Missense mutation",
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "E",
+                "alt": "K",
+                "position": "46"
+            },
+            "Protein Change": {
+                "ref": "E",
+                "alt": "K",
+                "position": "46"
+            },
+            "Description in input context": "E46K"
+        }
+    ]
+}
+```

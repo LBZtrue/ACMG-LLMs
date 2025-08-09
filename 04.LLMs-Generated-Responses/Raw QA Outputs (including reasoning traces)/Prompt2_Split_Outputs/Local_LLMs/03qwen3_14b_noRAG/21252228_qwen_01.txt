@@ -1,0 +1,44 @@
+总时间（秒）：19.43
+问答时间（秒）：19.12
+
+<think>
+Okay, let's see. The user provided a list of references from a scientific paper, and they want to know if there's any mutation information in the text. The task is to extract gene names, cDNA changes, protein changes, and descriptions if present, otherwise return "N.D.".
+
+First, I need to check each entry in the references. Let me go through them one by one.
+
+Looking at the first entry: "Cuervo, A. M. (2004) Trends Cell Biol. 14, 70–77" – no mention of mutations here. The title is about mitochondrial autophagy, but no specific mutations.
+
+Next, entry 47: "Cuervo, A. M., Stefanis, L., Fredenburg, R., Lansbury, P. T., and Sulzer, D. (2004) Science 305, 1292–1295" – the title here is "Mutant A53T α-Synuclein and Mitochondrial Autophagy". The term "Mutant A53T" suggests a mutation. The gene here is α-Synuclein, and the mutation is A53T. The description is "Mutant A53T α-Synuclein". 
+
+In the text, the title mentions "Mutant A53T α-Synuclein", which is a specific mutation. The cDNA change isn't provided here, but the protein change is A to T at position 53. The gene is α-Synuclein. 
+
+Other entries like 48, 49, etc., don't mention mutations explicitly. Entry 53 mentions "Petrucelli, L., O’Farrell, C., Lockhart, P. J., Baptista, M., Kehoe, K., Vink, L., Choi, P., Wolozin, B., Farrer, M., Hardy, J., and Cookson, M. R. (2002) Neuron. 36, 1007–1019" – the title here is about α-synuclein and Parkinson's disease, but no specific mutation is named in the title or the authors. 
+
+Looking back at entry 47, the title clearly states the mutation. So the extracted information would be gene: SNCA (since α-Synuclein is encoded by SNCA), the mutation is A53T. The cDNA change isn't specified in the title, so it's N.D. The protein change is from Alanine to Threonine at position 53. The description is "Mutant A53T α-Synuclein".
+
+Other entries like 51: "Vives-Bauza, C., Zhou, C., Huang, Y., Cui, M., de Vries, R. L., Kim, J., May, J., Tocilescu, M. A., Liu, W., Ko, H. S., Magrane´, J., Moore, D. J., Dawson, V. L., Grailhe, R., Dawson, T. M., Li, C., Tieu, K., and Przedborski, S. (2010) Proc. Natl. Acad. Sci. U.S.A. 107, 378–383" – no mutation info in the title.
+
+So the only entry with a mutation is entry 47. The rest don't have mutations mentioned. Therefore, the JSON should have the gene as SNCA, variants with cDNA change N.D., protein change A to T at position 53, and the description as "Mutant A53T α-Synuclein".
+</think>
+
+```json
+{
+    "Gene": "SNCA",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "T",
+                "position": "53"
+            },
+            "Description in input context": "Mutant A53T α-Synuclein"
+        }
+    ]
+}
+```

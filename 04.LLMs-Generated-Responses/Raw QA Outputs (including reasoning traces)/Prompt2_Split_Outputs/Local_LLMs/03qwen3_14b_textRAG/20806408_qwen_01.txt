@@ -1,0 +1,50 @@
+总时间（秒）：15.75
+问答时间（秒）：13.12
+
+<think>
+Okay, let's tackle this query. The user wants me to extract mutation information from the provided medical literature paragraph. First, I need to carefully read through the text to identify any mentions of mutations.
+
+Looking at the abstract and the introduction, there are a few key points. The main mutations discussed are L10P and P158DEL in the DJ-1 protein. The abstract mentions these as novel pathogenic mutations. The introduction also refers to two novel recessive mutations in the PARK7/DJ-1 gene leading to early-onset parkinsonism. The specific mutations are L10P (a missense mutation) and P158DEL (a deletion of the P158 residue).
+
+Now, I need to structure this into the JSON format as per the example. The gene is clearly DJ-1, which is also known as PARK7. The variants are L10P and P158DEL. For each variant, I need to note the cDNA change and protein change. However, the text doesn't mention specific cDNA positions, only the amino acid changes. The cDNA change is listed as "N.D." since it's not provided. The protein changes are L10P and P158DEL. The description in the context includes terms like "homozygous missense mutation" and "homozygous mutation resulting in the deletion".
+
+I should check if there are any other mutations mentioned. The text also references L166P as a pathogenic variant, but that's part of the comparison in the study, not the novel mutations being discussed. The user's focus is on L10P and P158DEL, so those are the ones to extract. 
+
+Make sure all fields are filled with "N.D." where information isn't present. The cDNA change for both variants isn't specified, so that's "N.D." The protein changes are clear. The description should include the context from the literature, like "novel pathogenic homozygous DJ-1 missense mutation" for L10P and "novel homozygous mutation resulting in the deletion of DJ-1 residue P158" for P158DEL.
+
+Double-checking the JSON structure to ensure it matches the example. Each variant is an object within the variants array, with cDNA Change and Protein Change as nested objects. All required fields are included, and missing data is marked as "N.D.".
+</think>
+
+{
+    "Gene": "DJ-1",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "L",
+                "alt": "P",
+                "position": "10"
+            },
+            "Description in input context": "novel pathogenic homozygous DJ-1 missense mutation resulting in the L10P amino acid substitution"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "P",
+                "alt": "DEL",
+                "position": "158"
+            },
+            "Description in input context": "novel homozygous mutation resulting in the deletion of DJ-1 residue P158"
+        }
+    ]
+}

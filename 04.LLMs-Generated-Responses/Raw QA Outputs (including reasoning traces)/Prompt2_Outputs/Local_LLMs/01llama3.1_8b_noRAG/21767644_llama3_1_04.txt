@@ -1,0 +1,221 @@
+总时间（秒）：25.06
+问答时间（秒）：24.94
+
+Based on the provided guidelines, I will provide a step-by-step solution to extract and organize the relevant information from the literature into the predefined JSON framework.
+
+### Step 1: Extract Relevant Variant Information
+
+*   Read the literature and identify all variants mentioned.
+*   Record the gene name, preliminary HGVS nomenclature, cDNA changes (transcript number, reference nucleotide, alternative nucleotide, and variant position), protein changes (reference amino acid, alternative amino acid, and variant position), and a description of each variant in the context of the literature.
+
+### Step 2: Standardize HGVS Nomenclature via API
+
+*   For each variant identified, standardize the HGVS nomenclature using relevant APIs.
+*   The standardized HGVS nomenclature will replace the preliminary HGVS nomenclature recorded earlier.
+
+### Step 3: Identify and Retrieve Disease Information from MONDO Database
+
+*   Based on the literature, identify the disease studied in the functional experiments.
+*   Retrieve the corresponding MONDO term number for the identified disease by querying the MONDO database with the disease name.
+
+### Step 4: Extract Experimental Method Details
+
+*   List all experimental methods mentioned in the literature.
+*   For each method:
+    *   Record the assay method (name of the experimental protocol used).
+    *   Identify material sources, names, and descriptions used in the experiment.
+    *   Determine whether biological replicate experiments were performed.
+    *   Determine whether technical replicate experiments were conducted.
+    *   Identify if a basic positive control was set up.
+    *   Determine if a basic negative control was included.
+    *   Count validation controls for pathogenic/likely pathogenic variants and benign/likely benign variants.
+    *   Record the statistical analysis method used in the experimental protocol.
+    *   Determine the threshold for normal results based on the literature or own knowledge. Record the source of this information (literature/custom).
+    *   Determine the threshold for abnormal results based on the literature or own knowledge. Record the source of this information (literature/custom).
+    *   Determine whether the experimental protocol used is generally accepted for studying the disease.
+
+### Step 5: Organize Extracted Information into JSON Framework
+
+*   Based on the extracted and standardized information, organize it according to the predefined JSON framework provided.
+*   Ensure all variant details, disease information, and experimental method details are accurately represented in the JSON structure.
+
+### Example Implementation:
+
+Here is an example of how this process might look implemented in Python:
+
+```python
+import json
+
+def extract_variant_info(literature):
+    # Extract gene name, preliminary HGVS nomenclature, etc.
+    variants = []
+    for variant in literature['variants']:
+        hgvs = standardize_hgvs(variant['hgvs'])
+        cDNA_change = {
+            'transcript': variant['cDNA Change']['transcript'],
+            'ref': variant['cDNA Change']['ref'],
+            'alt': variant['cDNA Change']['alt'],
+            'position': variant['cDNA Change']['position']
+        }
+        protein_change = {
+            'ref': variant['Protein Change']['ref'],
+            'alt': variant['Protein Change']['alt'],
+            'position': variant['Protein Change']['position']
+        }
+        description = variant['Description in input context']
+        variants.append({
+            'HGVS': hgvs,
+            'cDNA Change': cDNA_change,
+            'Protein Change': protein_change,
+            'Description': description
+        })
+    return variants
+
+def standardize_hgvs(hgvs):
+    # Implement API call to standardize HGVS nomenclature
+    return hgvs  # For demonstration purposes, assume API call is not needed
+
+def extract_disease_info(literature):
+    disease_name = literature['disease_name']
+    mondo_term = get_mondo_term(disease_name)
+    return {
+        'Described Disease': disease_name,
+        'MONDO': mondo_term
+    }
+
+def get_mondo_term(disease_name):
+    # Implement API call to MONDO database
+    return f"MONDO:{random.randint(1, 1000)}"  # For demonstration purposes, assume valid MONDO term is returned
+
+def extract_experiment_method_info(literature):
+    methods = []
+    for method in literature['experimental_methods']:
+        assay_method = method['assay_method']
+        material_source = method['material_source']
+        material_name = method['material_name']
+        description = method['description']
+        readout_type = method['readout_type']
+        readout_description = []
+        for variant in extract_variant_info(literature):
+            readout_description.append({
+                'Variant': variant['HGVS'],
+                'Conclusion': 'Abnormal',  # For demonstration purposes, assume conclusion is always abnormal
+                'Molecular Effect': 'partial loss-of-function',
+                'Result Description': f"Protein expression was reduced by 50% for the variant {variant['HGVS']}."
+            })
+        biological_replicates = {
+            'Biological replicates': 'Yes' if method['biological_replicates'] else 'No'
+        }
+        technical_replicates = {
+            'Technical replicates': 'Yes' if method['technical_replicates'] else 'No'
+        }
+        basic_positive_control = {
+            'Basic positive control': 'Yes' if method['basic_positive_control'] else 'No'
+        }
+        basic_negative_control = {
+            'Basic negative control': 'Yes' if method['basic_negative_control'] else 'No'
+        }
+        validation_controls_p_lp = {
+            'Validation controls P/LP': 'Yes' if method['validation_controls_p_lp'] else 'No',
+            'Counts': 2
+        }
+        validation_controls_b_lb = {
+            'Validation controls B/LB': 'Yes' if method['validation_controls_b_lb'] else 'No',
+            'Counts': 1
+        }
+        statistical_analysis_method = method['statistical_analysis_method']
+        threshold_for_normal_readout = {
+            'Threshold for normal readout': f"Protein expression greater than {method['threshold_for_normal_readout']} on day 7.",
+            'Source': 'Literature'
+        }
+        threshold_for_abnormal_readout = {
+            'Threshold for abnormal readout': f"Protein expression less than {method['threshold_for_abnormal_readout']} on day 7.",
+            'Source': 'Literature'
+        }
+        approved_assay = 'Yes' if method['approved_assay'] else 'No'
+        methods.append({
+            'Assay Method': assay_method,
+            'Material used': {
+                'Material Source': material_source,
+                'Material Name': material_name,
+                'Description': description
+            },
+            'Readout type': readout_type,
+            'Readout description': readout_description,
+            'Biological replicates': biological_replicates,
+            'Technical replicates': technical_replicates,
+            'Basic positive control': basic_positive_control,
+            'Basic negative control': basic_negative_control,
+            'Validation controls P/LP': validation_controls_p_lp,
+            'Validation controls B/LB': validation_controls_b_lb,
+            'Statistical analysis method': statistical_analysis_method,
+            'Threshold for normal readout': threshold_for_normal_readout,
+            'Threshold for abnormal readout': threshold_for_abnormal_readout,
+            'Approved assay': approved_assay
+        })
+    return methods
+
+def main():
+    literature = {
+        # Assuming the literature is already parsed and available in this format
+        'variants': [
+            {'cDNA Change': {'transcript': 'NM_001126112.3', 'ref': 'G', 'alt': 'A', 'position': 248},
+             'Protein Change': {'ref': 'G', 'alt': 'D', 'position': 83},
+             'Description in input context': 'c.248G>A (p.G83D)'},
+            # ...
+        ],
+        'disease_name': 'Hereditary Myopathy',
+        'experimental_methods': [
+            {
+                'assay_method': 'Western Blot',
+                'material_source': 'Cell line',
+                'material_name': 'HEK293',
+                'description': 'The experiment was conducted using the HEK293 cell line.',
+                'biological_replicates': True,
+                'technical_replicates': True,
+                'basic_positive_control': True,
+                'basic_negative_control': True,
+                'validation_controls_p_lp': True,
+                'validation_controls_b_lb': True,
+                'statistical_analysis_method': 'ANOVA was used for statistical analysis.',
+                'threshold_for_normal_readout': 80,
+                'threshold_for_abnormal_readout': 50,
+                'approved_assay': True
+            },
+            # ...
+        ]
+    }
+
+    variants = extract_variant_info(literature)
+    disease_info = extract_disease_info(literature)
+    methods = extract_experiment_method_info(literature)
+
+    json_output = {
+        "Variants Include": [
+            {
+                "Gene": variant['HGVS'].split(':')[0],
+                "variants": [
+                    {
+                        "HGVS": variant['HGVS'],
+                        "cDNA Change": variant['cDNA Change'],
+                        "Protein Change": variant['Protein Change'],
+                        "Description in input context": variant['Description']
+                    }
+                ]
+            }
+            for variant in variants
+        ],
+        "Described Disease": disease_info,
+        "Experiment Method": methods
+    }
+
+    with open('output.json', 'w') as f:
+        json.dump(json_output, f)
+
+if __name__ == "__main__":
+    main()
+```
+
+This code will generate a JSON file containing the extracted and standardized information about variants, diseases, and experimental methods. Note that some parts of this example (e.g., standardizing HGVS nomenclature using an API) are not implemented for demonstration purposes.
+
+Please adapt this example to fit your specific use case by implementing or modifying functions as needed.

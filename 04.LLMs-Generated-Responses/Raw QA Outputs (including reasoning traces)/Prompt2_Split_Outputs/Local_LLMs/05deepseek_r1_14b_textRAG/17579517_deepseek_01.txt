@@ -1,0 +1,68 @@
+总时间（秒）：16.82
+问答时间（秒）：14.93
+
+<think>
+Alright, let's tackle this query. The user is asking me to act as a professional medical literature data mining expert. My role here is to extract specific information about mutations from a given paragraph of medical literature. 
+
+First, I need to understand the context provided. The paragraph discusses a study on PINK1 and its role in protecting against oxidative stress by phosphorylating TRAP1. It mentions that mutations in the PINK1 gene cause an autosomal recessive form of Parkinson's disease (PD). Specifically, it talks about three mutations: G309D, L347P, and W437X.
+
+The user wants me to extract information related to these mutations. I should identify each mutation, note the type of change (cDNA or protein), and describe them as mentioned in the input. 
+
+Looking at the example provided, when a mutation is described like c.248G>A (p.G83D), the JSON structure captures both the cDNA and protein changes. However, in our case, the mutations are described differently. For instance, W437X refers to a truncating mutation where tryptophan at position 437 is replaced by stop. Similarly, G309D is a missense mutation changing glycine to aspartic acid at position 309.
+
+I need to structure each variant correctly. Since the input doesn't specify cDNA changes but refers to protein-level alterations (like G309D being a missense), I should represent that in the JSON. Each variant will have its description, and since there's no transcript information provided, those fields will be marked as "N.D.".
+
+I'll list each mutation separately under variants, noting their position, type of change, and a brief description from the context. It's important to ensure accuracy and completeness, omitting nothing and only including what's explicitly stated.
+
+So, I'll structure the JSON with the gene name PINK1, then for each variant, include the cDNA details as "N.D." since they aren't provided, and detail the protein changes along with their descriptions. This way, the user gets a precise extraction of mutation data from the literature.
+</think>
+
+```json
+{
+    "Gene": "PINK1",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "W",
+                "alt": "X",
+                "position": "437"
+            },
+            "Description in input context": "PD-linked PINK1 G309D, L347P, and W437X mutations."
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "G",
+                "alt": "D",
+                "position": "309"
+            },
+            "Protein Change": {
+                "ref": "G",
+                "alt": "D",
+                "position": "309"
+            },
+            "Description in input context": "PD-linked PINK1 G309D, L347P, and W437X mutations."
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "L",
+                "alt": "P",
+                "position": "347"
+            },
+            "Protein Change": {
+                "ref": "L",
+                "alt": "P",
+                "position": "347"
+            },
+            "Description in input context": "PD-linked PINK1 G309D, L347P, and W437X mutations."
+        }
+    ]
+}
+```

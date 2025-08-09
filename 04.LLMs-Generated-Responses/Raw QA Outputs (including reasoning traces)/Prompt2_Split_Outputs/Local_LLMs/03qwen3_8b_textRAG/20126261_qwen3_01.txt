@@ -1,0 +1,47 @@
+总时间（秒）：12.23
+问答时间（秒）：9.12
+
+<think>
+Okay, let's tackle this query. The user wants me to act as a medical literature data mining expert, specifically to extract mutation information from the provided abstract and introduction. The goal is to determine if there are any mutations mentioned and extract details like gene names, cDNA changes, protein changes, and descriptions.
+
+First, I'll read through the provided text carefully. The abstract mentions "Loss-of-function mutations in PINK1 and Parkin cause parkinsonism in humans..." So here, PINK1 and Parkin are genes with loss-of-function mutations. The introduction also talks about mutations in Parkin and PINK1 leading to familial Parkinson disease. 
+
+Looking for specific mutation details, the abstract states that disease-causing mutations in PINK1 and Parkin disrupt Parkin recruitment and mitophagy. However, the text doesn't specify the exact cDNA or protein changes. The example given in the user's prompt includes cDNA and protein changes, but in this case, the literature only mentions the genes and the type of mutations (loss-of-function) without specific variants. 
+
+The user's instructions say to extract gene names, cDNA changes, protein changes, and mutation descriptions. Since the text doesn't provide specific variants like c.248G>A or p.G83D, but rather refers to mutations in general, I need to check if the genes are mentioned. The genes PINK1 and Parkin are clearly stated. The mutation type is "loss-of-function," which is a description. 
+
+The example shows that if specific variants aren't mentioned, the cDNA and protein change fields can have "N.D." So in this case, the genes are PINK1 and Parkin, the mutation type is loss-of-function, and the descriptions mention that these mutations cause parkinsonism and disrupt Parkin recruitment. 
+
+I should structure the JSON with the genes as an array, each variant having the mutation description. Since there are no specific cDNA or protein changes, those fields will be "N.D." The description in the input context would include the relevant parts from the text. 
+
+Wait, the user's example includes "Description in input context" as the specific mutation mention. Here, the abstract says "loss-of-function mutations in PINK1 and Parkin cause parkinsonism..." and "disease-causing mutations in PINK1 and Parkin disrupt..." So the descriptions should include those phrases. 
+
+So the extracted information would have two genes: PINK1 and Parkin. Each variant's description would reference the loss-of-function and the disruption of Parkin recruitment. The cDNA and protein changes are not specified, so they are "N.D." 
+
+I need to make sure that the JSON structure matches the example. Each variant is an object in the variants array, with cDNA Change, Protein Change, and Description in input context. Since there are no specific variants listed, the cDNA and protein fields are "N.D." but the description includes the mutation types mentioned. 
+
+Therefore, the final JSON should list the two genes, each with a variant that has the description of the mutations causing parkinsonism and disrupting mitophagy. The cDNA and protein changes are not present, so they are marked as "N.D.".
+</think>
+
+{
+    "Gene": [
+        "PINK1",
+        "Parkin"
+    ],
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "Loss-of-function mutations in PINK1 and Parkin cause parkinsonism in humans; disease-causing mutations in PINK1 and Parkin disrupt Parkin recruitment and Parkin-induced mitophagy at distinct steps"
+        }
+    ]
+}

@@ -1,0 +1,51 @@
+总时间（秒）：8.76
+问答时间（秒）：8.61
+
+Based on the provided workflow and example, I will describe the solution to extract and organize information from a scientific literature into a predefined JSON framework.
+
+**Step 1:** Read the literature and extract all relevant variant information, including gene name, preliminary HGVS nomenclature, cDNA changes, and protein changes.
+
+* Identify the sections in the literature that describe variants, such as tables or text describing specific mutations.
+* Extract the following information for each variant:
+	+ Gene name
+	+ Preliminary HGVS nomenclature (e.g., NM_001126112.3:c.248G>A)
+	+ cDNA changes (transcript number, reference nucleotide, alternative nucleotide, and position)
+	+ Protein changes (reference amino acid, alternative amino acid, and position)
+
+**Step 2:** Standardize the HGVS nomenclature of the variants via relevant API.
+
+* Use a HGVS nomenclature standardization API (e.g., Ensembl's Variant Effect Predictor) to convert the preliminary HGVS nomenclature into standardized format.
+* Record the standardized HGVS nomenclature for each variant.
+
+**Step 3:** Identify the disease studied in the literature and retrieve the corresponding terms from the MONDO database.
+
+* Read the literature and identify the specific disease mentioned (e.g., Hereditary Myopathy).
+* Search the MONDO database to retrieve the corresponding term number for the identified disease.
+
+**Step 4:** List all experimental methods mentioned in the literature and extract detailed information about each method, including material sources, readout types, result descriptions, experimental replicates, control settings, statistical analysis methods, and thresholds for normal and abnormal results.
+
+* Read the literature and identify specific sections describing experiments (e.g., Western Blot).
+* Extract the following information for each experiment:
+	+ Assay Method
+	+ Material used (source, name, description)
+	+ Readout type
+	+ Result descriptions for each variant mentioned in the literature or listed in 'Variants Include'
+	+ Biological replicates (yes/no/N.D.)
+	+ Technical replicates (yes/no/N.D.)
+	+ Basic positive control (yes/no/N.D.)
+	+ Basic negative control (yes/no/N.D.)
+	+ Validation controls P/LP (yes/no/N.D., counts)
+	+ Validation controls B/LB (yes/no/N.D., counts)
+	+ Statistical analysis method
+	+ Threshold for normal readout
+	+ Threshold for abnormal readout
+
+**Step 5:** Determine whether the experimental methods are generally used for studying the disease.
+
+* Read the literature and identify sections that discuss the experimental protocol's relevance to the disease studied.
+* Determine whether the experimental protocol is generally used for studying this disease (yes/no/N.D.).
+
+**Step 6:** Organize the extracted and standardized information according to the predefined JSON framework.
+
+* Use the extracted information from steps 1-5 to populate the predefined JSON framework, following the structure described in the provided example.
+* Ensure that all required fields are populated with accurate information for each variant and experiment.

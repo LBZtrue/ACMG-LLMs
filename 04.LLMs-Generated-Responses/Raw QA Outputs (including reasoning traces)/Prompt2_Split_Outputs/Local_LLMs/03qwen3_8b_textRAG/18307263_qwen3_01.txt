@@ -1,0 +1,54 @@
+总时间（秒）：11.42
+问答时间（秒）：10.46
+
+<think>
+Okay, let me tackle this query. The user wants me to act as a medical literature data mining expert, specifically to extract mutation information from the provided text. The key here is to follow the strict guidelines given.
+
+First, I need to read through the abstract and the background paragraph carefully. The main focus is on PINK1 gene mutations. The abstract mentions "compound heterozygous PINK1 mutations" in a patient with Parkinson's disease. The specific mutations are p.A244G and p.V317I. Also, it states that these mutations abolish the protective effect of wild-type PINK1 against apoptosis.
+
+Looking at the background section, it reinforces that PINK1 mutations are a cause of autosomal recessive parkinsonism, with homozygous or compound heterozygous forms. The example given in the abstract has two mutations, so I need to capture both.
+
+Now, applying the JSON structure. The Gene should be PINK1. For each variant, I need cDNA change and protein change. The abstract mentions the protein changes as p.A244G and p.V317I. However, the cDNA changes aren't explicitly stated here. Wait, in the abstract, the user wrote "Both mutations (p.A244G and p.V317I)" but the cDNA changes are not provided. Wait, maybe I missed something. Wait, in the abstract, the user wrote "Both mutations (p.A244G and p.V317I) were found to abolish..." So the protein changes are p.A244G and p.V317I. But the cDNA changes (like c.?) aren't mentioned here. The original text might have them, but in the provided context, the user only mentioned the protein changes. Wait, looking back, the user's input text says "Both mutations (p.A244G and p.V317I)" but the actual cDNA changes (like c.?) are not specified. Wait, the user might have omitted that part. Wait, in the original abstract, the user wrote "Both mutations (p.A244G and p.V317I)" but perhaps the cDNA positions are not given. So in the JSON, the cDNA Change's transcript, ref, alt, position would be N.D. because the text doesn't mention the exact cDNA positions. However, the protein changes are clearly stated as p.A244G and p.V317I. 
+
+Wait, but the user's example includes cDNA and protein changes. So in this case, the cDNA changes are not provided in the text. Therefore, for each variant, the cDNA Change fields should be N.D., and only the protein changes are present. The description in the input context would be the exact mention from the text, like "p.A244G" and "p.V317I".
+
+So, the JSON should have Gene: PINK1, variants array with two entries. Each variant's cDNA Change is N.D., but the protein change is specified. The Description in input context would be the exact string from the text. Also, the background mentions that PINK, but the mutations are only in the abstract part. The background doesn't mention specific mutations, so only the abstract's mutations are relevant here.
+
+Therefore, the correct extraction is to list the two protein mutations under PINK1, with cDNA details as N.D., since the text doesn't specify the exact cDNA positions.
+</think>
+
+```json
+{
+    "Gene": "PINK1",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "G",
+                "position": "244"
+            },
+            "Description in input context": "p.A244G"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "V",
+                "alt": "I",
+                "position": "317"
+            },
+            "Description in input context": "p.V317I"
+        }
+    ]
+}
+```

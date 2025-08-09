@@ -1,0 +1,124 @@
+总时间（秒）：24259.87
+问答时间（秒）：123.69
+
+```python
+import json
+from typing import Dict, List
+
+
+# Define the ACMG Functional Evidence Evaluation Flowchart as a nested dictionary
+acmg_flowchart: Dict[str, Dict[str, List[str]]] = {
+    "Step 1": {
+        "question": "Does the paper clearly define the disease mechanism relevant to the functional assay?",
+        "judgment_basis": "Extract explicit statements or strong inferences about the disease's molecular basis and how the gene/protein functions within it.",
+        "decision_logic": [
+            "If NO: Then Do not use PS3/BS3.",
+            "If YES: Proceed to Step 2."
+        ]
+    },
+    "Step 2": {
+        "question": "Does the general class of assay used for this variant effectively model or reflect the disease pathogenesis/mechanism defined in Step 1?",
+        "judgment_basis": "Evaluate the assay's ability to accurately represent the disease mechanism.",
+        "decision_logic": [
+            "If NO: Then Do not use PS3/BS3.",
+            "If YES: Proceed to Step 3."
+        ]
+    },
+    "Step 3": {
+        "substep_3a": {
+            "question": "Were basic controls included (both Normal/Negative/Wild type AND Abnormal/Positive/Null) and were multiple replicates performed?",
+            "judgment_basis": "Search Materials & Methods and Results for descriptions of controls and experimental repetition.",
+            "decision_logic": [
+                "If NO (either condition not met): Proceed to Sub-step 3b.",
+                "If YES (both conditions met): Proceed to Sub-step 3c."
+            ]
+        },
+        "substep_3b": {
+            "question": "Has the specific instance of the assay been broadly accepted historically, previously validated in other studies, or provided as a commercial kit with defined performance metrics?",
+            "judgment_basis": "Look for statements on assay novelty, references to prior validation, or mentions of commercial kits/standards.",
+            "decision_logic": [
+                "If NO (all conditions not met): Then Do not use PS3/BS3.",
+                "If YES (any condition met): The functional evidence strength is Max PS3_supporting / Max BS3_supporting."
+            ]
+        },
+        "substep_3c": {
+            "question": "Were variant controls used?",
+            "judgment_basis": "Were known pathogenic variants, known benign variants, or variants tested that reach P/LP or B/LB criteria without relying on PS3/BS3 evidence themselves used as controls?",
+            "decision_logic": [
+                "If NO (all conditions not met): The functional evidence strength is Max PS3_supporting / Max BS3_supporting.",
+                "If YES (any condition met): Proceed to Step 4."
+            ]
+        }
+    },
+    "Step 4": {
+        "substep_4a": {
+            "question": "Are the statistical analyses in the paper sufficient to estimate or calculate OddsPath for the functional data for this variant?",
+            "judgment_basis": "Look for mentions of statistical tests, p-values, effect sizes, confidence intervals, or direct calculation/reporting of OddsPath.",
+            "decision_logic": [
+                "If NO: Proceed to Sub-step 4b.",
+                "If YES: Proceed to Sub-step 4c."
+            ]
+        },
+        "substep_4b": {
+            "question": "How many total benign/pathogenic variant controls were used across the entire study (as applicable to this variant's assay)?",
+            "judgment_basis": "Count the number of explicitly identified benign and pathogenic control variants used in the assays related to this variant.",
+            "decision_logic": [
+                "If 10 or less in total: The functional evidence strength is Max PS3_supporting / Max BS3_supporting.",
+                "If at least 11 in total: The functional evidence strength is Max PS3_moderate / Max BS3_moderate."
+            ]
+        },
+        "substep_4c": {
+            "question": "Correlate OddsPath with functional evidence strength (assuming standard thresholds)",
+            "judgment_basis": "Apply ACMG guidelines for OddsPath interpretation (e.g., PS3: OddsPath > 18.7 = very_strong; OddsPath > 4.3 = moderate; OddsPath > 2.0 = supporting. BS3: OddsPath < 1/18.7 = very_strong; OddsPath < 1/4.3 = moderate; OddsPath < 1/2.0 = supporting).",
+            "decision_logic": [
+                "For PS3 (Pathogenic):",
+                "If OddsPath very high (> 18.7): PS3_very_strong",
+                "If OddsPath moderate (> 4.3 and <= 18.7): PS3_moderate",
+                "If OddsPath supporting (> 2.0 and <= 4.3): PS3_supporting",
+                "For BS3 (Benign):",
+                "If OddsPath very low (< 1/18.7): BS3_very_strong",
+                "If OddsPath moderate (< 1/4.3 and >= 1/18.7): BS3_moderate",
+                "If OddsPath supporting (< 1/2.0 and >= 1/4.3): BS3_supporting"
+            ]
+        }
+    }
+}
+
+
+def get_paper_data(paper_text: str) -> List[Dict]:
+    """Extract relevant functional evidence details from the provided scientific paper text for each variant mentioned that has functional data."""
+    # Implementation omitted for brevity (assumed to be provided by LLM developer)
+    return [
+        {
+            "variant_id": {
+                "Gene": "Extracted_Gene_Symbol",
+                "Protein_Change": {
+                    "ref": "Extracted_Reference_Amino_Acid",
+                    "alt": "Extracted_Alternate_Amino_Acid",
+                    "position": "Extracted_Amino_Acid_Position"
+                },
+                "variant_string_id": "Gene RefPosAlt"
+            },
+            "functional_evidence_aim": "Pathogenic",
+            "paper_text": "Quote or concise summary of the relevant text from the paper."
+        }
+    ]
+
+
+def apply_acmg_flowchart(paper_data: List[Dict]) -> List[Dict]:
+    """Apply the ACMG functional evidence evaluation flowchart to the extracted information for each variant."""
+    assessments: List[Dict] = []
+
+    for variant in paper_data:
+        assessment: Dict = {"variant_id": variant["variant_id"], "functional_evidence_aim": variant["functional_evidence_aim"], "assessment_steps": [], "final_evidence_strength": {}, "overall_conclusion": ""}
+
+        # Step 1
+        step_1 = {"step_name": "Step 1: Define the disease mechanism.", "extracted_paper_info": variant["paper_text"], "judgment": "", "reasoning": ""}
+
+        if acmg_flowchart["Step 1"]["question"] in variant["paper_text"]:  # Replace this with actual extraction logic based on acmg_flowchart["Step 1"]["judgment_basis"]
+            step_1["judgment"] = "Yes"
+            step_1["reasoning"] = "Explanation based on extracted info and flowchart logic."
+            assessment["assessment_steps"].append(step_1)
+
+            # Step 2
+            step_2 = {"step_name": "Step 2: Evaluate applicability of general classes of assay used in the field.", "extracted_paper_info": variant["paper_text"], "
