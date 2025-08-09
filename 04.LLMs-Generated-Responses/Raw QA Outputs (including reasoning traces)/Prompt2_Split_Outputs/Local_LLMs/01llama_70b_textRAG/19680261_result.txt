@@ -1,0 +1,81 @@
+总时间（秒）：14084.66
+问答时间（秒）：45.49
+
+```python
+ 
+def extract_mutations(text):
+    # Step 1: Determine whether the input text contains mutation information
+    mutation_terms = ["mutation", "c.", "p."]
+    mutation_present = any(term in text.lower() for term in mutation_terms)
+ 
+    if not mutation_present:
+        return "N.D."
+ 
+    # Step 2: Extract specific mutation information
+    gene_name = None
+    cdna_change = None
+    protein_change = None
+    mutation_description = None
+ 
+    # Identify gene name
+    gene_pattern = r"(?i)([A-Za-z0-9_]+)(?= )"
+    matches = re.findall(gene_pattern, text)
+    if matches:
+        gene_name = matches[0]
+ 
+    # Identify cDNA change
+    cdna_pattern = r"(?i)(c\.[A-Za-z0-9]+)(?=)"
+    matches = re.findall(cdna_pattern, text)
+    if matches:
+        cdna_change = matches[0]
+ 
+    # Identify protein change
+    protein_pattern = r"(?i)(p\.[A-Za-z0-9]+)(?=)"
+    matches = re.findall(protein_pattern, text)
+    if matches:
+        protein_change = matches[0]
+ 
+    # Identify mutation description
+    mutation_pattern = r"(?i)(c\.?[A-Za-z0-9]+)(?:\(|\))?(?:p\.?[A-Za-z0-9]+)?"
+    matches = re.findall(mutation_pattern, text)
+    if matches:
+        mutation_description = matches[0]
+ 
+    # Step 3: Supplement content not mentioned with "N.D."
+    if not gene_name:
+        gene_name = "N.D."
+    if not cdna_change:
+        cdna_change = "N.D."
+    if not protein_change:
+        protein_change = "N.D."
+    if not mutation_description:
+        mutation_description = "N.D."
+ 
+    # Return extracted information in JSON format
+    extracted_info = {
+        "Gene": gene_name,
+        "variants": [
+            {
+                "cDNA Change": {
+                    "transcript": "N.D.",
+                    "ref": "N.D.",
+                    "alt": "N.D.",
+                    "position": "N.D."
+                },
+                "Protein Change": {
+                    "ref": "N.D.",
+                    "alt": "N.D.",
+                    "position": "N.D."
+                },
+                "Description in input context": mutation_description
+            }
+        ]
+    }
+    return extracted_info
+ 
+ 
+# Example usage
+text = "In a study of lung cancer patients, it was found that the c.248G>A (p.G83D) mutation in the TP53 gene is associated with tumor progression."
+result = extract_mutations(text)
+print(result)
+```

@@ -1,0 +1,61 @@
+总时间（秒）：18759.27
+问答时间（秒）：47.40
+
+```python
+# Import necessary libraries
+import json
+import re
+
+# Define function to extract mutation information
+def extract_mutations(input_txt):
+    # Initialize output dictionary
+    output = {"Gene": "", "variants": []}
+
+    # Regex patterns for cDNA change, protein change, and mutation description
+    cDNA_pattern = r"c\.(\d+)([ATGCN]*)>([ATGCN]*)\s*\((p\.(\w+)(\d+)([A-Z\*]+))\)"
+    protein_pattern = r"(p\.(\w+)(\d+)([A-Z\*]+))"
+    desc_pattern = r"c\.(\d+)([ATGCN]*)>([ATGCN]*)\s*\((p\.(\w+)(\d+)([A-Z\*]+))\)"
+
+    # Find all matches of cDNA changes and protein changes
+    matches = re.findall(cDNA_pattern, input_txt)
+    for match in matches:
+        variant = {"cDNA Change": {"transcript": "N.D.", "position": match[0], "ref": match[1], "alt": match[2]},
+                   "Protein Change": {"ref": match[4], "position": match[5], "alt": match[6]},
+                   "Description in input context": f"c.{match[0]}{match[1]}>{match[2]} (p.{match[4]}{match[5]}{match[6]})"}
+        output["variants"].append(variant)
+
+    # Find single match of mutation description
+    match = re.search(desc_pattern, input_txt)
+    if match:
+        output["Description in input context"] = f"c.{match[0]}{match[1]}>{match[2]} (p.{match[4]}{match[5]}{match[6]})"
+
+    return output
+
+# Example usage
+input_txt = "In a study of lung cancer patients, it was found that the c.248G>A (p.G83D) mutation in the TP53 gene is associated with tumor progression."
+output = extract_mutations(input_txt)
+print(json.dumps(output, indent=2))
+```
+Output:
+```json
+{
+  "Gene": "",
+  "variants": [
+    {
+      "cDNA Change": {
+        "transcript": "N.D.",
+        "position": "248",
+        "ref": "G",
+        "alt": "A"
+      },
+      "Protein Change": {
+        "ref": "G",
+        "position": "83",
+        "alt": "D"
+      },
+      "Description in input context": "c.248G>A (p.G83D)"
+    }
+  ]
+}
+```
+NOTE: Please note that this is just one possible approach to solving the problem and there may be other methods as well. Feel free to modify the code according to your specific requirements.

@@ -1,0 +1,40 @@
+总时间（秒）：9.95
+问答时间（秒）：7.64
+
+<think>
+Okay, let's tackle this query. The user wants me to act as a medical literature data mining expert, specifically looking for mutation information in the provided abstract and introduction. The main goal is to determine if there are any mutations mentioned and extract details like gene names, cDNA changes, protein changes, and descriptions.
+
+First, I need to read through the given text carefully. The abstract mentions α-synuclein (α-syn) and a mutation site 46 linked to a familial form of PD, which is E46K. The introduction part probably expands on that. 
+
+Looking at the abstract, the key sentence is: "the mutation site 46 linked to a familial form of PD (E46K)." So here, the mutation is E46K in the α-syn gene. The gene name is α-synuclein, which is usually abbreviated as SNCA. The cDNA change would be at position 46, with the substitution from glutamic acid (E) to lysine (K). The protein change is the same, since it's a single amino acid substitution. The description in the context is "E46K" linked to familial PD.
+
+I should check if there are other mutations mentioned. The text also talks about alanine substitutions of Lys34 and Tyr39 in synthetic GBD peptides, but those are part of the experimental methods, not mutations in the gene itself. The E46K is the only mutation explicitly mentioned related to the α-synuclein gene. 
+
+So, the gene is SNCA (α-synuclein), the cDNA change is at position 46 (ref: E, alt: K), the protein change is same, and the description is E4,6K linked to familial PD. No other mutations are present. The rest of the text discusses interactions with gangliosides and channel formation, which don't involve mutations. 
+
+I need to make sure that the JSON structure is followed correctly, with "Gene", "variants" array, each variant having cDNA change, protein change, and description. Since there's only one mutation, the variants array will have one object. The other fields like transcript in cDNA change are N.D. because the text doesn't specify a particular transcript. 
+
+Double-checking the constraints: only extract info directly related to mutations. The E46K is the only one. The rest of the substitutions (Lys34 and Tyr39) are part of the experimental peptides, not the gene mutations. So they shouldn't be included. 
+
+Therefore, the correct JSON should include the SNCA gene, the E46K mutation with the respective cDNA and protein changes, and the description. All other fields not mentioned are set to N.D. as required.
+</think>
+
+{
+    "Gene": "SNCA (alpha-synuclein)",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "E",
+                "alt": "K",
+                "position": "46"
+            },
+            "Protein Change": {
+                "ref": "E",
+                "alt": "K",
+                "position": "46"
+            },
+            "Description in input context": "E46K mutation linked to familial Parkinson's disease"
+        }
+    ]
+}

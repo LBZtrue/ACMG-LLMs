@@ -1,0 +1,42 @@
+总时间（秒）：11.98
+问答时间（秒）：11.80
+
+<think>
+Okay, let's tackle this query. The user wants to extract mutation information from a given text. The provided example uses JSON format, so I need to make sure the output matches that structure.
+
+First, I'll look at the input text. The main paragraph discusses a study on Parkinson's disease and a mutation in the PINK1 gene. The key parts here are the gene name (PINK1), the specific mutation (c.1125delG), and the resulting protein change (p.G375fs). 
+
+I need to check if there are any other mutations mentioned. The text also refers to the G1178E mutation in the LRRK2 gene. So that's another entry. 
+
+Now, the JSON structure requires "Gene" as the top-level key, with an array of "variants" under it. Each variant should have cDNA Change, Protein Change, and Description. 
+
+For the first mutation (PINK1 c.1125delG), the cDNA change is delG at position 1125. The protein change is G375fs, which is a frameshift. The description is "c.1125delG (p.G375fs)".
+
+For the LRRK2 G1178E mutation, the cDNA change is G to E at position 1178. The protein change is also G1178E. The description is straightforward.
+
+I need to ensure that any missing fields are filled with "N.D." as per the constraints. In this case, the transcript information for both mutations isn't mentioned, so it should be "N.D." in the cDNA Change's transcript field.
+
+Double-checking that all extracted information is accurate and directly from the text. No other mutations are mentioned, so the output should include both PINK1 and LRRK2 variants.
+</think>
+
+```json
+{
+    "Gene": "PINK1",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "G",
+                "alt": "del",
+                "position": "1125"
+            },
+            "Protein Change": {
+                "ref": "G",
+                "alt": "fs",
+                "position": "375"
+            },
+            "Description in input context": "c.1125delG (p.G375fs)"
+        }
+    ]
+}
+```

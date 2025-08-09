@@ -1,0 +1,74 @@
+总时间（秒）：29.37
+问答时间（秒）：28.23
+
+<think>
+Alright, so I've been given this query where someone wants me to extract information about mutations from a paragraph of medical literature. The user is a professional in data mining, specifically looking for mutation details, and they want the output in a specific JSON format.
+
+First, I need to understand what exactly the user is asking for. They provided an example with a TP53 gene mutation, showing how the cDNA change, protein change, and description should be structured. That makes it clear that each variant needs detailed information if available.
+
+Looking at the input text, it's about LRRK2 and its role in Parkinson's disease. The abstract mentions disease-associated mutations: R1441C, G2019S, and I2020T. These are all missense mutations. The introduction part also refers to these same mutations in the context of LRRK2.
+
+Now, extracting this information. The gene here is LRRK2. Each mutation needs its own entry in the variants array. However, in the provided example, only one variant was present. Here, there are three, so each should be listed separately with their respective details.
+
+But wait, looking at the JSON structure they want: for each variant, "cDNA Change" has a transcript field, but it's not mentioned in the input text. So that would be "N.D.". The same goes for any other missing fields.
+
+So, for each mutation:
+- Gene is LRRK2.
+- For each variant (R1441C, G2019S, I2020T), extract the protein change and description as they appear in the text. Since cDNA changes aren't provided, those will be "N.D.".
+
+Wait, but in the initial example, the user included both cDNA and protein changes if available. In this case, only protein changes are mentioned for each mutation. So the JSON should reflect that, with empty fields where information isn't present.
+
+I need to make sure I format it correctly, with "N.D." where data is missing and proper structuring for multiple variants. Each variant gets its own object within the variants array, even if some details aren't available.
+
+So putting it all together, the JSON will have LRRK2 as the gene and three variants listed under variants, each showing their protein change and how they were described in the input.
+</think>
+
+```json
+{
+    "Gene": "LRRK2",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "R1441",
+                "alt": "C",
+                "position": "1441"
+            },
+            "Protein Change": {
+                "ref": "R",
+                "alt": "C",
+                "position": "1441"
+            },
+            "Description in input context": "R1441C"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "G2019",
+                "alt": "S",
+                "position": "2019"
+            },
+            "Protein Change": {
+                "ref": "G",
+                "alt": "S",
+                "position": "2019"
+            },
+            "Description in input context": "G2019S"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "I2020",
+                "alt": "T",
+                "position": "2020"
+            },
+            "Protein Change": {
+                "ref": "I",
+                "alt": "T",
+                "position": "2020"
+            },
+            "Description in input context": "I2020T"
+        }
+    ]
+}
+```

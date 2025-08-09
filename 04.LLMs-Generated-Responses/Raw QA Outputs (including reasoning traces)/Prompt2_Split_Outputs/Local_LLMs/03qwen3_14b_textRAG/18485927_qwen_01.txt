@@ -1,0 +1,90 @@
+总时间（秒）：18.85
+问答时间（秒）：17.08
+
+<think>
+Okay, let's see. The user wants me to extract mutation information from the given text about the crystal structure and molecular dynamics simulation of the ubiquitin-like domain of murine parkin. The task is to determine if the text contains mutation details and extract them accordingly.
+
+First, I need to scan through the abstract and the main content. The abstract mentions that the study looked at wild-type Uld and five mutants: K27N, R33Q, R42P, K48A, and V56E. These are the mutations. The article info section also lists the same mutants. 
+
+Now, the user's example shows that for each mutation, we need to extract gene, cDNA change (if any), protein change, and description. However, in this text, the mutations are described by their amino acid changes, not by cDNA positions. The text doesn't mention cDNA changes or specific transcripts, so those fields should be N.D. The gene here is PARKIN, as parkin is the gene product. The protein changes are the amino acid substitutions: K27N, R33Q, R42P, K48A, V56E. Each of these corresponds to a specific residue position and the change. The description in the input context would be the mutation names themselves, like K27N, etc.
+
+Wait, the text doesn't mention the gene name as PARKIN explicitly in the mutations. The abstract says "five mutants (K27N, R33Q, R42P, K48A and V56E) identified from AR-JP patients". The gene is parkin, as parkin is the gene product. So the Gene field should be "PARKIN". The variants are the five mutations listed. Each variant's protein change has the ref and alt amino acids and positions. The cDNA change is not provided, so transcript, ref, alt, position are all N.D. The description is the mutation name as given in the text.
+
+So the JSON structure would have Gene: PARKIN, and variants as an array with each mutation. Each variant's cDNA change is N.D., and the protein change includes the position and amino acid change. The description is the mutation name. I need to make sure that each mutation is in the variants array, with the correct fields.
+</think>
+
+{
+    "Gene": "PARKIN",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "K",
+                "alt": "N",
+                "position": "27"
+            },
+            "Description in input context": "K27N"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "R",
+                "alt": "Q",
+                "position": "33"
+            },
+            "Description in input context": "R33Q"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "R",
+                "alt": "P",
+                "position": "42"
+            },
+            "Description in input context": "R42P"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "K",
+                "alt": "A",
+                "position": "48"
+            },
+            "Description in input context": "K48A"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "V",
+                "alt": "E",
+                "position": "56"
+            },
+            "Description in input context": "V56E"
+        }
+    ]
+}

@@ -1,0 +1,104 @@
+总时间（秒）：24.26
+问答时间（秒）：22.70
+
+<think>
+Okay, let's tackle this query. The user wants me to extract information from the provided scientific paper and structure it into a specific JSON format. First, I need to parse the abstract and introduction to identify the relevant genetic variants, the disease, and the experimental methods.
+
+Looking at the abstract, the paper discusses mutations in the PINK1 gene associated with Parkinson's disease. The variants mentioned are in the N-terminus, C-terminus, and kinase domain. However, the specific HGVS nomenclature isn't provided in the text. Since the user requires standardizing HGVS via API, but the paper doesn't give exact nucleotide changes, I'll have to note that as N.D. for the cDNA and protein changes.
+
+Next, the disease. The paper refers to Parkinson disease (PD), which I need to map to MONDO. Checking MONDO, the term is MONDO:0005233. So that's straightforward.
+
+For the experimental methods, the paper describes creating cell lines with normal and mutant PINK1 to simulate heterozygous and homozygous states. They subjected these to oxidative stress and measured apoptosis and mitochondrial membrane potential. The methods here include generating stable cell lines, oxidative stress experiments, and assessing apoptosis and DCm. 
+
+I need to detail each method. The material used is human dopaminergic neuronal cell lines. The readout types are quantitative, as they measure rates and changes. The variants are described as N-terminus, C-terminus, and kinase domain mutants, but without specific HGVS, so those fields will be N.D. The biological replicates aren't mentioned, so I'll use N.D. for that. Similarly, technical replicates, controls, statistical methods, and thresholds aren't specified in the abstract, so they'll be N.D. or "Not described" as per the instructions.
+
+The "Approved assay" for studying PD would be "Yes" since the methods are standard in PD research, but I need to confirm that. However, the user might expect that based on common practices, but the paper doesn't explicitly state if the method is approved, so maybe N.D. But the example had "Yes" when it's common. I think in this case, since the methods are standard in PD research, it's safe to say "Yes".
+
+Putting it all together, I'll structure the JSON with the variants, disease, and experiments, filling in N.D. where specific details aren't provided. Making sure to follow the example's format strictly.
+</think>
+
+{
+  "Variants Include": [
+    {
+      "Gene": "PINK1",
+      "variants": [
+        {
+          "HGVS": "N.D.",
+          "cDNA Change": {
+            "transcript": "N.D.",
+            "ref": "N.D.",
+            "alt": "N.D.",
+            "position": "N.D."
+          },
+          "Protein Change": {
+            "ref": "N.D.",
+            "alt": "N.D.",
+            "position": "N.D."
+          },
+          "Description in input context": "Mutations in the N-terminus, C-terminus, and kinase domain of PINK1"
+        }
+      ]
+    }
+  ],
+  "Described Disease": {
+    "Described Disease": "Parkinson's disease",
+    "MONDO": "MONDO:0005233"
+  },
+  "Experiment Method": [
+    {
+      "Assay Method": "Cell line generation and oxidative stress experiment",
+      "Material used": {
+        "Material Source": "Cell line",
+        "Material Name": "Human dopaminergic neuronal cell lines",
+        "Description": "Stable cell lines were generated with normal and mutant PINK1 to simulate heterozygous and homozygous states."
+      },
+      "Readout type": "Quantitative",
+      "Readout description": [
+        {
+          "Variant": "N.D.",
+          "Conclusion": "N.D.",
+          "Molecular Effect": "N.D.",
+          "Result Description": "Cell lines were subjected to oxidative stress, and apoptosis and mitochondrial membrane potential (DCm) were measured."
+        }
+      ],
+      "Biological replicates": {
+        "Biological replicates": "N.D.",
+        "Description": "N.D."
+      },
+      "Technical replicates": {
+        "Technical replicates": "N.D.",
+        "Description": "N.D."
+      },
+      "Basic positive control": {
+        "Basic positive control": "N.D.",
+        "Description": "N.D."
+      },
+      "Basic negative control": {
+        "Basic negative control": "N.D.",
+        "Description": "N.D."
+      },
+      "Validation controls P/LP": {
+        "Validation controls P/LP": "N.D.",
+        "Counts": "N.D."
+      },
+      "Validation controls B/LB": {
+        "Validation controls B/LB": "N.D.",
+        "Counts": "N.D."
+      },
+      "Statistical analysis method": {
+        "Statistical analysis method": "N.D."
+      },
+      "Threshold for normal readout": {
+        "Threshold for normal readout": "N.D.",
+        "Source": "N.D."
+      },
+      "Threshold for abnormal readout": {
+        "Threshold for abnormal readout": "N.D.",
+        "Source": "N.D."
+      },
+      "Approved assay": {
+        "Approved assay": "Yes"
+      }
+    }
+  ]
+}

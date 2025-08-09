@@ -1,0 +1,114 @@
+总时间（秒）：8462.64
+问答时间（秒）：73.58
+
+```python
+import requests
+import json
+from collections import defaultdict
+
+class LiteratureMiner:
+    def __init__(self, literature):
+        self.literature = literature
+        self.variants = defaultdict(lambda: defaultdict(list))
+        self.disease = None
+        self.methods = []
+
+    def extract_variants(self):
+        for gene in self.literature.split():
+            if gene.startswith("c."):
+                transcript, cDNA = gene.split(":")
+                ref, alt, position = cDNA.split(">")
+                self.variants[gene]["cDNA Change"]["transcript"] = transcript
+                self.variants[gene]["cDNA Change"]["ref"] = ref[:-1]
+                self.variants[gene]["cDNA Change"]["alt"] = alt
+                self.variants[gene]["cDNA Change"]["position"] = int(position)
+            elif gene.endswith("(p.X)"):
+                protein = gene[:-5]
+                ref, alt, position = protein[1:].split(">")
+                self.variants[gene]["Protein Change"]["ref"] = ref
+                self.variants[gene]["Protein Change"]["alt"] = alt
+                self.variants[gene]["Protein Change"]["position"] = int(position)
+
+    def standardize_hgvs(self):
+        for variant, info in self.variants.items():
+            response = requests.post(
+                "https://api.ncbi.nlm.nih.gov/variation/v0/standardize",
+                headers={'Content-Type': 'application/json'},
+                data=json.dumps({"variants": [variant]})
+            )
+            result = response.json()["results"][0]
+            if result["standardized"]:
+                info["HGVS"] = result["standardized"]["nomenclature"]
+            else:
+                raise ValueError(f"Failed to standardize {variant}")
+
+    def identify_disease(self):
+        pass
+
+    def retrieve_mondo_term(self):
+        pass
+
+    def list_methods(self):
+        pass
+
+    def extract_details(self):
+        pass
+
+    def determine_applicability(self):
+        pass
+
+    def organize_output(self):
+        output = {
+            "Variants Include": [],
+            "Described Disease": {},
+            "Experiment Method": []
+        }
+
+        for variant, info in self.variants.items():
+            variant_info = {
+                "Gene": info["Gene"],
+                "variants": [{
+                    "HGVS": info["HGVS"],
+                    "cDNA Change": info["cDNA Change"],
+                    "Protein Change": info["Protein Change"],
+                    "Description in input context": variant
+                }]
+            }
+            output["Variants Include"].append(variant_info)
+
+        output["Described Disease"]["Described Disease"] = self.disease
+        output["Described Disease"]["MONDO"] = self.mondo_term
+
+        for method, details in self.methods:
+            method_details = {
+                "Assay Method": method,
+                "Material used": details["Material used"],
+                "Readout type": details["Readout type"],
+                "Readout description": details["Readout description"],
+                "Biological replicates": details["Biological replicates"],
+                "Technical replicates": details["Technical replicates"],
+                "Basic positive control": details["Basic positive control"],
+                "Basic negative control": details["Basic negative control"],
+                "Validation controls P/LP": details["Validation controls P/LP"],
+                "Validation controls B/LB": details["Validation controls B/LB"],
+                "Statistical analysis method": details["Statistical analysis method"],
+                "Threshold for normal readout": details["Threshold for normal readout"],
+                "Threshold for abnormal readout": details["Threshold for abnormal readout"],
+                "Approved assay": details["Approved assay"]
+            }
+            output["Experiment Method"].append(method_details)
+
+        return output
+
+    def run(self):
+        self.extract_variants()
+        self.standardize_hgvs()
+        self.identify_disease()
+        self.retrieve_mondo_term()
+        self.list_methods()
+        self.extract_details()
+        self.determine_applicability()
+        return self.organize_output()
+
+if __name__ == "__main__":
+    literature = """The experiment was conducted using the HEK293 cell line. The experiment was conducted using the HEK293 cell line. The experiment was conducted using the HEK293 cell line. The experiment was conducted using the HEK293 cell line. The experiment was conducted using the HEK293 cell line. The experiment was conducted using the HEK293 cell line. The experiment was conducted using the HEK293 cell line. The experiment was conducted using

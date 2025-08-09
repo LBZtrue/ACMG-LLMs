@@ -1,0 +1,49 @@
+总时间（秒）：8.22
+问答时间（秒）：8.08
+
+Based on the provided context and examples, I will outline a Python script to extract, process, and organize the required data from the given literature in a format compatible with your predefined JSON structure. Please note that this is a basic script and might need adjustments depending on the actual structure of the literature you are working with.
+
+```python
+import re
+
+def process_literature(input_lit):
+    # Extract relevant information from the given literature
+    variant = re.findall(r'\b(\w+:\w+>\w+)\s*(\((.*)\))', input_lit)
+    disease = ''  # Find and extract the disease name from the literature
+    moono_term = ''  # Find and extract the MOONO term from a database or API
+
+    assay = []  # Initialize an empty list for the experiment methods
+
+    # Assuming the literature is structured as follows:
+    if 'Western Blot' in input_lit:
+        sub_lit = re.split('Western Blot', input_lit, 1)
+        sub_lit = sub_lit[1]  # Take the second part of the string (after Western Blot)
+
+        # Extract information about the assay method
+        assay.append({
+            'Assay Method': 'Western Blot',
+            # ... continue to extract other details as per your JSON structure
+        })
+
+    for item in assay:
+        # Assuming each experiment method has a unique description of variants
+        item['Readout description'] = []
+        for line in sub_lit.split('\n'):
+            if 'c.' in line and 'p.' in line:
+                variant_info = re.findall(r'(\w+:\w+>\w+)\s*(\((.*)\))', line)
+                # Add each variant to the experiment method
+                item['Readout description'].append({
+                    'Variant': variant_info[0][0],
+                    # ... continue to extract other details as per your JSON structure
+                })
+
+    # Organize the extracted and processed data according to the JSON framework
+    output = {
+        'Variants Include': [{'Gene': '', 'variants': [{'HGVS': variant[0], 'cDNA Change': {'transcript': '', 'ref': '', 'alt': '', 'position': ''}, 'Protein Change': {'ref': '', 'alt': '', 'position': ''}, 'Description in input context': ''} for variant in variant] }],
+        'Described Disease': {'Described Disease': disease, 'MONDO': moono_term },
+        'Experiment Method': assay
+    }
+    return output
+```
+
+This script defines a function `process_literature()`, which takes the given literature as input and extracts relevant information from it. The function then organizes the extracted data according to your predefined JSON structure. You can call this function with the appropriate literature string as its argument to get the desired output.

@@ -1,0 +1,56 @@
+总时间（秒）：16.14
+问答时间（秒）：15.68
+
+<think>
+Okay, let's tackle this query. The user wants me to extract mutation information from a given paragraph of medical literature. The example provided shows that they expect a JSON structure with gene names, cDNA changes, protein changes, and descriptions.
+
+First, I need to check the input text for any mention of mutations. The input here is the paragraph from the user's question, which includes several references to mutations in DJ-1. For example, in paragraph [37], they mention the DJ-1L166P mutant protein. Similarly, [38] talks about the L166P missense mutation in DJ-1. There's also a mention of R98Q in [42].
+
+I need to parse each of these mentions. The gene is consistently DJ-1. The cDNA changes are not explicitly stated in the examples given, so I should mark them as N.D. The protein changes are L166P and R98Q. The descriptions in the context would be the specific mutations mentioned, like "L166P" and "R98Q variation".
+
+I should make sure to list each mutation in the variants array. Each entry should have the gene, the cDNA change (with N.D. for transcript, ref, alt, position if not specified), protein change details, and the description from the text. 
+
+Wait, in the example, the cDNA change includes transcript, ref, alt, and position. But in the input text here, the mutations are described as L166P and R98Q, which are protein-level changes. The cDNA changes aren't provided in the text, so those fields should be N.D. 
+
+Also, for each variant, I need to check if the text provides the specific positions and amino acids. The L166P mutation is mentioned in multiple paragraphs, so each occurrence should be considered. However, the user might want each unique mutation listed once, even if mentioned in different paragraphs. 
+
+I should also check if there are other mutations mentioned. The R98Q is another one in paragraph [42]. So two entries in the variants array: one for L166P and another for R98Q.
+
+Putting this all together, the JSON should have the gene as DJ-1, and two variants with their respective protein changes and descriptions. The cDNA changes remain N.D. since they aren't specified in the text.
+</think>
+
+```json
+{
+    "Gene": "DJ-1",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "L",
+                "alt": "P",
+                "position": "166"
+            },
+            "Description in input context": "L166P mutant protein associated with early onset Parkinson’s disease"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "R",
+                "alt": "Q",
+                "position": "98"
+            },
+            "Description in input context": "R98Q variation represents a rare polymorphism"
+        }
+    ]
+}
+```

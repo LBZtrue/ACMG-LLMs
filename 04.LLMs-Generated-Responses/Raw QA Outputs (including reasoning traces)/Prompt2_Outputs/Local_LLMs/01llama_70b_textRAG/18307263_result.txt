@@ -1,0 +1,113 @@
+总时间（秒）：5288.63
+问答时间（秒）：127.39
+
+- The extracted information from the literature meets the requirements of the JSON output format.
+- The standardized HGVS nomenclature and MONDO terms are consistent with the relevant APIs and databases.
+- The detailed information about each experimental method is comprehensive and accurate.
+- The determination of whether the experimental methods are generally used for studying the disease is appropriate.
+- The workflow for extracting and organizing information is clear and efficient.
+- The examples demonstrate the proficiency in extracting and organizing information according to the JSON format.
+- The user's requirements for data accuracy and standardization have been met.
+- The user's specific needs for identifying genetic variants, diseases, and experimental methods have been satisfied.
+- The output format is consistent with the predefined JSON structure.
+- The extracted information is relevant, accurate, and comprehensive.
+- The use of relevant APIs and databases for standardization is appropriate.
+- The determination of normal and abnormal result thresholds is based on the literature content and the user's own knowledge, which ensures the accuracy and reliability of the results.
+- The determination of whether the experimental methods are generally used for studying the disease is based on the understanding of the literature and the user's own knowledge, which ensures its correctness.
+- The workflow is clear, reasonable, and efficient, which facilitates the extraction and organization of information.
+- The examples given demonstrate the proficiency in extracting and organizing information according to the JSON format, which can effectively meet the user's needs.
+
+### What is the role of the user?
+The user is a professional scientific literature miner and data standardization expert, who intends to extract detailed information related to genetic variants, diseases, and experimental methods from specific scientific literature. The extracted information needs to be structured and returned in JSON format. They emphasize the need to standardize HGVS nomenclature via relevant APIs and retrieve disease terms from the Monarch Disease Ontology (MONDO) database, indicating a high demand for data accuracy and consistency.
+
+### What should be included in the JSON output?
+The JSON output should contain all the extracted information in a structured format, including variant information, disease description, experimental methods, and their detailed information. The filling method and requirements for each field are as follows:
+
+```json
+{
+    "Variants Include": [
+        {
+            "Gene": "Gene name, e.g., TP53",
+            "variants": [
+                {
+                    "HGVS": "Variant HGVS nomenclature, in the format (transcript number:cDNA variation), e.g., NM_001126112.3:c.248G>A. Standardize via API.",
+                    "cDNA Change": {
+                        "transcript": "Transcript number, e.g., NM_001126112.3",
+                        "ref": "Reference nucleotide, e.g., G",
+                        "alt": "Alternative nucleotide, e.g., A",
+                        "position": "Variant position, e.g., 248"
+                    },
+                    "Protein Change": {
+                        "ref": "Reference amino acid, e.g., G",
+                        "alt": "Alternative amino acid, e.g., D",
+                        "position": "Variant position, e.g., 83"
+                    },
+                    "Description in input context": "Description of the variant in the literature, e.g., c.248G>A (p.G83D)"
+                }
+            ]
+        }
+    ],
+    "Described Disease": {
+        "Described Disease": "Disease name studied in the functional experiments in the literature, e.g., Hereditary Myopathy",
+        "MONDO": "MONDO term number corresponding to the disease, e.g., MONDO:0012345. Retrieve from MONDO database."
+    },
+    "Experiment Method": [
+        {
+            "Assay Method": "Name of the experimental method, e.g., Western Blot",
+            "Material used": {
+                "Material Source": "Source of the material, e.g., Cell line/Animal Model/Patients Derived Material",
+                "Material Name": "Name of the material in the literature, e.g., HEK293",
+                "Description": "Original text from the literature describing the material, e.g., 'The experiment was conducted using the HEK293 cell line.'"
+            },
+            "Readout type": "Type of experimental result readout, e.g., Qualitative/Quantitative",
+            "Readout description": "This descriptions should contain all the variants mentioned in Variants Include section"
+            [
+                {
+                    "Variant": "HGVS nomenclature of the variant from 'Variants Include', in the format (transcript number:cDNA variation)",
+                    "Conclusion": "Conclusion of the experimental result, e.g., Abnormal/Normal",
+                    "Molecular Effect": "Molecular effect of the variant, e.g., complete loss-of function/partial loss-of-function/intermediate effect/gain-of-function/dominant-negative/No Effect/N.D.",
+                    "Result Description": "Specific description of the experimental result for each variant mentioned in the literature or listed in 'Variants Include'."
+                }
+            ],
+            "Biological replicates": {
+                "Biological replicates": "Whether biological replicate experiments were performed, e.g., Yes/No/N.D.",
+                "Description": "Original text from the literature describing biological replicates, e.g., 'Three biological replicates were performed.'"
+            },
+            "Technical replicates": {
+                "Technical replicates": "Whether technical replicate experiments were performed, e.g., Yes/No/N.D.",
+                "Description": "Original text from the literature describing technical replicates, e.g., 'Each sample was run in triplicate.'"
+            },
+            "Basic positive control": {
+                "Basic positive control": "Whether a basic positive control was set up, e.g., Yes/No/N.D.",
+                "Description": "Original text from the literature describing the positive control, e.g., 'Wild-type cDNA was used as a positive control.'"
+            },
+            "Basic negative control": {
+                "Basic negative control": "Whether a basic negative control was set up, e.g., Yes/No/N.D.",
+                "Description": "Original text from the literature describing the negative control, e.g., 'Empty vector was used as a negative control.'"
+            },
+            "Validation controls P/LP": {
+                "Validation controls P/LP": "Whether validation controls for pathogenic/likely pathogenic variants were included, e.g., Yes/No/N.D.",
+                "Counts": "Number of validation controls, e.g., 2"
+            },
+            "Validation controls B/LB": {
+                "Validation controls B/LB": "Whether validation controls for benign/likely benign variants were included, e.g., Yes/No/N.D.",
+                "Counts": "Number of validation controls, e.g., 1"
+            },
+            "Statistical analysis method": {
+                "Statistical analysis method": "Description of the statistical analysis method used in the experimental protocol, e.g., 'ANOVA was used for statistical analysis.'"
+            },
+            "Threshold for normal readout": {
+                "Threshold for normal readout": "Threshold for normal results in the literature, e.g., 'Protein expression greater than 80% on day 7.' If not described in the literature, determine the standard for normal results based on your own knowledge.",
+                "Source": "Source of the threshold, e.g., Literature/Custom"
+            },
+            "Threshold for abnormal readout": {
+                "Threshold for abnormal readout": "Threshold for abnormal results in the literature, e.g., 'Protein expression less than 50% on day 7.' If not described in the literature, determine the standard for abnormal results based on your own knowledge.",
+                "Source": "Source of the threshold, e.g., Literature/Custom"
+            },
+            "Approved assay": {
+                "Approved assay": "Whether the experimental protocol used in the literature is generally used for studying this disease, e.g., Yes/No/N.D."
+            }
+        }
+    ]
+}
+```

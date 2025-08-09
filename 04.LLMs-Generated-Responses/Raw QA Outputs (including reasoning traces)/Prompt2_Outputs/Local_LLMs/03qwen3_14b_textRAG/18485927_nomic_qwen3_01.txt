@@ -1,0 +1,159 @@
+总时间（秒）：34.89
+问答时间（秒）：33.26
+
+<think>
+Okay, let's tackle this query step by step. The user wants me to extract detailed information from a scientific paper about the crystal structure and molecular dynamics simulation of the ubiquitin-like domain of murine parkin. They need the data in a specific JSON format, including genetic variants, diseases, and experimental methods. 
+
+First, I need to identify the gene involved here. The paper mentions "parkin" and specifically the "ubiquitin-like domain" (Uld) in murine parkin. The gene is PARK2, which is known to be associated with autosomal recessive juvenile Parkinsonism (AR-JP). The variants listed are K27N, R33Q, R42P, K48A, and V56E. However, the problem is that the HGVS nomenclature requires transcript and position information, which isn't provided in the paper. The paper doesn't mention specific transcripts or cDNA changes, so I can't standardize the HGVS nomenclature via API. That means I have to use "N.D." for those fields.
+
+Next, the disease. The paper clearly states that parkin is the major cause of AR-JP. I need to look up the MONDO term for AR-JP. From what I recall, MONDO:0005346 is the term for "Autosomal Recessive Juvenile Parkinsonism." So that's the MONDO entry.
+
+For the experimental methods, the paper describes X-ray crystal structure determination and molecular dynamics (MD) simulations. The X-ray method is straightforward, but MD simulations are also mentioned. The materials used are the murine parkin Uld and its variants. However, the paper doesn't mention cell lines or vectors, so the material source might be "Protein" or "In vitro." The readout types are structural and molecular effects, which are qualitative. The readout description should include the variants and their effects as mentioned in the paper, like K27N causing structural changes, etc. 
+
+Looking at the experimental details, the paper doesn't mention biological or technical replicates, so those would be "N.D." There are no controls mentioned either, so the basic positive and negative controls would be "N.D." The statistical analysis method isn't specified, so again "N.D." The thresholds for normal and abnormal readouts are also not provided in the text, so I'll have to use standard thresholds based on my knowledge, but the source would be "Custom." 
+
+Finally, the approved assay. Since X-ray crystallography and MD simulations are standard methods in structural biology, especially for studying protein structure and dynamics, I can mark "Approved assay" as "Yes."
+
+Putting it all together, I need to structure the JSON with the variants, disease with MONDO term, and experimental methods with all the details, using "N.D." where information isn't available in the paper. Also, ensure that the readout description includes each variant and their molecular effects as described in the text.
+</think>
+
+{
+  "Variants Include": [
+    {
+      "Gene": "PARK2",
+      "variants": [
+        {
+          "HGVS": "N.D.",
+          "cDNA Change": {
+            "transcript": "N.D.",
+            "ref": "N.D.",
+            "alt": "N.D.",
+            "position": "N.D."
+          },
+          "Protein Change": {
+            "ref": "N.D.",
+            "alt": "N.D.",
+            "position": "N.D."
+          },
+          "Description in input context": "K27N, R33Q, R42P, K48A, V56E (described as structural/molecular effects in the paper)"
+        }
+      ]
+    }
+  ],
+  "Described Disease": {
+    "Described Disease": "Autosomal Recessive Juvenile Parkinsonism",
+    "MONDO": "MONDO:0005346"
+  },
+  "Experiment Method": [
+    {
+      "Assay Method": "X-ray Crystallography",
+      "Material used": {
+        "Material Source": "Protein",
+        "Material Name": "Murine parkin ubiquitin-like domain (Uld) and variants",
+        "Description": "X-ray crystallography was performed on the murine parkin Uld and its variants."
+      },
+      "Readout type": "Qualitative",
+      "Readout description": [
+        {
+          "Variant": "N.D.",
+          "Conclusion": "N.D.",
+          "Molecular Effect": "N.D.",
+          "Result Description": "Structural changes observed in variants (e.g., K27N, R33Q, R42P, K48A, V56E) through crystallography and MD simulations."
+        }
+      ],
+      "Biological replicates": {
+        "Biological replicates": "N.D.",
+        "Description": "N.D."
+      },
+      "Technical replicates": {
+        "Technical replicates": "N.D.",
+        "Description": "N.D."
+      },
+      "Basic positive control": {
+        "Basic positive control": "N.D.",
+        "Description": "N.D."
+      },
+      "Basic negative control": {
+        "Basic negative control": "N.D.",
+        "Description": "N.D."
+      },
+      "Validation controls P/LP": {
+        "Validation controls P/LP": "N.D.",
+        "Counts": "N.D."
+      },
+      "Validation controls B/LB": {
+        "Validation controls B/LB": "N.D.",
+        "Counts": "N.D."
+      },
+      "Statistical analysis method": {
+        "Statistical analysis method": "N.D."
+      },
+      "Threshold for normal readout": {
+        "Threshold for normal readout": "N.D.",
+        "Source": "Custom"
+      },
+      "Threshold for abnormal readout": {
+        "Threshold for abnormal readout": "N.D.",
+        "Source": "Custom"
+      },
+      "Approved assay": {
+        "Approved assay": "Yes"
+      }
+    },
+    {
+      "Assay Method": "Molecular Dynamics (MD) Simulation",
+      "Material used": {
+        "Material Source": "In vitro",
+        "Material Name": "Murine parkin Uld and variants",
+        "Description": "MD simulations were performed on the murine parkin Uld and its variants."
+      },
+      "Readout type": "Qualitative",
+      "Readout description": [
+        {
+          "Variant": "N.D.",
+          "Conclusion": "N.D.",
+          "Molecular Effect": "N.D.",
+          "Result Description": "MD simulations revealed structural instability and altered dynamics in variants (e.g., K27N, R33Q, R42P, K48A, V56E)."
+        }
+      ],
+      "Biological replicates": {
+        "Biological replicates": "N.D.",
+        "Description": "N.D."
+      },
+      "Technical replicates": {
+        "Technical replicates": "N.D.",
+        "Description": "N.D."
+      },
+      "Basic positive control": {
+        "Basic positive control": "N.D.",
+        "Description": "N.D."
+      },
+      "Basic negative control": {
+        "Basic negative control": "N.D.",
+        "Description": "N.D."
+      },
+      "Validation controls P/LP": {
+        "Validation controls P/LP": "N.D.",
+        "Counts": "N.D."
+      },
+      "Validation controls B/LB": {
+        "Validation controls B/LB": "N.D.",
+        "Counts": "N.D."
+      },
+      "Statistical analysis method": {
+        "Statistical analysis method": "N.D."
+      },
+      "Threshold for normal readout": {
+        "Threshold for normal readout": "N.D.",
+        "Source": "Custom"
+      },
+      "Threshold for abnormal readout": {
+        "Threshold for abnormal readout": "N.D.",
+        "Source": "Custom"
+      },
+      "Approved assay": {
+        "Approved assay": "Yes"
+      }
+    }
+  ]
+}

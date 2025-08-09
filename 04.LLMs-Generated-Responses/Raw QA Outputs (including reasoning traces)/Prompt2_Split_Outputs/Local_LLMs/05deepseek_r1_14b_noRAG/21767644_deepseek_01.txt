@@ -1,0 +1,65 @@
+总时间（秒）：22.51
+问答时间（秒）：22.24
+
+<think>
+Alright, let me try to figure this out step by step. The user has provided a query where they want to extract mutation information from a given paragraph of medical literature. They've also shared an example and some context about the data structure they expect.
+
+First, I need to understand what exactly the user is asking for. It seems like they're looking for a way to automatically parse through medical text and pull out specific details about gene mutations. The goal is to extract gene names, cDNA changes, protein changes, and any relevant descriptions of the mutation from each paragraph.
+
+Looking at the example provided, when the input text mentions a specific mutation like "c.248G>A (p.G83D)", the output should include the gene name (TP53), the cDNA change with reference and alternate bases along with their positions, the protein change similarly, and a brief description from the context.
+
+Now, considering the constraints, I must ensure that if there's no mutation information in the text, I return "N.D." for all fields except the Gene name. But wait, actually, looking at the example again, if there's no mutation info, it seems like the entire JSON should still be structured with placeholders as "N.D."
+
+I need to think about how to identify mutations in the text. Typically, mutations are mentioned using formats like c.XXXX or p.YYY, where X and Y represent nucleotide and amino acid changes. Sometimes they might mention gene names followed by terms like "mutation," "variant," or specific mutation types.
+
+In the provided context, I see several paragraphs mentioning alpha-synuclein mutations, such as A53T, E46K, etc. For each of these, I need to extract the gene (which is alpha-synuclein in all cases here), the cDNA and protein changes if specified, and any descriptions.
+
+For example, one paragraph mentions "A53T mutant" which implies a mutation at position 53, changing Alanine to Threonine. Another mentions "E46K", so Glutamic acid to Lysine at position 46. I should note these as separate entries in the variants array.
+
+However, some paragraphs might not mention specific mutations but discuss the effects of mutations. In such cases, if there's no explicit mutation detail, I'll mark those fields as "N.D."
+
+I also need to handle different formats. Sometimes mutations are written as A53T, others as c.160G>A (p.A53T). I should parse both types and extract the relevant information.
+
+Another thing is the gene name. All mutations in this context seem to be alpha-synuclein, so that's straightforward. But if other genes were mentioned, they'd need to be captured as well.
+
+I might come across terms like "overexpression of A53T mutant" or "the new mutation E46K". In these cases, I should extract the specific mutation and its context.
+
+If a paragraph doesn't mention any mutations, I'll have to return all fields as N.D. except for the gene if it's mentioned without a mutation. Wait, no—the example shows that even if there's no mutation info, the JSON structure is still provided with "N.D." in the relevant fields.
+
+So, my approach should be:
+
+1. Read each paragraph carefully.
+2. Look for any mentions of mutations, variants, or specific amino acid changes.
+3. Extract gene names, cDNA and protein changes if available.
+4. If no mutation info is found, return all as N.D.
+
+I also need to ensure that the JSON structure matches exactly what was shown in the example, with appropriate nesting and fields.
+
+Potential challenges include varying notation styles for mutations (e.g., sometimes using numbers without letters), or discussing multiple mutations in a single paragraph. I'll have to handle each mutation separately in the variants array.
+
+Another point is ensuring accuracy. If the text doesn't specify the exact cDNA change but only mentions the protein level, I should mark the cDNA change as N.D. and vice versa.
+
+I think that's about it. Now, applying this logic to each paragraph provided by the user.
+</think>
+
+```json
+{
+    "Gene": "N.D.",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "N.D."
+        }
+    ]
+}
+```

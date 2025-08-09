@@ -1,0 +1,85 @@
+总时间（秒）：7.81
+问答时间（秒）：5.61
+
+<think>
+Okay, let's tackle this query. The user provided a paragraph from a medical literature abstract and wants to know if it contains mutation information. If yes, extract the relevant details; if not, return "N.D.".
+
+First, I need to read through the abstract carefully. The main focus here is on alpha-synuclein (α-syn) mutations. The abstract mentions three missense mutations: A30P, A53T, and E46K in the α-syn gene. These are associated with rare autosomal dominant forms of familial PD. 
+
+So, the key points here are the gene names (α-syn), the specific mutations (A30P, A53T, E46K), and their roles in PD. The user's task is to extract these mutations. 
+
+I need to check if the text explicitly states the gene name, the specific mutations, and their descriptions. The abstract does mention the gene name α-syn and lists the three mutations with their positions. Each mutation is a missense mutation, which is a type of mutation where the amino acid sequence is changed. 
+
+The user's example shows that when a mutation is mentioned, the gene, cDNA change, protein change, and description are extracted. So, for each mutation, I need to map the information accordingly.
+
+The mutations are:
+1. A30P: This is a substitution where threonine (T) is replaced by proline (P) at position 30.
+2. A53T: Threonine (T) at position 53 is replaced by tyrosine (T).
+3. E46K: Glutamic acid (E) at position 46 is replaced by lysine (K).
+
+The abstract mentions these three mutations, so each should be extracted. The gene is α-syn, and the positions are given. The description in the input context is the specific mutation notation like "A30P" etc.
+
+I need to make sure that each mutation is captured with the correct cDNA and protein changes. The positions are mentioned as "A30P" which translates to the position in the cDNA transcript. For example, A30P would be the cDNA change at position 30, with the reference amino acid being asparagine (N) and the alternate being proline (P). Wait, actually, the position is given as A30P, which is the amino acid change. So in the example, the cDNA change would be the position, and the protein change would be the amino acid change. 
+
+So for each mutation, the cDNA change is the position, and the protein change is the amino acid substitution. The description in the input context is the mutation notation like "A30P".
+
+Therefore, the extracted information should include each mutation with the gene, cDNA change, protein change, and description. Since the user's example includes all three mutations, I need to list them all.
+
+I need to check if there's any mention of other mutations or if the text is only about these three. The abstract clearly states the three mutations, so they are all relevant. The other parts of the abstract discuss the effects of these mutations, but the mutation information is explicitly stated in the first part.
+
+So the answer should list each of the three mutations with their respective details. The gene is α-syn, the positions are given, and the mutations are listed. The cDNA changes are the positions, and the protein changes are the amino acids. The description in the input context is the mutation notation.
+
+I need to make sure that the JSON structure is correct, with the Gene field, and for each variant, the cDNA change, protein change, and description. The example shows that each variant is an object with those fields. So I need to structure each mutation as a separate entry in the variants array.
+
+Also, the user's example includes the "transcript" field as "N.D." when there's no specific information, but in this case, the positions are provided. So for each mutation, the transcript is the position, and the ref and alt are the amino acids. 
+
+Therefore, the JSON should have three entries in the variants array, each with the respective mutation details.
+</think>
+
+{
+    "Gene": "α-syn",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "T",
+                "alt": "P",
+                "position": "30"
+            },
+            "Protein Change": {
+                "ref": "Asn",
+                "alt": "Pro",
+                "position": "30"
+            },
+            "Description in input context": "A30P"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "T",
+                "alt": "Y",
+                "position": "53"
+            },
+            "Protein Change": {
+                "ref": "Asn",
+                "alt": "Tyr",
+                "position": "53"
+            },
+            "Description in input context": "A53T"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "E",
+                "alt": "K",
+                "position": "46"
+            },
+            "Protein Change": {
+                "ref": "Glu",
+                "alt": "Lys",
+                "position": "46"
+            },
+            "Description in input context": "E46K"
+        }
+    ]
+}

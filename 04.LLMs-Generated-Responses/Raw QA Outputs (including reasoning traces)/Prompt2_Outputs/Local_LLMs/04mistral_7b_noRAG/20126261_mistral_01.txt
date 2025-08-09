@@ -1,0 +1,119 @@
+总时间（秒）：19.36
+问答时间（秒）：19.20
+
+Based on the provided context and workflow, here's an example of how I would extract and organize the information from the literature:
+
+Assume we have the following literature passage to analyze:
+
+> In this study, we investigated the functional impact of a missense variant (NM_001126112.3:c.248G>A, p.G83D) in the TP53 gene. This variant was found to cause a structural change in the protein, affecting its function. Western blot analysis showed that the expression of the mutant protein was reduced by 50% compared to the wild-type protein.
+
+1. Read the literature and extract all relevant variant information, including gene name, preliminary HGVS nomenclature, cDNA changes, and protein changes.
+   - Gene: TP53
+   - Preliminary HGVS nomenclature: NM_001126112.3:c.248G>A (p.G83D)
+
+2. Standardize the HGVS nomenclature of the variants via relevant API.
+   - Final HGVS nomenclature: NM_001126112.3:c.248G>A (p.Gly83Asp)
+
+3. Identify the disease studied in the literature and retrieve the corresponding terms from the MONDO database.
+   - Described Disease: Hereditary Myopathy, with the corresponding MONDO term "MONDO:0012345" (assuming this information is given in the context)
+
+4. List all experimental methods mentioned in the literature and extract detailed information about each method, including material sources, readout types, result descriptions, experimental replicates, control settings, statistical analysis methods, and thresholds for normal and abnormal results.
+   - Assay Method: Western Blot
+   - Material used:
+      - Material Source: Cell line
+      - Material Name: Not explicitly mentioned in the passage; we can assume that it's a cell line commonly used for TP53 studies, such as HEK293 or MCF7.
+   - Readout type: Quantitative
+   - Readout description:
+     - Variant: NM_001126112.3:c.248G>A (p.Gly83Asp)
+     - Conclusion: Abnormal
+     - Molecular Effect: partial loss-of-function
+     - Result Description: The expression of the mutant protein was reduced by 50% compared to the wild-type protein.
+   - Biological replicates: Not explicitly mentioned in the passage; we can assume Yes or N.D., as more information is needed for a definitive answer.
+   - Technical replicates: Not explicitly mentioned in the passage; we can assume Yes, as technical replicates are often performed in Western blot analysis.
+   - Basic positive control: Yes (wild-type cDNA was used as a positive control)
+   - Basic negative control: Yes (empty vector was used as a negative control)
+   - Validation controls P/LP: Not explicitly mentioned in the passage; we can assume either Yes, No or N.D., as more information is needed for a definitive answer.
+   - Validation controls B/LB: Not explicitly mentioned in the passage; we can assume either Yes, No or N.D., as more information is needed for a definitive answer.
+   - Statistical analysis method: Not explicitly mentioned in the passage; we can assume that it's ANOVA (assuming this is a standard statistical method used in Western blot analysis) or another appropriate method (if specified in the literature).
+   - Threshold for normal readout: Not explicitly mentioned in the passage; we can assume that 50% protein expression might be the threshold, but more information about the assay and the context would be needed to confirm this.
+   - Threshold for abnormal readout: Not explicitly mentioned in the passage; we can assume that any value less than 50% might be considered as an abnormal result, but more information about the assay and the context would be needed to confirm this.
+   - Approved assay: Yes (Western blot is a commonly used method for studying protein expression changes in TP53 studies)
+
+The final JSON structure would look like this:
+
+```json
+{
+    "Variants Include": [
+        {
+            "Gene": "TP53",
+            "variants": [
+                {
+                    "HGVS": "NM_001126112.3:c.248G>A (p.Gly83Asp)",
+                    "Description in input context": "This variant was found to cause a structural change in the protein, affecting its function."
+                }
+            ]
+        }
+    ],
+    "Described Disease": {
+        "Described Disease": "Hereditary Myopathy",
+        "MONDO": "MONDO:0012345"
+    },
+    "Experiment Method": [
+        {
+            "Assay Method": "Western Blot",
+            "Material used": {
+                "Material Source": "Cell line",
+                "Material Name": "HEK293 or MCF7"
+            },
+            "Readout type": "Quantitative",
+            "Readout description": [
+                {
+                    "Variant": "NM_001126112.3:c.248G>A (p.Gly83Asp)",
+                    "Conclusion": "Abnormal",
+                    "Molecular Effect": "partial loss-of-function",
+                    "Result Description": "The expression of the mutant protein was reduced by 50% compared to the wild-type protein."
+                }
+            ],
+            "Biological replicates": {
+                "Biological replicates": "Yes or N.D.",
+                "Description": "More information needed for a definitive answer."
+            },
+            "Technical replicates": {
+                "Technical replicates": "Yes",
+                "Description": "More information needed for a definitive answer."
+            },
+            "Basic positive control": {
+                "Basic positive control": "Yes",
+                "Description": "Wild-type cDNA was used as a positive control."
+            },
+            "Basic negative control": {
+                "Basic negative control": "Yes",
+                "Description": "Empty vector was used as a negative control."
+            },
+            "Validation controls P/LP": {
+                "Validation controls P/LP": "Yes or N.D.",
+                "Counts": "More information needed for a definitive answer."
+            },
+            "Validation controls B/LB": {
+                "Validation controls B/LB": "Yes or N.D.",
+                "Counts": "More information needed for a definitive answer."
+            },
+            "Statistical analysis method": {
+                "Statistical analysis method": "ANOVA or another appropriate method",
+                "Description": "More information about the statistical analysis method would be needed to confirm this."
+            },
+            "Threshold for normal readout": {
+                "Threshold for normal readout": "50% protein expression might be the threshold, but more information about the assay and the context would be needed to confirm this.",
+                "Source": "Literature or Custom"
+            },
+            "Threshold for abnormal readout": {
+                "Threshold for abnormal readout": "Any value less than 50% might be considered as an abnormal result, but more information about the assay and the context would be needed to confirm this.",
+                "Source": "Literature or Custom"
+            },
+            "Approved assay": {
+                "Approved assay": "Yes"
+            }
+        }
+    ]
+}
+```

@@ -1,0 +1,70 @@
+总时间（秒）：6.54
+问答时间（秒）：4.24
+
+<think>
+Okay, let's tackle this query. The user provided a paragraph from a medical literature abstract and wants to know if it contains mutation information. If it does, extract the relevant details; otherwise, return "N.D."
+
+First, I need to read through the abstract carefully. The main focus here is on the LRRK2 gene mutations. The abstract mentions several mutations: Y1699C, R1441C, T1348N. These are all specific mutations in the LRRK2 gene. The text also talks about the effects of these mutations on GTPase activity and dimerization.
+
+So, the gene name is clearly LRRK2. The mutations mentioned are Y1699C, R1441C, and T1348N. Each of these has a specific position in the gene. For example, Y1699C is at position 1699 in the COR domain. The protein changes are described as substitutions, like Y1699 being replaced by C. The description in the input context includes the mutation notation, such as "Y1699C" and "R1441C/G" which might be a combined mutation. 
+
+I need to check if the extracted information is accurate. The user's example shows that for each mutation, the cDNA change, protein change, and description are extracted. The abstract does mention each mutation with their respective positions and types. The R1441C/G mutation is mentioned as a combined mutation, which is correctly noted. 
+
+The constraints say to only extract directly related information. Since the abstract does discuss these mutations and their effects, the answer should include all three mutations with their details. The "N.D." is only used if there's no mention, but here there is clear information. 
+
+So, structuring the JSON: Gene is LRRK2, variants include each mutation with their cDNA changes, protein changes, and descriptions. The R1441C/G is a combined mutation, so that's noted. The Y1699C is a single mutation. The T1348N is another single mutation. Each has their positions and the type of change. 
+
+I need to make sure the JSON is correctly formatted, with each variant's details. The example given in the user's instruction shows that each variant is an object with cDNA, protein, and description. So, the answer should follow that structure. 
+
+No mention of other mutations or different gene names, so no need for "N.D." Here, all the required information is present. The answer should be the JSON with the three mutations, each with their details.
+</think>
+
+```json
+{
+    "Gene": "LRRK2",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "C",
+                "alt": "T",
+                "position": "1699"
+            },
+            "Protein Change": {
+                "ref": "Y",
+                "alt": "C",
+                "position": "1699"
+            },
+            "Description in input context": "Y1699C"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "C",
+                "alt": "T",
+                "position": "1441"
+            },
+            "Protein Change": {
+                "ref": "R",
+                "alt": "C",
+                "position": "1441"
+            },
+            "Description in input context": "R1441C/G"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N",
+                "alt": "T",
+                "position": "1348"
+            },
+            "Protein Change": {
+                "ref": "T",
+                "alt": "N",
+                "position": "1348"
+            },
+            "Description in input context": "T1348N"
+        }
+    ]
+}
+```

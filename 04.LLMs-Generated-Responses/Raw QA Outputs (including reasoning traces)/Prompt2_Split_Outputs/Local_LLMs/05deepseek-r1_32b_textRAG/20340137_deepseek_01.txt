@@ -1,0 +1,50 @@
+总时间（秒）：19.92
+问答时间（秒）：18.29
+
+<think>
+Alright, I'm looking at this query where the user wants me to extract mutation information from a given paragraph of medical literature. They've provided a detailed setup about their role and the structure they expect in the output.
+
+First, I need to carefully read through the abstract and introduction sections they've included. The main focus is on mutations in the SNCA gene related to Parkinson Disease. I notice several mentions of specific mutations like p.Ala53Thr, which appears multiple times. There's also a mention of another mutation, p.Ala30Pro, though it doesn't specify any cDNA change.
+
+Since the user wants only information directly related to mutations, I'll extract each instance where a mutation is described. For p.Ala53Thr, there are details about both the cDNA and protein changes, so I can fill those in. However, for p.Ala30Pro, the cDNA part isn't provided, so I'll mark that as "N.D.".
+
+I also need to ensure that each mutation is listed separately under the "variants" array. Even though one of them doesn't have a cDNA change specified, it's still relevant and should be included in the output. 
+
+Finally, I'll structure everything into JSON format, making sure all fields are present and any missing information is clearly marked as "N.D." This way, the user gets a comprehensive and accurate extraction of mutation details from the provided text.
+</think>
+
+```json
+{
+    "Gene": "SNCA",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "exon4",
+                "ref": "G",
+                "alt": "A",
+                "position": "157"
+            },
+            "Protein Change": {
+                "ref": "Ala",
+                "alt": "Thr",
+                "position": "53"
+            },
+            "Description in input context": "c.157G>A (p.Ala53Thr)"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "Ala",
+                "alt": "Pro",
+                "position": "30"
+            },
+            "Description in input context": "p.Ala30Pro"
+        }
+    ]
+}
+```

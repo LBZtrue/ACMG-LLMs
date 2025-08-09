@@ -1,0 +1,56 @@
+总时间（秒）：8.57
+问答时间（秒）：6.83
+
+<think>
+Okay, I'm trying to figure out how to answer the user's question about extracting information related to mutations from a paragraph of medical literature. The user provided an abstract and some introduction sections of a study on a-Synuclein (a-Syn) mutations linked to Parkinson's disease.
+
+First, I need to understand what the user is asking for. They want me to act as a Medical Literature Data Mining Expert who can extract mutation information from given text. My job is to read through the provided paragraph and pick out any mutation details, like gene names, cDNA changes, protein changes, and descriptions of those mutations.
+
+Looking at the abstract, I see mentions of specific mutations: A30P and A53T. These are proline substitutions in a-Syn. The introduction also talks about missense mutations (A53T) linked to early-onset Parkinson's disease. So, I should note these down.
+
+I need to structure the extracted information correctly. Each mutation will be an entry in the "variants" array under "cDNA Change" and "Protein Change." For cDNA, I have to specify if it's the transcript or reference, alternate allele, etc. Similarly, for protein changes, it's about the residue positions.
+
+I also need to include a description of each mutation as given in the text. The abstract mentions that A30P has defective membrane binding compared to wild-type and A53T is normal. So I should capture those points under "Description in input context."
+
+Now, putting this all together into the JSON format they provided, making sure not to miss any details like gene names or mutation types.
+
+I also need to ensure that if something isn't mentioned, I put N.D., but in this case, everything relevant is present. So no placeholders are needed here.
+
+Finally, double-checking for accuracy: A30P and A53T mutations, their effects on membrane binding, and their association with Parkinson's disease. Everything seems correctly captured.
+</think>
+
+```json
+{
+    "Gene": "a-Syn",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "A",
+                "alt": "T",
+                "position": "53"
+            },
+            "Protein Change": {
+                "ref": "30P",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "The familial Parkinson's disease-linked A30P mutant a-Syn is defective in membrane binding compared to wild-type and A53T substitutions."
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "A",
+                "alt": "T",
+                "position": "53"
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "The naturally occurring murine A53T substitution, which is linked to Parkinson's disease, displayed normal membrane-binding activity comparable to wild-type a-Syn."
+        }
+    ]
+}
+```

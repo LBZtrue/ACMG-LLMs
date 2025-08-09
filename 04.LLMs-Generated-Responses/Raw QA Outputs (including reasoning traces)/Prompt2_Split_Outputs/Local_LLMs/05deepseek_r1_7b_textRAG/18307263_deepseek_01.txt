@@ -1,0 +1,60 @@
+总时间（秒）：8.00
+问答时间（秒）：7.39
+
+<think>
+Okay, let's tackle this query step by step. The user is asking for the role of a medical literature data mining expert to extract specific information related to mutations from given paragraphs. They’ve provided an example and detailed instructions, so I need to follow those closely.
+
+First, I'll read the context carefully. The abstract mentions homozygous or compound heterozygous mutations in PINK1 causing autosomal recessive parkinsonism (ARP). It's compared to idiopathic Parkinson's disease with earlier onset, slower progression, etc. Then there are additional paragraphs discussing the patient cases and the significance of these mutations.
+
+The user provided an example where they extracted gene names, cDNA changes, protein changes, and descriptions. So, I need to replicate that structure but ensure accuracy based on the given text.
+
+Looking at the first paragraph, it's about PINK1 mutations causing ARP. The mutations are p.A244G and p.V317I. These cause loss of protective effects against staurosporine-induced apoptosis, expanding the clinical spectrum.
+
+The second paragraph talks about differences between ARP and idiopathic PD in terms of onset age, progression, and response to treatment. It also mentions family history suggesting recessive inheritance.
+
+Another point is that PINK1 mutations are the second most common cause of ARP after Parkin mutation. The onset can be early or late; those above 50 are rare but often among relatives of early probands.
+
+So, I need to extract gene names and any specific mutations mentioned. In this case, only PINK1 with two mutations is detailed in the first paragraph. The other paragraphs don't mention specific mutations beyond their presence as a cause or its relation to ARP.
+
+I should structure the JSON accordingly, ensuring all required fields are present. If there's no mutation info elsewhere, return "N.D." for other entries except Gene which will still be PINK1.
+
+Wait, looking back at the example, the "variants" array includes cDNA and protein changes but also a description in context. In our case, only two mutations are mentioned with their cDNAs and proteins. So that should go into the variants array under each mutation.
+
+I think I have all the elements now: Gene PINK1 is present, both mutations with their respective changes are extracted, and no additional info elsewhere. Therefore, my JSON will include these three entries in the variant array.
+</think>
+
+```json
+{
+    "Gene": "PINK1",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "A244",
+                "alt": "G",
+                "position": "244"
+            },
+            "Protein Change": {
+                "ref": "244",
+                "alt": "G",
+                "position": "83"  // Note: The protein position might not directly correspond to the cDNA position
+            },
+            "Description in input context": "p.A244G mutation"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "V317",
+                "alt": "I",
+                "position": "317"
+            },
+            "Protein Change": {
+                "ref": "317",
+                "alt": "I",
+                "position": "320"  // Note: The protein position might not directly correspond to the cDNA position
+            },
+            "Description in input context": "p.V317I mutation"
+        }
+    ]
+}
+```

@@ -1,0 +1,78 @@
+总时间（秒）：17.05
+问答时间（秒）：14.64
+
+<think>
+Okay, let's tackle this query. The user wants me to act as a medical literature data mining expert, specifically focusing on extracting mutation information from the provided abstract and introduction.
+
+First, I need to read through the given text carefully. The abstract mentions that mutations in the PINK1 gene cause PARK6. It also talks about specific mutations: G309D, E417G, and CΔ145. These are all variants of the PINK1 gene. The introduction references PARK6 as an autosomal recessive disorder, which is linked to PINK1 mutations.
+
+Now, I need to identify each mutation. Let's break them down:
+
+1. G309D: This is a substitution where glycine (G) at position 309 is replaced by aspartic acid (D). The cDNA change would be c.927G>A (assuming the codon for G309 is GAA or GAG, but since the exact transcript isn't specified, I'll note transcript as N.D.). The protein change is p.G309D.
+
+2. E417G: This is a substitution of glutamic acid (E) at position 417 with glycine (G). The cDNA change would be c.1251G>A (assuming the codon for E417 is GAA or GAG, but again, transcript is N.D.). Protein change is p.E417G.
+
+3. CΔ145: This is a deletion of 145 amino acids. The cDNA change would be a deletion from position 435 to 579 (assuming each amino acid is coded by 3 nucleotides, so 145 amino acids would be 435-579). Protein change is p.CΔ145.
+
+The abstract also mentions that these mutations (G309D, E417G, CΔ145) are defective in regulating mitochondrial functions and attenuating ROS production. The introduction states that PARK6 is autosomal recessive, so the mutations are likely loss-of-function.
+
+I need to structure this into the JSON format. Each variant should have cDNA change (with transcript as N.D. since the specific transcript isn't mentioned), ref, alt, position. Protein change includes ref, alt, position. Description in input context should include the mutation names as given.
+
+Wait, the example uses "c.248G>A" for the TP53 example. In the PINK1 case, the mutations are G309D, E417G, and CΔ145. For the cDNA changes, since the exact transcript isn't specified, I'll have to use N.D. for transcript. The positions are 309, 417, and 145 (but for deletion, it's a range). However, the example for deletion in the TP53 example was c.1251G>A, which is a single nucleotide change. Wait, the CΔ145 is a deletion of 145 amino acids, which would correspond to a deletion of 435 nucleotides (since each amino acid is 3 nucleotides). But the exact cDNA position isn't specified in the text, so I'll have to note that as N.D. for the cDNA change, but the protein change is p.CΔ145.
+
+Wait, the text says "PARK6 mutant (G309D), (E417G) or (CΔ145) PINK1". So the mutations are G309D, E417G, and CΔ145. For each of these, the cDNA change would be the corresponding codon. For example, G309D would be a substitution at position 309, which in cDNA is likely c.927G>A (if the codon is GAA or GAG). But since the exact transcript isn't mentioned, the transcript field should be N.D. Similarly for E417G and CΔ145.
+
+So, the JSON should list each variant with their respective details. Also, the description in input context should include the mutation names as given in the text. The introduction mentions that PARK6 is autosomal recessive, which is the inheritance pattern, but the user's question is about mutations, so that's not directly relevant unless it's part of the mutation description. However, the user's focus is on the mutations themselves.
+
+Therefore, the extracted information should include the Gene as PINK1, each variant with their cDNA and protein changes, and the description as per the text. The answer should be structured in the JSON format as specified.
+</think>
+
+```json
+{
+    "Gene": "PINK1",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "G",
+                "alt": "D",
+                "position": "309"
+            },
+            "Protein Change": {
+                "ref": "G",
+                "alt": "D",
+                "position": "309"
+            },
+            "Description in input context": "PARK6 mutant (G309D) PINK1"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "E",
+                "alt": "G",
+                "position": "417"
+            },
+            "Protein Change": {
+                "ref": "E",
+                "alt": "G",
+                "position": "417"
+            },
+            "Description in input context": "PARK6 mutant (E417G) PINK1"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "CΔ145",
+                "alt": "N.D.",
+                "position": "145"
+            },
+            "Protein Change": {
+                "ref": "CΔ145",
+                "alt": "N.D.",
+                "position": "145"
+            },
+            "Description in input context": "PARK6 mutant (CΔ145) PINK1"
+        }
+    ]
+}
+```

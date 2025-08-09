@@ -1,0 +1,46 @@
+总时间（秒）：26.42
+问答时间（秒）：24.10
+
+<think>
+Okay, let's start by looking at the user's query. They want to extract mutation information from the provided medical literature text. The user is a professional in data mining medical literature, so accuracy is key here.
+
+First, I need to determine if the input text contains any mutation-related information. The context mentions "mutant A53T R-syn" and "wild-type (WT) R-syn". The gene in question here is R-synuclein, which is commonly abbreviated as R-syn. The mutant form is specified as A53T, which refers to an amino acid substitution at position 53: alanine (A) is replaced by threonine (T).
+
+Next, I need to extract the gene name. The gene is R-synuclein, often abbreviated as R-syn. The mutation is A53T. The cDNA change isn't directly mentioned in the text. The original text refers to the protein change as A53T, so the cDNA change would correspond to the nucleotide substitution leading to that amino acid change. However, the text doesn't specify the exact cDNA position or the nucleotide change, so I'll have to mark that as N.D.
+
+The protein change is clearly stated as A53T. The description in the context is "mutant A53T R-syn". 
+
+I need to structure the JSON according to the example provided. The gene is RSYN (since R-synuclein is the gene, sometimes abbreviated as RSYN), but the text uses R-syn. However, in the example, the gene is written as TP53, so I'll use RSYN as the gene name here. 
+
+The variants array should include the cDNA change and protein change. Since the cDNA details aren't provided, the transcript, ref, alt, and position for cDNA will be N.D. The protein change has ref (A), alt (T), and position (53). 
+
+I need to ensure that all fields not mentioned in the text are filled with N.D. For example, the transcript for cDNA change isn't specified, so it's N.D. The position for cDNA is also N.D. because the text doesn't mention the exact nucleotide position. 
+
+Finally, the description in the input context is "mutant A53T R-syn". 
+
+I should double-check that there are no other mutations mentioned. The text only discusses A53T and wild-type, so no other variants are present. 
+
+Putting it all together, the JSON should correctly reflect the mutation details as per the user's example, with N.D. for missing information.
+</think>
+
+```json
+{
+    "Gene": "RSYN",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "T",
+                "position": "53"
+            },
+            "Description in input context": "mutant A53T R-syn"
+        }
+    ]
+}
+```

@@ -1,0 +1,58 @@
+总时间（秒）：27.51
+问答时间（秒）：26.74
+
+<think>
+Okay, let's tackle this query. The user wants me to extract mutation-related information from a given paragraph. First, I need to check if the text mentions any mutations. 
+
+Looking at the first paragraph, it talks about resistin forms and their bioactivity. There's a mention of resistin family structure similar to adiponectin, but nothing about mutations here. 
+
+Moving to the second paragraph about Parkinson's disease. The first sentence mentions a locus mapped to chromosome 1p36 (PARK6). Then, it states that mutations in PINK1 are associated with PARK6. The key part here is the identification of two homozygous mutations in the PINK1 kinase domain: a truncating nonsense mutation and a missense mutation at a conserved amino acid. 
+
+So, the gene is PINK1. The variants are two: one is a nonsense mutation (which causes a stop codon) and the other is a missense mutation (a single amino acid change at a conserved position). The description in the context refers to these two mutations. 
+
+I need to structure this into the JSON format. For each variant, even though there are two, the example shows an array. The first variant is a nonsense mutation, so the cDNA change would have a position, but the example uses "N.D." for transcript. The protein change for nonsense would be a stop codon (e.g., p.ArgX), but the text doesn't specify the exact position, so I'll use "N.D." for position. The second variant is a missense mutation at a highly conserved amino acid, but again, the exact position isn't given, so "N.D." for position. 
+
+Wait, the text says "a missense mutation at a highly conserved amino acid" but doesn't specify which amino acid. So the protein change's position remains "N.D." as well. The cDNA changes aren't provided, so those are "N.D." too. 
+
+Putting it all together, the JSON should list both variants with the available info and "N.D." where details are missing. The first variant is the nonsense mutation, the second is the missense. The gene is PINK1. 
+
+I need to make sure not to include any other information not directly related to mutations. The rest of the text about mitochondria and cell culture is not mutation-related, so it's ignored. 
+
+Double-checking the constraints: only extract mutation info, use "N.D." for missing parts. Looks good.
+</think>
+
+```json
+{
+    "Gene": "PINK1",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "a truncating nonsense mutation in the PINK1 kinase domain"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "a missense mutation at a highly conserved amino acid in the PINK1 kinase domain"
+        }
+    ]
+}
+```

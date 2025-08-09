@@ -1,0 +1,187 @@
+总时间（秒）：129.66
+问答时间（秒）：125.81
+
+<think>
+Okay, let's tackle this query. The user wants to extract mutation information from the provided literature abstract. First, I need to check if the text mentions any mutations.
+
+Looking at the abstract, the first sentence says, "Loss-of-function mutations in PINK1 and Parkin cause parkinsonism..." So there's a clear mention of mutations in PINK1 and Parkin. The next part talks about disease-causing mutations in PINK1 and Parkin disrupting Parkin recruitment and mitophagy. 
+
+Now, I need to extract the gene names. The genes mentioned are PINK1 and Parkin. The user's example shows how to structure the JSON, so I'll follow that. For each gene, I need to list the variants. However, the abstract doesn't specify any particular cDNA or protein changes, like c.248G>A or p.G83D. It just mentions "loss-of-function mutations" and "disease-causing mutations" without giving specific nucleotide or amino acid changes. 
+
+Since there are no specific cDNA or protein changes provided, I should use "N.D." for those fields. The description in the context would be the part where the mutations are mentioned, such as "loss-of-function mutations in PINK1 and Parkin" and "disease-causing mutations in PINK1 and Parkin". 
+
+I need to make sure each variant is an object under the "variants" array. Since there are two mentions of mutations (loss-of-function and disease-causing), but they both refer to the same genes, I should list each mutation type as a separate variant. However, the example shows that each variant entry is for a specific change. But in this case, there are no specific changes given, only the type of mutation. 
+
+Wait, the user's example includes a description in the context. Here, the descriptions are "loss-of-function mutations in PINK1 and Parkin cause parkinsonism..." and "disease-causing mutations in PINK1 and Parkin disrupt Parkin recruitment...". So each of these would be a separate variant entry, but since they refer to the same genes, maybe we can have two entries under variants for each gene? Or perhaps each gene has two variants? Hmm, the example has one variant per gene. But in this case, both mutations are in the same genes. 
+
+Wait, the first sentence mentions both PINK1 and Parkin in the same mutation context. So maybe each gene has a variant? But the example's input mentions a single gene (TP53) with one variant. Here, the input mentions two genes. So perhaps each gene is listed separately in the "variants" array? Or maybe each gene has its own entry. Let me check the example again. The example input has one gene (TP53) with one variant. The output has a "variants" array with one entry. So in this case, the input mentions two genes (PINK1 and Parkin) each with a loss-of-function mutation. So perhaps each gene is treated as a separate variant entry. 
+
+Wait, but in the example, the variant is for a specific gene. So in this case, the two genes would each have their own variant entry. However, the text doesn't mention any specific cDNA or protein changes for either gene. So for each gene, the variants would have "N.D." for the cDNA and protein changes, and the description would be "loss-of-function mutations" and "disease-causing mutations". 
+
+But the user's example shows that each variant is for a specific gene. So in this case, the first variant is for PINK1 and the second for Parkin? Or are they both under the same gene? Wait, the first sentence says "mutations in PINK1 and Parkin", so both genes are involved. So perhaps each gene is listed as a separate variant. 
+
+Alternatively, the "variants" array could have two entries, each for one gene. Let me structure it that way. Each variant entry corresponds to a gene. For each gene, the cDNA and protein changes are "N.D." and the description is the part mentioning the mutation type. 
+
+So the JSON would look like:
+
+{
+    "Gene": "PINK1",
+    "variants": [
+        {
+            "cDNA Change": { "transcript": "N.D.", "ref": "N.D.", "alt": "N.D.", "position": "N.D." },
+            "Protein Change": { "ref": "N.D.", "alt": "N.D.", "position": "N.D." },
+            "Description in input context": "loss-of-function mutations in PINK1 and Parkin cause parkinsonism in humans and mitochondrial dysfunction in model organisms"
+        },
+        {
+            "cDNA Change": { "transcript": "N.D.", "ref": "N.D.", "alt": "N.D.", "position": "N.D." },
+            "Protein Change": { "ref": "N.D.", "alt": "N.D.", "position": "N.D." },
+            "Description in input context": "disease-causing mutations in PINK1 and Parkin disrupt Parkin recruitment and Parkin-induced mitophagy at distinct steps"
+        }
+    ]
+},
+{
+    "Gene": "Parkin",
+    "variants": [
+        {
+            "cDNA Change": { "transcript": "N.D.", "ref": "N.D.", "alt": "N.D.", "position": "N.D." },
+            "Protein Change": { "ref": "N.D.", "alt": "N.D.", "position": "N.D." },
+            "Description in input context": "loss-of-function mutations in PINK1 and Parkin cause parkinsonism in humans and mitochondrial dysfunction in model organisms"
+        },
+        {
+            "cDNA Change": { "transcript": "N.D.", "ref": "N.D.", "alt": "N.D.", "position": "N.D." },
+            "Protein Change": { "ref": "N.D.", "alt": "N.D.", "position": "N.D." },
+            "Description in input context": "disease-causing mutations in PINK1 and Parkin disrupt Parkin recruitment and Parkin-induced mitophagy at distinct steps"
+        }
+    ]
+}
+
+Wait, but the user's example has a single gene with multiple variants. Here, the input mentions two genes each with two mutation types. So maybe each gene is a separate entry in the "variants" array. But the example's JSON structure is under a single "Gene" key. Hmm, perhaps the example is for a single gene, but in our case, there are two genes. So the JSON should have two separate objects for each gene. But the user's example shows the "Gene" as a single string. So maybe the correct approach is to list both genes under "Gene" as a single entry, but that doesn't fit the example. Alternatively, perhaps each gene is a separate object. 
+
+Wait, looking back at the user's example, the input mentions a single gene (TP53) with one variant. The output is a single object with "Gene" as "TP53" and "variants" as an array with one entry. So in our case, since there are two genes (PINK1 and Parkin), each with their own mutations, we need to create two separate objects. However, the user's example shows a single object. So perhaps the correct approach is to have two separate JSON objects for each gene. But the user's example doesn't show that. 
+
+Alternatively, maybe the "Gene" field can be a list. But the example shows "Gene" as a string. So perhaps the correct approach is to have each gene as a separate entry. But the user's example doesn't have that. 
+
+Wait, the user's example input is about TP53, and the output is a single JSON object. So in our case, the input mentions both PINK1 and Parkin. So perhaps the JSON should have two entries under "variants", each for a different gene. But the example's structure is for a single gene. 
+
+Hmm, this is a bit confusing. Let me re-examine the user's instructions. The user says: "If mutation information is found, extract specific gene names, cDNA changes, protein changes, and mutation descriptions." So the "Gene" field should be the gene name(s) where the mutation is found. In the example, it's a single gene. In our case, two genes. But the example's structure doesn't handle multiple genes. 
+
+Wait, maybe the user expects that if there are multiple genes mentioned in the same context, they should be listed under the "Gene" field. But the example's "Gene" is a single string. So perhaps the correct approach is to list both genes separated by a comma. However, the user's example doesn't show that. 
+
+Alternatively, perhaps the user expects that each gene is processed separately. But the example shows a single gene. So perhaps in this case, the JSON should have two separate objects for each gene. However, the user's example shows a single object. 
+
+Wait, the user's example input mentions a single gene (TP53) with a specific mutation. The output is a single JSON object. So in our case, the input mentions two genes (PINK1 and Parkin) with mutations. So perhaps the output should have two JSON objects, each for one gene. But the user's example doesn't show that. 
+
+Alternatively, maybe the user expects that the "Gene" field is a list. But the example shows it as a string. 
+
+Hmm, perhaps the user expects that when multiple genes are mentioned in the same context, they are listed under the "Gene" field as a single string. For example, "PINK1 and Parkin". But the example's "Gene" is a single gene. 
+
+Given the ambiguity, perhaps the best approach is to list both genes under the "Gene" field as a single string, separated by a space or "and". Then, the "variants" array would have entries for each gene. But the example doesn't show this. 
+
+Alternatively, perhaps the user expects that each gene is a separate entry in the "variants" array, but the "Gene" field is the same for all. 
+
+This is a bit tricky. Given the example's structure, I think the correct approach is to have each gene as a separate entry in the "variants" array, but under the same "Gene" field. Wait, no, the "Gene" field is a single string. So perhaps the "Gene" field should list both genes, and the "variants" array has entries for each mutation type. 
+
+Wait, perhaps the user's example is for a single gene, but the input can have multiple genes. So in our case, the "Gene" field should be "PINK1 and Parkin", and the "variants" array would have two entries, each describing the mutations in those genes. 
+
+But the example's "Gene" is a single gene. So maybe in this case, the user expects that each gene is processed separately. However, the example doesn't show that. 
+
+Given the user's example, I think the correct approach is to list each gene as a separate entry in the "variants" array. But since the "Gene" field is a single string, perhaps we should list both genes in the "Gene" field. 
+
+Alternatively, maybe the user expects that each gene is a separate JSON object. But the example shows one. 
+
+Given the ambiguity, I'll proceed with the following structure: the "Gene" field is "PINK1 and Parkin", and the "variants" array contains two entries, each for one of the mutation types mentioned. However, the example's "Gene" is a single gene. 
+
+Alternatively, perhaps the user expects that each gene is a separate object. For example, two JSON objects. But the example shows one. 
+
+Hmm. Since the user's example shows a single JSON object for a single gene, perhaps the correct approach here is to have two separate JSON objects, each for PINK1 and Parkin. However, the user's example doesn't show that. 
+
+Given the constraints, perhaps the best way is to combine both genes into the "Gene" field and have the variants array with entries for each mutation type. 
+
+But the user's example shows the "Gene" as a single string. So perhaps the correct approach is to have "Gene": "PINK1 and Parkin" and then the variants array with entries for each mutation type. 
+
+Alternatively, perhaps the user expects that each gene is a separate entry in the "variants" array. 
+
+This is a bit unclear, but given the example, I think the user expects that each gene is a separate entry. However, the example's structure doesn't show that. 
+
+Given the time constraints, I'll proceed with listing both genes in the "Gene" field and then have the variants array with entries for each mutation type. 
+
+So the final JSON would be:
+
+{
+    "Gene": "PINK1 and Parkin",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "loss-of-function mutations in PINK1 and Parkin cause parkinsonism in humans and mitochondrial dysfunction in model organisms"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "disease-causing mutations in PINK1 and Parkin disrupt Parkin recruitment and Parkin-induced mitophagy at distinct steps"
+        }
+    ]
+}
+
+But the example's "Gene" is a single gene. So perhaps the user expects that each gene is a separate entry. However, the example doesn't show that. 
+
+Alternatively, maybe the user expects that each gene is a separate entry in the "variants" array. For example, two separate objects under "variants", each for a different gene. But the example's structure is for a single gene. 
+
+Given the example, I think the correct approach is to have the "Gene" field as "PINK1 and Parkin" and the variants array with entries for each mutation type. 
+
+But the user's example uses a single gene. So perhaps the correct approach is to have two separate JSON objects. However, the user's example doesn't show that. 
+
+Given the time, I'll proceed with the structure that combines both genes into the "Gene" field and have the variants array with entries for each mutation type.
+</think>
+
+{
+    "Gene": "PINK1 and Parkin",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "loss-of-function mutations in PINK1 and Parkin cause parkinsonism in humans and mitochondrial dysfunction in model organisms"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "disease-causing mutations in PINK1 and Parkin disrupt Parkin recruitment and Parkin-induced mitophagy at distinct steps"
+        }
+    ]
+}

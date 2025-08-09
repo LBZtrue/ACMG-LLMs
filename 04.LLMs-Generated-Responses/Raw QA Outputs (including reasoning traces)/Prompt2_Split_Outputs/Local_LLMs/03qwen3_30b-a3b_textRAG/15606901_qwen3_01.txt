@@ -1,0 +1,98 @@
+总时间（秒）：15.44
+问答时间（秒）：13.52
+
+<think>
+Okay, let's tackle this query. The user wants me to act as a Medical Literature Data Mining Expert. The task is to check if the provided text has mutation information and extract it in a specific JSON format. If not, return "N.D.".
+
+First, I'll read the input text carefully. The abstract mentions "pathogenic C-and N-terminal parkin mutants" and "four N-terminal missense mutations" in the ubiquitin-like domain (UBL). It also talks about a 42 kDa parkin species from an internal start site missing the N-terminal UBL domain.
+
+So, the key points here are mutations in the parkin gene. The C-terminal and N-terminal mutants are mentioned. The N-terminal missense mutations are in the UBL domain. The text specifies that these mutations decrease stability and lead to degradation by the proteasome. Also, there's a mention of a smaller parkin species due to an internal start site, but that's more about processing than a mutation per se.
+
+Now, looking for specific details: The gene is parkin. The mutations are C-terminal and N-terminal. The N-terminal ones are missense mutations in the UBL domain. However, the text doesn't provide specific cDNA or protein changes like "c.248G>A" or "p.G83D" as in the example. It just mentions they are in the UBL domain. So, the cDNA and protein changes aren't specified here. The description in the input context is "four N-terminal missense mutations, located within the ubiquitin-like domain (UBL)".
+
+For the C-terminal, the text says "deletion of the C terminus", which is a structural mutation, but again, no specific cDNA or protein changes. The description here is "deletion of the C terminus".
+
+The other part about the 42kDa protein is about an internal start site, not a mutation. So that's not relevant here.
+
+So, the JSON should include the gene "parkin" and two variants: one for the C-terminal deletion and one for the N-terminal missense mutations. Since specific cDNA and protein changes aren't given, those fields would be "N.D." except for the descriptions.
+
+Wait, the user's example had "transcript": "N.D." when not specified. So in the variants, for each mutation, the cDNA Change and Protein Change would have N.D. unless specified. The Description in input context would be the text from the paragraph.
+
+So, the JSON would have "Gene": "parkin", and variants with two entries. Each entry has cDNA Change with transcript N.D., and the position, ref, alt as N.D. unless mentioned. But in the text, the C-terminal deletion is a deletion, but no specific position. Similarly, the N-terminal missense mutations are in the UBL domain but no specific positions. So all the cDNA and protein details are N.D., except the description.
+
+Therefore, the extracted info would be:
+
+{
+  "Gene": "parkin",
+  "variants": [
+    {
+      "cDNA Change": {
+        "transcript": "N.D.",
+        "ref": "N.D.",
+        "alt": "N.D.",
+        "position": "N.D."
+      },
+      "Protein Change": {
+        "ref": "N.D.",
+        "alt": "N.D.",
+        "position": "N.D."
+      },
+      "Description in input context": "deletion of the C terminus"
+    },
+    {
+      "cDNA Change": {
+        "transcript": "N.D.",
+        "ref": "N.D.",
+        "alt": "N.D.",
+        "position": "N.D."
+      },
+      "Protein Change": {
+        "ref": "N.D.",
+        "alt": "N.D.",
+        "position": "N.D."
+      },
+      "Description in input context": "four N-terminal missense mutations, located within the ubiquitin-like domain (UBL)"
+    }
+  ]
+}
+
+But wait, the user's example had the cDNA and protein changes with specific details. Here, since the text doesn't provide specific nucleotide or amino acid changes, those fields should be N.D. The description is taken from the text.
+
+Yes, that's correct. So the answer should be structured like that.
+</think>
+
+```json
+{
+    "Gene": "parkin",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "deletion of the C terminus"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "four N-terminal missense mutations, located within the ubiquitin-like domain (UBL)"
+        }
+    ]
+}
+```

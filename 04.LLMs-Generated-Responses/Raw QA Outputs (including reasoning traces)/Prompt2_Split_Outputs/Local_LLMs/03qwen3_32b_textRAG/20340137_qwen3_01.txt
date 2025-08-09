@@ -1,0 +1,72 @@
+总时间（秒）：31.97
+问答时间（秒）：30.08
+
+<think>
+Okay, let's start by looking at the user's query. They want me to extract mutation information from the provided medical literature text. The user specified a JSON format with Gene, variants (each containing cDNA Change, Protein Change, and Description in input context), and to use "N.D." for missing information.
+
+First, I need to check if the text contains any mutation-related terms. The abstract mentions "point mutations, gene multiplications, and sequence variations within the promoter." But the main focus here is on the specific mutation p.Ala53Thr. 
+
+Looking at the Introduction section, there's a detailed description of the SNCA gene mutation. The mutation is a c.157G>A base substitution leading to p.Ala53Thr. The text also mentions other mutations like p.Ala30Pro and p.Glu46Lys but doesn't provide their cDNA changes. 
+
+For the p.Ala53Thr mutation, the cDNA change is c.157G>A. The protein change is from Alanine (A) at position 53 to Threonine (Thr). The description in the context is "c.157G>A (p.Ala53Thr)". 
+
+The other mutations mentioned, p.Ala30Pro and p.Glu46Lys, have protein changes but no cDNA details provided. So for those, the cDNA Change would be N.D. Their descriptions in the context are just the protein changes. 
+
+The gene in question is SNCA. So the JSON structure should list SNCA as the Gene, and under variants, include each mutation. For p.Ala53Thr, include the cDNA and protein changes. For the other two, include the protein changes but mark cDNA as N.D. 
+
+I need to ensure that each variant is an object in the variants array. Also, check if there are any other mutations mentioned, but from the text, only these three are discussed. The user's example included transcript information, but in the provided text, there's no transcript ID, so that's N.D. 
+
+Make sure to follow the exact format, using the correct keys and structure. Let me verify each part again to avoid mistakes. The cDNA position is 157 for p.Ala53Thr, and the protein position is 53. The other mutations have positions 30 and 46 respectively. 
+
+Everything seems to be covered. Now, structure the JSON accordingly, filling in N.D. where necessary.
+</think>
+
+```json
+{
+    "Gene": "SNCA",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "G",
+                "alt": "A",
+                "position": "157"
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "Thr",
+                "position": "53"
+            },
+            "Description in input context": "c.157G>A (p.Ala53Thr)"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "Pro",
+                "position": "30"
+            },
+            "Description in input context": "p.Ala30Pro"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "E",
+                "alt": "Lys",
+                "position": "46"
+            },
+            "Description in input context": "p.Glu46Lys"
+        }
+    ]
+}
+```

@@ -1,0 +1,40 @@
+总时间（秒）：22.05
+问答时间（秒）：20.77
+
+<think>
+Alright, let's break down this query to understand what the user is asking for and how best to approach it.
+
+First, I notice that the user has provided a detailed context from a medical literature abstract. The content discusses a study on Parkinson's disease (PD) focusing on the LRRK2 gene, specifically the Gly2385Arg variant. My task is to extract information related to mutations from this text.
+
+The user is acting as a Professional Medical Literature Data Mining Expert and has outlined specific steps for processing the input. They want me to determine if there's mutation information present and, if so, extract details such as gene names, cDNA changes, protein changes, and mutation descriptions. If any of these aren't mentioned, I should use "N.D." to fill in those gaps.
+
+Looking at the provided example, it's clear that the expected output is a JSON structure with the gene name and an array of variants, each containing cDNA change details (including transcript, reference nucleotide, alternate nucleotide, position) and protein change details (reference amino acid, alternate amino acid, position). The "Description in input context" field should capture exactly how the mutation was described in the text.
+
+In the given context from the abstract, I can identify that the mutation discussed is Gly2385Arg. This refers to a change from glycine (Gly) to arginine (Arg) at protein position 2385. However, the text doesn't provide details about the cDNA level, such as the nucleotide changes or their positions. Therefore, for the cDNA Change section, I'll need to mark all fields except "position" as "N.D." since that's not specified.
+
+I should also ensure that each part of the JSON is correctly filled in. The gene name is LRRK2, and there's only one variant mentioned, so the variants array will have a single entry. For the protein change, ref is Gly (G), alt is Arg (R), and position is 2385.
+
+Putting it all together, I'll construct the JSON accordingly, making sure to represent "N.D." where information isn't available. This approach aligns with the user's requirements for accuracy and completeness in extracting mutation-related data from biomedical literature.
+</think>
+
+```json
+{
+    "Gene": "LRRK2",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "Gly",
+                "alt": "Arg",
+                "position": "2385"
+            },
+            "Description in input context": "Gly2385Arg"
+        }
+    ]
+}
+```

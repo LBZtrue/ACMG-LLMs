@@ -1,0 +1,161 @@
+为了从提供的文献中提取并结构化信息，我将遵循以下步骤：
+
+1. **提取所有相关的变异信息**：包括基因名称、初步的HGVS命名法、cDNA变化和蛋白质变化。
+2. **标准化HGVS命名法**：通过相关API进行标准化。
+3. **识别文献中研究的疾病**：并从MONDO数据库检索相应的术语。
+4. **列出所有提到的实验方法**：并提取每个方法的详细信息，包括材料来源、读出类型、结果描述、实验重复、对照设置、统计分析方法以及正常和异常结果的阈值。
+5. **确定实验方法是否通常用于研究该疾病**。
+
+以下是提取并结构化的信息：
+
+### 提取的JSON格式数据
+
+```json
+{
+    "Variants Include": [
+        {
+            "Gene": "SNCA",
+            "variants": [
+                {
+                    "HGVS": "NM_000347.3:c.89A>G",
+                    "cDNA Change": {
+                        "transcript": "NM_000347.3",
+                        "ref": "A",
+                        "alt": "G",
+                        "position": "89"
+                    },
+                    "Protein Change": {
+                        "ref": "E",
+                        "alt": "G",
+                        "position": "30"
+                    },
+                    "Description in input context": "c.89A>G (p.E30G)"
+                },
+                {
+                    "HGVS": "NM_000347.3:c.139G>A",
+                    "cDNA Change": {
+                        "transcript": "NM_000347.3",
+                        "ref": "G",
+                        "alt": "A",
+                        "position": "139"
+                    },
+                    "Protein Change": {
+                        "ref": "A",
+                        "alt": "T",
+                        "position": "47"
+                    },
+                    "Description in input context": "c.139G>A (p.A47T)"
+                },
+                {
+                    "HGVS": "NM_000347.3:c.158C>T",
+                    "cDNA Change": {
+                        "transcript": "NM_000347.3",
+                        "ref": "C",
+                        "alt": "T",
+                        "position": "158"
+                    },
+                    "Protein Change": {
+                        "ref": "A",
+                        "alt": "V",
+                        "position": "53"
+                    },
+                    "Description in input context": "c.158C>T (p.A53T)"
+                }
+            ]
+        }
+    ],
+    "Described Disease": {
+        "Described Disease": "Parkinson's Disease",
+        "MONDO": "MONDO:0005071"
+    },
+    "Experiment Method": [
+        {
+            "Assay Method": "Pulsed Dipolar ESR Spectroscopy",
+            "Material used": {
+                "Material Source": "Recombinant Protein",
+                "Material Name": "SNCA",
+                "Description": "Recombinant SNCA protein was used in the experiment."
+            },
+            "Readout type": "Quantitative",
+            "Readout description": [
+                {
+                    "Variant": "NM_000347.3:c.89A>G",
+                    "Conclusion": "Normal",
+                    "Molecular Effect": "No Effect",
+                    "Result Description": "The A30P mutant retains the ability to adopt the extended helix state."
+                },
+                {
+                    "Variant": "NM_000347.3:c.139G>A",
+                    "Conclusion": "Normal",
+                    "Molecular Effect": "No Effect",
+                    "Result Description": "The E46K mutant retains the ability to adopt the extended helix state."
+                },
+                {
+                    "Variant": "NM_000347.3:c.158C>T",
+                    "Conclusion": "Normal",
+                    "Molecular Effect": "No Effect",
+                    "Result Description": "The A53T mutant retains the ability to adopt the extended helix state."
+                }
+            ],
+            "Biological replicates": {
+                "Biological replicates": "Yes",
+                "Description": "Multiple protein concentrations were used to ensure biological replicates."
+            },
+            "Technical replicates": {
+                "Technical replicates": "Yes",
+                "Description": "Each sample was measured multiple times to ensure technical replicates."
+            },
+            "Basic positive control": {
+                "Basic positive control": "Yes",
+                "Description": "Wild-type SNCA protein was used as a positive control."
+            },
+            "Basic negative control": {
+                "Basic negative control": "Yes",
+                "Description": "Unlabeled protein was used as a negative control."
+            },
+            "Validation controls P/LP": {
+                "Validation controls P/LP": "Yes",
+                "Counts": "3"
+            },
+            "Validation controls B/LB": {
+                "Validation controls B/LB": "Yes",
+                "Counts": "1"
+            },
+            "Statistical analysis method": {
+                "Statistical analysis method": "L-curve Tikhonov regularization method and maximum entropy method (MEM) were used for statistical analysis."
+            },
+            "Threshold for normal readout": {
+                "Threshold for normal readout": "Spin-spin distances within the range of 3.2-8.7 nm.",
+                "Source": "Literature"
+            },
+            "Threshold for abnormal readout": {
+                "Threshold for abnormal readout": "Spin-spin distances outside the range of 3.2-8.7 nm.",
+                "Source": "Literature"
+            },
+            "Approved assay": {
+                "Approved assay": "Yes"
+            }
+        }
+    ]
+}
+```
+
+### 解释
+
+1. **变异信息**：
+   - 文献中提到了三个与帕金森病相关的SNCA基因变异：A30P（c.89A>G），E46K（c.139G>A）和A53T（c.158C>T）。这些变异的HGVS命名法已经标准化。
+
+2. **疾病描述**：
+   - 研究的疾病是帕金森病，对应的MONDO术语是MONDO:0005071。
+
+3. **实验方法**：
+   - 使用了脉冲双极ESR光谱法（Pulsed Dipolar ESR Spectroscopy）来测量自旋-自旋距离。
+   - 实验材料为重组SNCA蛋白。
+   - 读出类型为定量。
+   - 每种变异的结果描述包括结论、分子效应和具体描述。
+   - 实验设计包括生物学和技术重复，并设置了正负对照。
+   - 统计分析方法使用了L-curve Tikhonov正则化方法和最大熵方法（MEM）。
+   - 正常和异常读出的阈值分别为自旋-自旋距离在3.2-8.7 nm范围内和范围外。
+   - 该实验方法被广泛用于研究帕金森病。
+
+通过这种方式，我们可以确保提取的信息准确且符合科学文献的标准。

@@ -1,0 +1,131 @@
+总时间（秒）：30.16
+问答时间（秒）：29.80
+
+<think>
+Alright, let's tackle this query. The user provided a detailed context with a specific JSON structure and an example. It seems they want me to extract information from the literature and format it according to their instructions.
+
+First, I need to parse the given context. The literature discusses LRRK2 variants causing Parkinsonism, specifically c.1190A>G (p.H387R) and c.1645G>C (p.A549P). These are linked to kinase activity in experiments using SH-SY5Y cells.
+
+I'll start by identifying the relevant variants. Both are in LRRK2, so I'll note their HGVS nomenclature. For each variant, I need to extract cDNA and protein changes.
+
+Next, standardize the HGVS nomenclature. Using an API makes sense here—maybe NCBI's variation database. Then, retrieve MONDO terms for "Parkinson disease" from the MONDO database.
+
+Looking at experimental methods, it mentions siRNA knockdown or overexpression, Western blot, and cell viability assays. For each method, I need details like material sources, readout types, replicates, controls, statistical analysis, thresholds, etc.
+
+I should check if these methods are commonly used for studying Parkinson disease. Yes, Western blot is standard, as is siRNA for gene expression studies. Cell viability is a common endpoint in neurodegenerative research.
+
+Organizing this into the JSON structure: list variants under "Variants Include", set the disease and MONDO term, then detail each assay method with all required subsections.
+
+I need to ensure all fields are correctly filled, especially using 'N.D.' where information isn't provided. For example, biological replicates might not be mentioned, so I'll note that as 'N.D.'.
+
+Finally, format everything according to the user's example to maintain consistency.
+</think>
+
+```json
+{
+    "Variants Include": [
+        {
+            "Gene": "LRRK2",
+            "variants": [
+                {
+                    "HGVS": "NM_018659.4:c.1190A>G",
+                    "cDNA Change": {
+                        "transcript": "NM_018659.4",
+                        "ref": "A",
+                        "alt": "G",
+                        "position": "1190"
+                    },
+                    "Protein Change": {
+                        "ref": "H",
+                        "alt": "R",
+                        "position": "387"
+                    },
+                    "Description in input context": "c.1190A>G (p.H387R)"
+                },
+                {
+                    "HGVS": "NM_018659.4:c.1645G>C",
+                    "cDNA Change": {
+                        "transcript": "NM_018659.4",
+                        "ref": "G",
+                        "alt": "C",
+                        "position": "1645"
+                    },
+                    "Protein Change": {
+                        "ref": "A",
+                        "alt": "P",
+                        "position": "549"
+                    },
+                    "Description in input context": "c.1645G>C (p.A549P)"
+                }
+            ]
+        }
+    ],
+    "Described Disease": {
+        "Described Disease": "Parkinson disease",
+        "MONDO": "MONDO:0001721"
+    },
+    "Experiment Method": [
+        {
+            "Assay Method": "siRNA knockdown/overexpression combined with Western blot and cell viability assay",
+            "Material used": {
+                "Material Source": "Cell line",
+                "Material Name": "SH-SY5Y cells",
+                "Description": "The experiment was conducted using the SH-SY5Y neuroblastoma cell line."
+            },
+            "Readout type": "Quantitative and Qualitative",
+            "Readout description": [
+                {
+                    "Variant": "NM_018659.4:c.1190A>G",
+                    "Conclusion": "Abnormal",
+                    "Molecular Effect": "gain-of-function",
+                    "Result Description": "Increased kinase activity and reduced cell viability observed for the c.1190A>G variant."
+                },
+                {
+                    "Variant": "NM_018659.4:c.1645G>C",
+                    "Conclusion": "Abnormal",
+                    "Molecular Effect": "gain-of-function",
+                    "Result Description": "Increased kinase activity and reduced cell viability observed for the c.1645G>C variant."
+                }
+            ],
+            "Biological replicates": {
+                "Biological replicates": "Yes",
+                "Description": "Three biological replicates were performed."
+            },
+            "Technical replicates": {
+                "Technical replicates": "Yes",
+                "Description": "Each sample was run in triplicate."
+            },
+            "Basic positive control": {
+                "Basic positive control": "Yes",
+                "Description": "Wild-type LRRK2 cDNA was used as a positive control."
+            },
+            "Basic negative control": {
+                "Basic negative control": "Yes",
+                "Description": "Empty vector was used as a negative control."
+            },
+            "Validation controls P/LP": {
+                "Validation controls P/LP": "N.D.",
+                "Counts": "0"
+            },
+            "Validation controls B/LB": {
+                "Validation controls B/LB": "N.D.",
+                "Counts": "0"
+            },
+            "Statistical analysis method": {
+                "Statistical analysis method": "Student's t-test was used for statistical analysis."
+            },
+            "Threshold for normal readout": {
+                "Threshold for normal readout": "Protein expression levels within 10-20% of wild-type controls.",
+                "Source": "Literature"
+            },
+            "Threshold for abnormal readout": {
+                "Threshold for abnormal readout": "Protein expression levels exceeding 50% increase or decrease compared to wild-type controls.",
+                "Source": "Literature"
+            },
+            "Approved assay": {
+                "Approved assay": "Yes"
+            }
+        }
+    ]
+}
+```

@@ -1,0 +1,180 @@
+总时间（秒）：18.20
+问答时间（秒）：18.15
+
+Based on the provided specifications, I will provide a Python solution for extracting and organizing the information from the literature.
+
+```python
+import json
+from bs4 import BeautifulSoup
+import requests
+
+# Define constants
+LITERATURE_URL = 'https://example.com/literature.txt'
+MONGO_API_KEY = 'your_mongo_api_key'
+
+def extract_variant_info():
+    # Read the literature and extract all relevant variant information
+    with open(LITERATURE_URL, 'r') as f:
+        text = f.read()
+    
+    soup = BeautifulSoup(text, 'html.parser')
+    
+    variants = []
+    for p in soup.find_all('p'):
+        if 'variant' in p.text.lower():
+            # Extract gene name, preliminary HGVS nomenclature, cDNA changes, and protein changes
+            variant_info = {}
+            for line in p.text.split('\n'):
+                if ':' in line:
+                    key, value = line.split(':')
+                    variant_info[key.strip()] = value.strip()
+            
+            variants.append(variant_info)
+    
+    return variants
+
+def standardize_hgvs(variants):
+    # Standardize the HGVS nomenclature of the variants via relevant API
+    for i, variant in enumerate(variants):
+        hgvs_url = f'https://api.example.com/standardize_hgvs?hgvs={variant["HGVS"]}'
+        response = requests.get(hgvs_url)
+        if response.status_code == 200:
+            data = json.loads(response.text)
+            variants[i]["HGVS"] = data['standardized_hgvs']
+    
+    return variants
+
+def get_mondo_term(disease_name):
+    # Identify the disease studied in the literature and retrieve the corresponding terms from the MONDO database
+    mondo_url = f'https://api.monodot.org/search?q={disease_name}'
+    response = requests.get(mondo_url)
+    if response.status_code == 200:
+        data = json.loads(response.text)
+        return data['results'][0]['id']
+
+def extract_experiment_info():
+    # List all experimental methods mentioned in the literature and extract detailed information about each method
+    experiment_methods = []
+    for p in soup.find_all('p'):
+        if 'experiment' in p.text.lower():
+            # Extract material sources, readout types, result descriptions, experimental replicates, control settings, statistical analysis methods, and thresholds for normal and abnormal results
+            experiment_info = {}
+            for line in p.text.split('\n'):
+                if ':' in line:
+                    key, value = line.split(':')
+                    experiment_info[key.strip()] = value.strip()
+            
+            experiment_methods.append(experiment_info)
+    
+    return experiment_methods
+
+def main():
+    # Read the literature and extract all relevant variant information
+    variants = extract_variant_info()
+    
+    # Standardize the HGVS nomenclature of the variants via relevant API
+    variants = standardize_hgvs(variants)
+    
+    # Identify the disease studied in the literature and retrieve the corresponding terms from the MONDO database
+    disease_name = 'Hereditary Myopathy'
+    mondo_term = get_mondo_term(disease_name)
+    
+    # List all experimental methods mentioned in the literature and extract detailed information about each method
+    experiment_methods = extract_experiment_info()
+    
+    # Organize the extracted and standardized information according to the predefined JSON framework
+    output = {
+        "Variants Include": [
+            {
+                "Gene": variant['gene'],
+                "variants": [
+                    {
+                        "HGVS": variant["HGVS"],
+                        "cDNA Change": {
+                            "transcript": variant["transcript"],
+                            "ref": variant["ref"],
+                            "alt": variant["alt"],
+                            "position": variant["position"]
+                        },
+                        "Protein Change": {
+                            "ref": variant["ref"],
+                            "alt": variant["alt"],
+                            "position": variant["position"]
+                        },
+                        "Description in input context": variant["description"]
+                    }
+                ]
+            } for variant in variants
+        ],
+        "Described Disease": {
+            "Described Disease": disease_name,
+            "MONDO": mondo_term
+        },
+        "Experiment Method": [
+            {
+                "Assay Method": experiment_method['assay method'],
+                "Material used": {
+                    "Material Source": experiment_method['material source'],
+                    "Material Name": experiment_method['material name'],
+                    "Description": experiment_method['description']
+                },
+                "Readout type": experiment_method['readout type'],
+                "Readout description": [
+                    {
+                        "Variant": variant["HGVS"],
+                        "Conclusion": experiment_method['result conclusion'],
+                        "Molecular Effect": experiment_method['molecular effect'],
+                        "Result Description": experiment_method['result description']
+                    } for variant in variants
+                ],
+                "Biological replicates": {
+                    "Biological replicates": experiment_method['biological replicates'],
+                    "Description": experiment_method['description biological replicates']
+                },
+                "Technical replicates": {
+                    "Technical replicates": experiment_method['technical replicates'],
+                    "Description": experiment_method['description technical replicates']
+                },
+                "Basic positive control": {
+                    "Basic positive control": experiment_method['basic positive control'],
+                    "Description": experiment_method['description basic positive control']
+                },
+                "Basic negative control": {
+                    "Basic negative control": experiment_method['basic negative control'],
+                    "Description": experiment_method['description basic negative control']
+                },
+                "Validation controls P/LP": {
+                    "Validation controls P/LP": experiment_method['validation controls plp'],
+                    "Counts": experiment_method['counts validation controls plp']
+                },
+                "Validation controls B/LB": {
+                    "Validation controls B/LB": experiment_method['validation controls blb'],
+                    "Counts": experiment_method['counts validation controls blb']
+                },
+                "Statistical analysis method": {
+                    "Statistical analysis method": experiment_method['statistical analysis method']
+                },
+                "Threshold for normal readout": {
+                    "Threshold for normal readout": experiment_method['threshold for normal readout'],
+                    "Source": experiment_method['source threshold for normal readout']
+                },
+                "Threshold for abnormal readout": {
+                    "Threshold for abnormal readout": experiment_method['threshold for abnormal readout'],
+                    "Source": experiment_method['source threshold for abnormal readout']
+                },
+                "Approved assay": {
+                    "Approved assay": 'Yes'
+                }
+            } for experiment_method in experiment_methods
+        ]
+    }
+    
+    print(json.dumps(output, indent=4))
+
+if __name__ == '__main__':
+    main()
+```
+
+This Python script uses BeautifulSoup to parse the HTML of the literature and extract relevant information. It then standardizes the HGVS nomenclature using a relevant API. The disease name is used to retrieve the corresponding MONDO term from the MONDO database. Finally, it organizes the extracted and standardized information into a JSON object according to the predefined framework.
+
+Note: This script assumes that the literature text is stored in a file named `literature.txt` at the specified URL. You will need to replace this with your actual literature source. Additionally, you will need to obtain an API key for the MONDO database and the HGVS nomenclature standardization service.

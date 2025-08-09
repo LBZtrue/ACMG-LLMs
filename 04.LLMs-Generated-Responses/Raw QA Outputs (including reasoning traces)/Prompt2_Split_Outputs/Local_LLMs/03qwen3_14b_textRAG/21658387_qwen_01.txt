@@ -1,0 +1,72 @@
+总时间（秒）：18.21
+问答时间（秒）：16.74
+
+<think>
+Okay, let's start by looking at the user's query. They provided a medical literature excerpt and want to extract mutation information. The task is to determine if the text mentions any mutations and, if so, extract the relevant details. If not, return "N.D.".
+
+First, I need to scan the given text for any mention of mutations. The text is about LRRK2 and its role in Parkinson's disease. Looking through the abstract and the sections, there's a part that says: "The disease-associated mutations, R1441C, G2019S, and I2020T, exhibited reduced interaction with, and phosphorylation of, Akt1..." 
+
+So here, three mutations are explicitly named: R1441C, G2019S, and I2020T. These are all mutations in the LRRK2 gene. The user's example shows that for each mutation, we need to extract the gene name, cDNA changes, protein changes, and description. However, the text here only provides the protein changes (the amino acid substitutions) and the gene (LRRK2), but not the cDNA changes (like specific nucleotide positions or transcript details). 
+
+The example given by the user includes both cDNA and protein changes. In this case, the text doesn't mention the cDNA changes, only the protein-level changes. So for the "cDNA Change" field, I should put "N.D." as per the constraints. The protein changes are R1441C, G2019S, and I2020T. Each of these corresponds to a specific amino acid position and substitution. 
+
+The description in the input context would be the exact names of the mutations as listed. Each mutation is listed as a separate variant, so I should create three entries in the variants array. 
+
+I need to make sure that the JSON structure is correct, with the gene name as "LRRK2" and each variant having the appropriate fields. Since the cDNA changes are not mentioned, they should be "N.D." for both transcript, ref, alt, and position. The protein changes will have the ref and alt amino acids and the position. 
+
+Also, the user's example used the format "c.248G>A (p.G83D)" as the description. In this case, the description is just the mutation names like "R1441C", so I'll use that directly. 
+
+Putting it all together, the JSON should list each of the three mutations under variants, with the gene name as LRRK2 and the cDNA change as N.D. for each. The protein changes will have the respective amino acid positions and substitutions. 
+
+I need to double-check that there are no other mutations mentioned in the text. The rest of the text discusses the role of LRRK2 and Akt1 but doesn't list any other mutations. So only the three mentioned are relevant here. 
+
+Finally, ensure that the JSON is correctly formatted with proper commas and brackets, and that all fields are included as specified.
+</think>
+
+{
+    "Gene": "LRRK2",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "R1441C"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "G2019S"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "I2020T"
+        }
+    ]
+}

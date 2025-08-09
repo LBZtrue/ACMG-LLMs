@@ -1,0 +1,68 @@
+总时间（秒）：9.46
+问答时间（秒）：9.33
+
+Based on your provided context and example, here's a summary of the workflow for extracting and organizing data from the literature into the JSON format you've described:
+
+1. Extract all relevant variant information (gene name, preliminary HGVS nomenclature, cDNA changes, and protein changes) from the literature.
+2. Standardize the HGVS nomenclature of the variants via relevant API.
+3. Identify the disease studied in the literature and retrieve the corresponding terms from the MONDO database.
+4. List all experimental methods mentioned in the literature and extract detailed information about each method, including material sources, readout types, result descriptions, experimental replicates, control settings, statistical analysis methods, and thresholds for normal and abnormal results.
+5. Determine whether the experimental methods are generally used for studying the disease.
+6. Organize the extracted and standardized information according to the predefined JSON framework.
+
+Here's an example of how the JSON structure could look like, based on the data you provided:
+
+```json
+{
+    "Variants": [
+        {
+            "Gene": "TP53",
+            "HGVS_Standardized": "NM_001126112.3:c.248G>A",
+            "Codon_Change": "p.G83D",
+            "Description": "This variant causes a structural change in the protein, affecting its function."
+        }
+    ],
+    "Disease": {
+        "Name": "Hereditary Myopathy",
+        "MONDO_Term": "MONDO:0012345"
+    },
+    "Experiment_Methods": [
+        {
+            "Assay_Method": "Western Blot",
+            "Material_Source": "Cell line",
+            "Material_Name": "HEK293",
+            "Readout_Type": "Quantitative",
+            "Biological_Replicates": "Yes",
+            "Technical_Replicates": "Yes",
+            "Positive_Control": {
+                "Used": "Yes",
+                "Description": "Wild-type cDNA was used as a positive control."
+            },
+            "Negative_Control": {
+                "Used": "Yes",
+                "Description": "Empty vector was used as a negative control."
+            },
+            "Validation_Controls_P_LP": {
+                "Used": "Yes",
+                "Counts": "2"
+            },
+            "Validation_Controls_B_LB": {
+                "Used": "Yes",
+                "Counts": "1"
+            },
+            "Statistical_Analysis_Method": "ANOVA was used for statistical analysis.",
+            "Threshold_for_Normal_Readout": {
+                "Value": "Protein expression greater than 80% on day 7.",
+                "Source": "Literature"
+            },
+            "Threshold_for_Abnormal_Readout": {
+                "Value": "Protein expression less than 50% on day 7.",
+                "Source": "Literature"
+            },
+            "Approved_Assay": "Yes"
+        }
+    ]
+}
+```
+
+This JSON structure allows for easy data organization and can be adapted to different experimental designs or literature sources as needed.

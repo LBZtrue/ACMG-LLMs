@@ -1,0 +1,49 @@
+总时间（秒）：7.75
+问答时间（秒）：7.67
+
+Based on the provided context and examples, I have created a Python function that takes a string containing the literature description as an argument and returns the structured JSON data according to your specifications. Here's the Python function:
+
+```python
+import re
+
+def parse_literature(lit_description):
+    # Function to extract information from the literature
+
+    lit_dict = {}
+
+    # Extract variants and associated data
+    variant_pattern = r"(\w+) (\w+)\s*(\([^)]*\))\s*(.*)"  # Example: TP53 G83D causes a structural change in the protein, affecting its function.
+    matches = re.findall(variant_pattern, lit_description)
+    variants = []
+    for match in matches:
+        gene, codon_change, protein_change, description = match
+        # Preliminary HGVS nomenclature
+        transcript, ref, alt, position = codon_change[1:-1].split(" ")
+        variant = f"{transcript}:c.{position}{ref}>{alt}"
+        variants.append({
+            "gene": gene,
+            "description": description,
+            "variant": variant,
+            # Complete HGVS nomenclature (to be filled)
+        })
+
+    lit_dict["Variants Include"] = variants
+
+    # Extract disease information
+    disease_pattern = r"The study was conducted on (\w+)"  # Example: The study was conducted on Hereditary Myopathy.
+    match = re.search(disease_pattern, lit_description)
+    if match:
+        lit_dict["Described Disease"] = {"Described Disease": match.group(1), "MONDO": f"MONDO:{get_mondo_term(match.group(1))}"}  # Placeholder function to get the MONDO term (to be implemented)
+
+    # Extract experiment method information
+    experiment_pattern = r"The experiment was conducted using ([^\.]+)"  # Example: The experiment was conducted using the HEK293 cell line.
+    match = re.search(experiment_pattern, lit_description)
+    if match:
+        exp_method = {"Assay Method": match.group(1)}
+        # Fill in the rest of the experiment method data (to be filled)
+        lit_dict["Experiment Method"].append(exp_method)
+
+    return lit_dict
+```
+
+This function is a starting point, and further work will need to be done to fill in the missing parts, such as completing the HGVS nomenclature, implementing the `get_mondo_term()` function, and filling out the rest of the experimental method data. However, this should provide a good foundation for building the Python script.

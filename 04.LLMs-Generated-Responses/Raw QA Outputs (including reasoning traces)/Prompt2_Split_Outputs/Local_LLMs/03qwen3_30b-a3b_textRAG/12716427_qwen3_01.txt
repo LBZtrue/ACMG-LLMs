@@ -1,0 +1,50 @@
+总时间（秒）：10.25
+问答时间（秒）：8.43
+
+<think>
+Okay, let's tackle this query. The user wants me to act as a Medical Literature Data Mining Expert, specifically looking for mutation information in the provided text. The output needs to be in a specific JSON format, and if there's no mutation info, I should return "N.D.".
+
+First, I'll read through the given abstract carefully. The main topic is Parkinson's disease and the role of alpha-synuclein. The abstract mentions that mutations in alpha-synuclein have been identified in autosomal dominant PD. Then it talks about experiments with neuroblastoma cells transfected with normal or mutant (A30P or A53T) alpha-synuclein.
+
+So, the key points here are the mutations A30P and A53T in the alpha-synuclein gene. The gene name is mentioned as "a-synuclein", which is also known as SNCA. The variants are listed as A30P and A53T. These are protein changes, where the amino acid at position 30 is replaced by proline (A30P) and position 53 is replaced by threonine (A53T). 
+
+Looking at the example provided, the JSON structure requires Gene, variants, each with cDNA Change, Protein Change, and Description. However, the input text doesn't mention cDNA changes (like c.248G>A) or transcript information. It only specifies the protein changes. So for cDNA Change, I need to put "N.D." since it's not mentioned. The protein changes are given as A30P and A53T, which translate to positions 30 and 53 with amino acid substitutions. The description in the context is "A30P or A53T".
+
+I need to make sure that all fields are filled. The Gene is "SNCA" (since a-synuclein is also called SNCA). The variants array will have two entries, each with the protein change and the description. The cDNA Change fields will be "N.D." because the text doesn't provide that info. Also, the example uses "transcript": "N.D." when not specified.
+
+So the final JSON should have Gene as "SNCA", variants with two entries for A30P and A53T, each with Protein Change details and the description. All other fields not mentioned will be "N.D.".
+</think>
+
+{
+    "Gene": "SNCA",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "P",
+                "position": "30"
+            },
+            "Description in input context": "A30P"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "T",
+                "position": "53"
+            },
+            "Description in input context": "A53T"
+        }
+    ]
+}

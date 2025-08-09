@@ -1,0 +1,69 @@
+总时间（秒）：89.61
+问答时间（秒）：60.13
+
+Okay, so I need to figure out how to extract mutation information from the provided medical literature text. Let me start by reading the context carefully.
+
+In the first part, the text mentions "parkin Q311stop" and "parkin T240R /parkin R42P." These look like specific mutations. I know that in genetic notation, the letters before the numbers represent the amino acids. "Q" is glutamine, "T" is threonine, "R" is arginine, and "P" is proline. The numbers are the positions of these amino acids in the protein. "stop" indicates a nonsense mutation, which means the protein synthesis stops early.
+
+So, "Q311stop" is a nonsense mutation at position 311, where glutamine (Q) is changed to a stop codon. Similarly, "T240R" means threonine at position 240 is replaced by arginine, and "R42P" means arginine at position 42 is replaced by proline. These are missense mutations because they change an amino acid to another.
+
+Looking at the second part, the text describes association studies with UbcH7 and various parkin mutants, but it doesn’t provide additional mutation information beyond what's already mentioned.
+
+Now, I need to structure this information into the specified JSON format. The gene in question is "parkin." There are three variants: Q311stop, T240R, and R42P. Each variant needs its own entry in the "variants" array.
+
+For each variant, I need to extract the cDNA change and protein change. The cDNA change is described by the transcript (which isn't specified here, so I'll use "N.D."), the reference nucleotide (ref), the alternate nucleotide (alt), and the position. The protein change includes the reference amino acid (ref), the alternate amino acid (alt), and the position.
+
+Since the context doesn’t mention the specific transcript or cDNA details, I'll have to use "N.D." for those parts. The mutation descriptions are given as "parkin Q311stop" and "parkin T240R /parkin R42P," so I'll split them into separate entries.
+
+Putting it all together, I'll create a JSON object with the gene "parkin" and an array of variants. Each variant will have the cDNA and protein changes as specified, using "N.D." where information isn't provided.
+</think>
+
+```json
+{
+    "Gene": "parkin",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "Q",
+                "alt": "stop",
+                "position": "311"
+            },
+            "Protein Change": {
+                "ref": "Q",
+                "alt": "stop",
+                "position": "311"
+            },
+            "Description in input context": "parkin Q311stop"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "T",
+                "alt": "R",
+                "position": "240"
+            },
+            "Protein Change": {
+                "ref": "T",
+                "alt": "R",
+                "position": "240"
+            },
+            "Description in input context": "parkin T240R"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "R",
+                "alt": "P",
+                "position": "42"
+            },
+            "Protein Change": {
+                "ref": "R",
+                "alt": "P",
+                "position": "42"
+            },
+            "Description in input context": "parkin R42P"
+        }
+    ]
+}
+```

@@ -1,0 +1,82 @@
+总时间（秒）：18.07
+问答时间（秒）：15.36
+
+<think>
+Okay, let's tackle this query. The user wants me to act as an expert in extracting mutation information from medical literature. The input is an abstract about DJ-1 protein mutations related to Parkinsonism.
+
+First, I need to read through the abstract carefully. The key parts mention two novel mutations: L10P and P158DEL. The abstract also references a known L166P variant. 
+
+I should check each mutation's details. For L10P, the text says it's a homozygous missense mutation leading to L10P. The cDNA change would be at position 10, with leucine to proline. Similarly, P158DEL is a deletion of residue P158, so the cDNA change is a deletion at position 158. The L166P is already a known pathogenic variant, so I need to note that as well.
+
+Next, I have to structure the JSON according to the example. Each variant should have cDNA Change (transcript, ref, alt, position), Protein Change (ref, alt, position), and Description. The transcript is N.D. since it's not mentioned. For L10P, the cDNA change is c.10L>P? Wait, the abstract says "L10P amino acid substitution" which is a missense mutation. The exact cDNA position isn't specified, so maybe I need to infer. Wait, the original text says "L10P" which refers to the amino acid change at position 10. But the cDNA change would depend on the codon. Since the exact codon isn't given, maybe I should note that as N.D. for transcript and cDNA details? Wait, the example shows that if the cDNA change isn't specified, it's left as N.D. But in the example, the cDNA change was given as c.248G>A. 
+
+Wait, the abstract mentions "L10P" as the amino acid substitution. The cDNA change would be the nucleotide change leading to that. However, the abstract doesn't specify the exact cDNA position or the nucleotide change. So for cDNA Change, transcript is N.D., ref and alt are N.D., but position is 10? Wait, the example has the position as 83 for p.G83D. So in the case of L10P, the position is 10, but the exact nucleotide change isn't given. So maybe the cDNA Change would have position 10, but ref and alt as N.D. Similarly for P158DEL, the position is 158, and it's a deletion, so the cDNA change would be a deletion at position 158. 
+
+Wait, the example for the deletion would have "del" in the cDNA change. But the original text here doesn't specify the exact nucleotide change for the deletion. So for P158DEL, the cDNA change would be a deletion at position 158, but since the exact nucleotides are not provided, maybe the cDNA Change's ref and alt are N.D., and the position is 158. 
+
+Similarly, the L166P variant is mentioned as a known pathogenic variant, so the same applies. 
+
+So, putting it all together, each variant would have the protein change (L10P, P15, etc.), and the cDNA change with position and N.D. for the nucleotides. The description in the input context would be the exact term used in the abstract, like "L10P" and "P158DEL". 
+
+I need to make sure that all fields are filled according to the JSON structure, using N.D. where the information isn't explicitly provided. The user's example includes the transcript as N.D. when not mentioned, so I should follow that. 
+
+Also, check if the L166P is part of the variants. The abstract mentions L166P as a known variant, so it should be included in the variants array. 
+
+So the final JSON should have the Gene as DJ-1, and three variants: L10P, P158DEL, and L166P. Each with their respective cDNA and protein changes, and descriptions. The transcript for all is N.D. since it's not specified. The cDNA position is given as 10 for L10P, 158 for P158DEL, and 166 for L166P. The protein changes are L10P, P158DEL (which is a deletion), and L166P. 
+
+I need to make sure that the JSON structure matches the example provided, including the "variants" array with each variant's details. Also, ensure that the "Description in input context" field is filled with the exact term from the abstract. 
+
+Double-checking the abstract: "L10P amino acid substitution" and "deletion of DJ-1 residue P158". The L166P is mentioned as a known variant. So all three are included. 
+
+Yes, that should cover all the required information.
+</think>
+
+```json
+{
+    "Gene": "DJ-1",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "10"
+            },
+            "Protein Change": {
+                "ref": "L",
+                "alt": "P",
+                "position": "10"
+            },
+            "Description in input context": "L10P"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "158"
+            },
+            "Protein Change": {
+                "ref": "P",
+                "alt": "DEL",
+                "position": "158"
+            },
+            "Description in input context": "P158DEL"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "166"
+            },
+            "Protein Change": {
+                "ref": "L",
+                "alt": "P",
+                "position": "166"
+            },
+            "Description in input context": "L166P"
+        }
+    ]
+}
+```

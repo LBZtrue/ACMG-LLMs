@@ -1,0 +1,51 @@
+总时间（秒）：13.01
+问答时间（秒）：11.57
+
+<think>
+Okay, so I need to figure out how to extract mutation information from the given research article. The user has provided a specific JSON template that needs to be filled with gene names, cDNA changes, protein changes, and their descriptions as found in the literature.
+
+First, I'll read through the provided context carefully. It's about a study identifying a new mutation in the DJ1 gene linked to early-onset Parkinson's disease. The key points mentioned are:
+
+- They identified a third mutation: c.192G>C (p.E64D).
+- This mutation was found in a patient of Turkish ancestry.
+- The sister, who is homozygous for E64D, didn't show clinical signs but had reduced dopamine uptake.
+- The brother, heterozygous, showed normal uptake.
+- Crystallography showed the DJ1 structure wasn't altered by E64D, but mutant levels were lower when overexpressed.
+- Immunocytochemistry revealed that cells with E64D or L166P mutations had more nuclear localization.
+
+So, I need to extract the gene name and mutation details. The gene is DJ1, also known as PARK7. The variant mentioned is c.192G>C leading to p.E64D. There's another mutation discussed, L166P, but it's described in the context of other findings, not directly as a new variant identified in this study.
+
+I should note that only the E64D mutation is the novel one they found. The other mutation (L166P) was already known and serves as a comparison point.
+
+Now, putting this into JSON format as per the user's example:
+
+- Gene: DJ1
+- variants array with each entry having cDNA and protein changes.
+- For cDNA Change, transcript is N.D., ref is G, alt is C, position 192.
+- Protein change: ref E, alt D, position 64.
+- Description in input context: "c.192G>C (p.E64D)".
+
+I shouldn't include L166P unless it's part of the variants they identified, but since it was already described elsewhere, perhaps it's not part of this study's findings on mutations. So I'll only include E64D.
+</think>
+
+```json
+{
+    "Gene": "DJ1",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "G",
+                "alt": "C",
+                "position": "192"
+            },
+            "Protein Change": {
+                "ref": "E",
+                "alt": "D",
+                "position": "64"
+            },
+            "Description in input context": "c.192G>C (p.E64D)"
+        }
+    ]
+}
+```

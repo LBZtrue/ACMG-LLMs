@@ -1,0 +1,70 @@
+总时间（秒）：17.87
+问答时间（秒）：17.70
+
+<think>
+Okay, let me start by looking at the user's query. They want me to act as a Professional Medical Literature Data Mining Expert, extracting mutation information from provided text. The task is to determine if the text contains mutation details and extract them in a specific JSON format, or return "N.D." if not.
+
+First, I need to carefully read the input text. The example given is a paragraph from a study about mutations in the LRRK2 gene. The text mentions several mutations: Y1699C, G2019S, and their deletion mutants. 
+
+I need to identify the gene names, cDNA changes, protein changes, and descriptions. The example input includes "Y1699C" and "G2019S" mutations. However, the text doesn't provide cDNA positions or transcript details, only the protein changes. The deletion mutants are also mentioned, but again, without specific cDNA information.
+
+Looking at the example response, when cDNA details aren't provided, they use "N.D." for the transcript. The protein changes are specified with the position and amino acid change. The description in the context is taken directly from the text, like "Y1699C mutant" and "G2019S mutant".
+
+In the given text, the mutations are described as Y1699C and G2019S. These are single-letter substitutions, so the cDNA change isn't specified, but the protein change is. The deletion mutants are mentioned but without specific positions, so those would be "N.D." for cDNA and protein changes. 
+
+I need to structure each mutation into the variants array, ensuring that each entry has the gene, cDNA change (with N.D. where not mentioned), protein change (with N.D. if not present), and the description from the context. 
+
+Also, the user's example shows that even if the mutation is a deletion, like in the deletion mutants, the cDNA change would be N.D. since the text doesn't specify the exact positions. The same applies to the protein changes for the deletion mutants.
+
+So, the final JSON should list the LRRK2 gene with two variants: Y1699C and G2019S, each having their protein changes and descriptions. The deletion mutants are also mentioned but without enough detail, so their cDNA and protein changes would be N.D., and the description would be "deletion mutants" as per the text.
+
+I need to make sure that all the information is accurately captured, using N.D. where necessary, and that the structure matches the example provided.
+</think>
+
+{
+    "Gene": "LRRK2",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "Y1699C mutant"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "G2019S mutant"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "deletion mutants"
+        }
+    ]
+}

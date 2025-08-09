@@ -1,0 +1,113 @@
+总时间（秒）：20.72
+问答时间（秒）：18.42
+
+<think>
+Okay, let's tackle this query. The user wants me to act as a Medical Literature Data Mining Expert. The task is to check if the provided text has mutation information and extract it in JSON format. If not, return "N.D." 
+
+First, I need to carefully read the given text. The context provided is an abstract and introduction from a study on Parkinson's disease, focusing on PINK1 and parkin mutations. 
+
+Looking at the abstract: It mentions "PD-linked pathogenic PINK1 mutations" and "homozygous mutations in parkin" and "homozygous mutations in PTEN-induced putative kinase 1 (PINK1)". Also, in the introduction, there's "mutations in parkin" and "mutations in PINK1". 
+
+So, there are references to mutations in both PINK1 and parkin genes. Now, I need to check if specific mutation details are given. The abstract says "PD-linked pathogenic PINK1 mutations" but doesn't specify particular cDNA or protein changes. Similarly, the introduction mentions "homozygous mutations" but no specific variants like c.248G>A or p.G83D as in the example. 
+
+The user's example had specific mutations with cDNA and protein changes. Here, the text doesn't provide such details. It only mentions the genes (PINK1, parkin) and that mutations in them are linked to PD, but no specific variants. 
+
+So according to the workflow, if there's no specific mutation details, I should note "N.D." for the variants. The Gene field would be PINK1 and parkin. The variants would be "N.D." since there's no specific information. 
+
+Wait, but the user's example had "variants" as an array. So even if there's no specific info, the structure should have "variants" with "N.D."? Let me check the constraints. The user says to extract only information directly related to mutations. If the text mentions the genes but not specific mutations, then the variants would be "N.D.".
+
+So the JSON should have "Gene" as "PINK1" and "parkin", but the variants would be "N.D." because there's no specific cDNA or protein changes mentioned. However, the example given in the user's prompt had "variants" as an array with details. But in this case, the text doesn't have specific mutations, just the genes. 
+
+Wait, the user's example had a specific mutation, but here the text doesn't. So the correct approach is to list the genes and put "N.D." in the variants. But the user's instructions say to extract specific gene names, cDNA changes, etc. If those aren't present, use "N.D.".
+
+So the answer would be:
+
+{
+  "Gene": "PINK1, parkin",
+  "variants": [
+    {
+      "cDNA Change": "N.D.",
+      "Protein Change": "N.D.",
+      "Description in input context": "PD-linked pathogenic PINK1 mutations"
+    },
+    {
+      "cDNA Change": "N.D.",
+      "Protein Change": "N.D.",
+      "Description in input context": "homozygous mutations in parkin"
+    },
+    {
+      "cDNA Change": "N.D.",
+      "Protein Change": "N.D.",
+      "Description in input context": "homozygous mutations in PINK1"
+    }
+  ]
+}
+
+But wait, the original text mentions "PD-linked pathogenic PINK1 mutations" and "homozygous mutations in parkin" and "homozygous mutations in PINK1". So each of these is a separate mutation description. However, the user's example had one variant per entry. So I need to list each mutation description as a separate variant entry. 
+
+But the problem is that the text doesn't have specific cDNA or protein changes, so those fields are "N.D.".
+
+So the JSON should have the Gene as "PINK1" and "parkin", and the variants array with each mutation description. However, the user's example had "Gene" as a single string. Wait, in the example, the input was "TP53" and the output had "Gene": "TP53". But in the text here, there are two genes: PINK1 and parkin. So the "Gene" field should be a list? But the example shows a single string. Wait, looking at the example:
+
+In the example, the extracted information has "Gene": "TP53", and "variants" as an array. So for multiple genes, perhaps the "Gene" field would be a comma-separated list. But the user's instruction says "extract specific gene names". So if there are multiple genes, list them separated by commas.
+
+So in this case, the genes are PINK1 and parkin. So "Gene": "PINK1, parkin".
+
+Then, for variants, each mutation description is a separate entry. The text mentions:
+
+- "PD-linked pathogenic PINK1 mutations"
+- "homozygous mutations in parkin"
+- "homozygous mutations in PINK1"
+
+So three entries. Each would have "Description in input context" as the respective phrases, and cDNA and Protein Change as "N.D.".
+
+But the user's example had one variant entry. So here, we need to list each mutation description as a separate variant. However, the problem is that the text doesn't specify specific mutations, just general terms. So each of these is a mutation description, even if not specific.
+
+So the JSON would be:
+
+{
+  "Gene": "PINK1, parkin",
+  "variants": [
+    {
+      "cDNA Change": "N.D.",
+      "Protein Change": "N.D.",
+      "Description in input context": "PD-linked pathogenic PINK1 mutations"
+    },
+    {
+      "cDNA Change": "N.D.",
+      "Protein Change": "N.D.",
+      "Description in input context": "homozygous mutations in parkin"
+    },
+    {
+      "cDNA Change": "N.D.",
+      "Protein Change": "N.D.",
+      "Description in input context": "homozygous mutations in PINK1"
+    }
+  ]
+}
+
+But the user's example had "variants" as an array with one object. So in this case, three objects in the variants array. However, the user's instructions say to extract specific gene names, etc. Since the text doesn't have specific mutations, the cDNA and Protein Change are "N.D.".
+
+Yes, that seems correct. The answer should include the genes and the mutation descriptions as provided, with "N.D." where specific details are missing.
+</think>
+
+{
+    "Gene": "PINK1, parkin",
+    "variants": [
+        {
+            "cDNA Change": "N.D.",
+            "Protein Change": "N.D.",
+            "Description in input context": "PD-linked pathogenic PINK1 mutations"
+        },
+        {
+            "cDNA Change": "N.D.",
+            "Protein Change": "N.D.",
+            "Description in input context": "homozygous mutations in parkin"
+        },
+        {
+            "cDNA Change": "N.D.",
+            "Protein Change": "N.D.",
+            "Description in input context": "homozygous mutations in PINK1"
+        }
+    ]
+}

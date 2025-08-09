@@ -1,0 +1,66 @@
+总时间（秒）：15.92
+问答时间（秒）：14.41
+
+<think>
+Okay, let's tackle this query. The user wants me to extract mutation information from the provided medical literature paragraph. First, I need to carefully read through the text to identify any mentions of mutations.
+
+Looking at the abstract, the main mutations discussed are E46K, A30P, and A53T in the a-synuclein gene. The E46K mutation is the focus of the study. The introduction also mentions A30P and A53T as causes of Parkinson's disease. 
+
+Now, I need to structure this information according to the JSON format. The gene here is clearly a-synuclein. For each mutation, I should extract the cDNA change, protein change, and description. However, the text doesn't provide specific cDNA positions or transcript details for E46K, A30P, or A53T. It only mentions the protein changes (like E46K, A30P, A53T) and their effects. 
+
+The user's example shows that if the cDNA change isn't specified, we use "N.D." for the transcript and position. So for each variant, even though the protein changes are known, the cDNA details are missing. The description in the input context should include the mutation's effect, like increasing phospholipid binding or filament assembly.
+
+I need to make sure each mutation is listed under "variants" with their respective details. Since the text doesn't mention the transcript for these mutations, I'll put "N.D." there. Also, check if there are other mutations, but in the given text, only E46K, A30P, and A53T are present. 
+
+Wait, the abstract mentions E46K as a novel mutation, and the introduction talks about A30P and A53T. So all three should be included. Each variant should have their own entry in the variants array. 
+
+So the final JSON should have the gene as "a-synuclein" and three variants with their respective protein changes and descriptions. The cDNA changes are not provided, so they remain "N.D.".
+</think>
+
+{
+    "Gene": "a-synuclein",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "E",
+                "alt": "K",
+                "position": "46"
+            },
+            "Description in input context": "E46K mutation increases phospholipid binding and filament assembly of a-synuclein, leading to twisted morphology with 43 nm cross-over spacing"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "P",
+                "position": "30"
+            },
+            "Description in input context": "A30P mutation associated with familial Parkinson’s disease and dementia with Lewy bodies"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "T",
+                "position": "53"
+            },
+            "Description in input context": "A53T mutation associated with familial Parkinson’s disease and dementia with Lewy bodies; increases filament assembly rate similarly to E46K"
+        }
+    ]
+}

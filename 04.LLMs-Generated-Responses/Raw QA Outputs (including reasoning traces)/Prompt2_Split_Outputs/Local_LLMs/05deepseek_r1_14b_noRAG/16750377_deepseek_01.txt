@@ -1,0 +1,72 @@
+总时间（秒）：18.03
+问答时间（秒）：17.79
+
+<think>
+Alright, I'm looking at the user's query about extracting mutation information from a medical literature paragraph. The user wants me to act as a data mining expert for biomedical literature, specifically focusing on mutations.
+
+First, I need to understand the structure of the provided JSON example. It includes gene name, variants with cDNA and protein changes, descriptions, and any other relevant info. My goal is to replicate this format accurately.
+
+Now, I'll read through the context given by the user. The paragraph discusses LRRK2 mutations in Parkinson's disease, mentioning that certain mutations cause it and affect kinase activity. There are studies cited where mutants like G209A and Y164H were analyzed.
+
+I should identify all mutation mentions. The primary gene here is LRRK2. For each variant, I need to extract cDNA changes if available, protein changes, and the description from the text.
+
+Looking at the provided context, there are a few key points:
+- Zimprich et al. (2004) found that mutations in LRRK2 cause autosomal-dominant Parkinsonism.
+- West et al. (2005) studied G209A and Y164H mutants, noting increased kinase activity linked to disease.
+
+In the first case, no specific cDNA or protein changes are listed beyond the gene name. So for Zimprich's study, I'll note that LRRK2 has mutations causing Parkinsonism but fill in "N.D." where specifics aren't provided.
+
+For West et al., they specifically mention G209A and Y164H. These likely correspond to cDNA changes at positions 209 (G to A) and 164 (Y to H). So, I'll extract these with their respective protein changes.
+
+I should structure the JSON accordingly, listing each mutation under "variants" with detailed information where available and using "N.D." where it's not. This ensures completeness and follows the user's format requirements.
+</think>
+
+```json
+{
+    "Gene": "LRRK2",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "Mutations in LRRK2 cause autosomal-dominant parkinsonism with pleomorphic pathology"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "G",
+                "alt": "A",
+                "position": "209"
+            },
+            "Protein Change": {
+                "ref": "G",
+                "alt": "A",
+                "position": "209"
+            },
+            "Description in input context": "G209A mutant LRRK2 induces neuronal degeneration"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "Y",
+                "alt": "H",
+                "position": "164"
+            },
+            "Protein Change": {
+                "ref": "Y",
+                "alt": "H",
+                "position": "164"
+            },
+            "Description in input context": "Y164H mutant LRRK2 induces neuronal degeneration"
+        }
+    ]
+}
+```

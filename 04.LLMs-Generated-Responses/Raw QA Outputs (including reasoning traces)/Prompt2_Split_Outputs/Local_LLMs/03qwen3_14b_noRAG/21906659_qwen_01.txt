@@ -1,0 +1,60 @@
+总时间（秒）：19.60
+问答时间（秒）：19.44
+
+<think>
+Okay, let's tackle this query. The user wants me to extract mutation information from a given text. First, I need to check if the text mentions any mutations. The example provided uses a JSON format, so I need to follow that structure.
+
+Looking at the input text, I see several references. The first one is from Singleton et al. (2003) mentioning "Alpha-synuclein locus triplication causes Parkinson’s disease." That's a mutation, but it's a triplication, not a point mutation. I should note that as a genomic duplication.
+
+Another part is from Zarranz et al. (2004) discussing the "E46K mutation" in alpha-synuclein. That's a specific point mutation. The gene is SNCA, and the mutation changes glutamic acid (E) at position 46 to lysine (K). I need to extract the gene name, the cDNA change if available, and the protein change. However, the text doesn't specify the cDNA position, so I'll put N.D. for transcript and position. The protein change is E46K.
+
+Other mentions like "Ala53Thr" and "Gly46Leu" in the same context are also mutations. But the example only included E46K, so I should check if those are mentioned. Wait, the input text for Zarranz et al. only mentions E46K. The other mutations might be in other parts of the text, but looking through the input again, I don't see those. So the only mutation here is E46K.
+
+I need to structure the JSON with the gene as SNCA (since alpha-synuclein is encoded by SNCA), the variant details. The cDNA change isn't specified, so transcript, ref, alt, position are N.D. The protein change is E to K at position 46. The description in the input is "E46K mutation of alpha-synuclein."
+
+Another mention is from Singleton AB et al. (2003) about locus triplication. That's a duplication, not a point mutation, but still a mutation type. However, the user might want all mutation types. But the example only included point mutations. The user's instruction says to extract any mutation information, so I should include that as well.
+
+So, the JSON should have two entries: one for the triplication and one for E46K. Wait, but the example only had one variant. Let me check again. The input text has two separate mentions: one about triplication and another about E46K. Each should be a separate variant in the variants array.
+
+For the triplication: Gene is SNCA, variants array has one entry. cDNA change is N.D. for all fields. Protein change is N.D. since it's a duplication. Description is "locus triplication."
+
+For E46K: Gene is SNCA, variants array has another entry. cDNA change is N.D. (no position given), protein change E46K, description "E46K mutation."
+
+So the JSON should have both variants. But the example only had one, but the user might expect all mutations. The user's instruction says to extract any mutation info, so both should be included.
+</think>
+
+```json
+{
+    "Gene": "SNCA",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "Alpha-synuclein locus triplication causes Parkinson’s disease"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "E",
+                "alt": "K",
+                "position": "46"
+            },
+            "Description in input context": "The new mutation, E46K, of alpha-synuclein causes Parkinson and Lewy body dementia"
+        }
+    ]
+}
+```

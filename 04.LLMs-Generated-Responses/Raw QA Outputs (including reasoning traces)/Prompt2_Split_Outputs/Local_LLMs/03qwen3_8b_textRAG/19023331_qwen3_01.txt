@@ -1,0 +1,112 @@
+总时间（秒）：29.14
+问答时间（秒）：27.34
+
+<think>
+Okay, let's tackle this query. The user wants me to act as a medical literature data mining expert, specifically to extract mutation information from the provided paragraphs. The answer needs to be in a strict JSON format, and if there's no mutation info, return "N.D.".
+
+First, I'll read through the abstract and the Parkinson's disease context provided. 
+
+In the abstract, the first sentence mentions mutations in PARK7 DJ-1 associated with autosomal-recessive early-onset Parkinson's disease. The gene encodes an atypical peroxiredoxin-like peroxidase. Then it talks about large gene deletions leading to loss-of-function, but some missense mutations' mechanisms are unclear. The study used yeast two-hybrid screening to find TRAF and TTRAP as DJ-1 interactors. They mention PD-associated mutations M26I and L166P. These mutants bind TTRAP more strongly than wild type. Also, the mutants blocked TTRAP's protective activity, leading to JNK and p38-MAPK mediated apoptosis.
+
+In the second paragraph about Parkinson's disease, it discusses the ubiquitin-proteasome system's role, mentions PARK1-14 genes, and specifically notes parkin (PARK2) and UCH-L1 (PARK5) related to the ubiquitin-proteasome system. However, there's no mention of specific mutations here, just gene associations.
+
+So, the key mutations here are M26I and L166P in the PARK7 gene (DJ-1). The abstract also refers to large gene deletions, but those are deletions, not point mutations. The user's examples show how to structure the JSON with Gene, variants, cDNA Change, Protein Change, and Description.
+
+I need to check if the mutations are described with cDNA and protein changes. The text says "PD-associated mutations M26I and L166P". The "M26I" is a protein change (methionine at position 26 to isoleucine), and "L166P" is leucine to proline at position 166. The cDNA changes would correspond to these. Since the text doesn't specify the exact cDNA positions, maybe they are inferred from the protein positions. But in the example, they used the cDNA position. Wait, the example had "c.248G>A" leading to "p.G83D". Here, the protein positions are 26 and 166. So, the cDNA positions would be calculated based on the gene's transcript. However, without the exact transcript info, maybe the user expects to note that as "N.D." for cDNA change? But the example includes cDNA change even if it's not specified. Wait, in the example, the user provided "c.248G>A" as the cDNA change, which is explicit. In the given text, the mutations are described as M26I and L166P, which are protein changes. The cDNA changes would be the corresponding nucleotide changes. Since the text doesn't mention the exact cDNA positions, maybe the answer should have "N.D." for cDNA change. Wait, but the example shows that even if the cDNA is not specified, they still include the protein change. Wait, the example includes both cDNA and protein changes. Wait, the example says "c.248G>A (p.G83D)" which is both. So in the given text, the mutations are described as M26I and L166P, which are protein changes. So in the JSON, the "Protein Change" would have ref and alt, and the position. But the cDNA change is not specified here, so it would be "N.D." for cDNA change. However, the example includes the cDNA change even if it's not explicitly given. Wait, in the example, the input text says "c.248G>A (p.G83D)", so they have both. In the current text, the mutations are M26I and L166P, which are protein changes. The cDNA change would be the corresponding nucleotide change, but since it's not provided, perhaps "N.D." for cDNA change. However, the user's example includes the cDNA change even if it's not explicitly stated. Wait, no. The example's input text includes the cDNA change. The current text doesn't mention cDNA changes, only protein changes. So, the cDNA change would be "N.D.".
+
+Wait, the user's instruction says to extract "cDNA Change", "Protein Change", and "Description in input context". The "Description in input context" would be the exact phrase from the text. So for M26I, the description is "PD-associated mutations M26I and L166P". But the example's description includes the exact phrase. So in this case, the description would be "PD-associated mutations M26I and L166P".
+
+So, the JSON should have "Gene": "PARK7" (or DJ-1?), the variants with cDNA Change as N.D., Protein Change with ref and alt, and the description. Wait, but in the example, the gene is TP53, and the variants are listed as separate entries. So in the current case, there are two mutations: M26I and L166P. So each would be a variant in the variants array. Each variant would have their own cDNA, protein, and description. But since the text doesn't specify the cDNA changes, those would be N.D. But the example includes the cDNA change even if it's not specified. Wait, no. The example's input text includes the cDNA change. So if the input text doesn't mention the cDNA change, then it's N.D. So in this case, the cDNA change is N.D., and the protein change is M26I and L166P. However, the example shows that even if the cDNA is not specified, the protein change is included. Wait, in the example, the input text has "c.248G>A (p.G83D)" which includes both. So in our case, the text mentions the protein changes but not the cDNA. Therefore, the cDNA change would be N.D., and the protein change is M26I and L166P. But the example includes both cDNA and protein changes. So in the current case, the cDNA change is N.D., and the protein change is described. 
+
+Also, the gene is PARK7 (DJ-1). The abstract mentions "mutations in PARK7 DJ-1", so the gene is PARK7. The variants are M26I and L166P. Each variant would be in the variants array. 
+
+So the JSON would look like:
+
+{
+    "Gene": "PARK7",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "M",
+                "alt": "I",
+                "position": "26"
+            },
+            "Description in input context": "PD-associated mutations M26I and L166P"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "L",
+                "alt": "P",
+                "position": "166"
+            },
+            "Description in input context": "PD-associated mutations M26I and L166P"
+        }
+    ]
+}
+
+Wait, but the description in the input context should be the exact phrase from the text. The text says "PD-associated mutations M26I and L166P". So each variant's description would be that same string. However, the example has a single variant with a description. So perhaps the description is the same for both variants. Alternatively, maybe the description is "PD-associated mutations M26I and L166P", and each variant is listed as separate entries. 
+
+Alternatively, maybe the description is "PD-associated mutations M26I and L166P", and the variants are two separate entries. 
+
+So, the JSON would have two variants, each with their own Protein Change and the same Description in input context. 
+
+But the example has a single variant with the description. So maybe in this case, the description is "PD-associated mutations M26I and L166P", and each variant is a separate entry. 
+
+Alternatively, the description could be split, but the example shows that the description is the exact phrase from the text. So the answer should have two variants, each with their own protein changes and the same description. 
+
+But I need to check the exact wording. The text says "PD-associated mutations M26I and L166P". So the description is that entire phrase. Therefore, each variant would have that same description. 
+
+But perhaps the user expects that each mutation is a separate variant. So the answer would have two variants, each with their own protein changes and the same description. 
+
+Therefore, the JSON would be structured as above. 
+
+Additionally, the abstract mentions "large gene deletions have been associated with a loss-of-function phenotype", which are deletions, not point mutations. The user's goal is to extract mutation information, so deletions are mutations but the user's examples don't include them. However, the user's examples only include point mutations. The user's constraints say to extract only information directly related to mutations. So deletions are mutations, but the user's examples don't cover them. However, the user's examples only include point mutations. The user's question may not specify if deletions are included. But the user's examples show only point mutations, so perhaps the answer should focus on the point mutations. 
+
+Therefore, the final answer includes the two missense mutations M26I and L166P in PARK7, with cDNA changes as N.D., and the description as given.
+</think>
+
+{
+    "Gene": "PARK7",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "M",
+                "alt": "I",
+                "position": "26"
+            },
+            "Description in input context": "PD-associated mutations M26I and L166P"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "L",
+                "alt": "P",
+                "position": "166"
+            },
+            "Description in input context": "PD-associated mutations M26I and L166P"
+        }
+    ]
+}

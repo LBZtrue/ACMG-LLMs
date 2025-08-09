@@ -1,0 +1,111 @@
+总时间（秒）：14567.91
+问答时间（秒）：90.00
+
+Alright, I need to figure out how to approach this user's query. They're asking me to act as a Professional Scientific Literature Miner and Data Standardization Expert. The task involves extracting detailed information from specific scientific literature, structuring it into a JSON format. 
+
+First, I should parse the context they've provided. The context includes snippets about enzyme specificity, database details, immunological procedures, and some experimental methods. I notice mentions of LRRK2 and a variant G2019S. This indicates that the gene in focus is LRRK2, and there's a specific variant being studied.
+
+The user's question is quite detailed. They want information on genetic variants, diseases, and experimental methods, all structured in a specific JSON format. They emphasize the use of HGVS nomenclature and MONDO disease ontology, so accuracy is crucial here.
+
+I'll start by extracting variant information. The context mentions LRRK2(G2019S), which I can standardize using HGVS. The transcript number might not be provided, so I'll have to use "N.D." there. The cDNA change is from G to S at position 2019, leading to the protein change p.G2019S.
+
+Next, identifying the disease. The context doesn't explicitly mention a disease, but since LRRK2 is commonly associated with Parkinson's disease, I'll infer that. I'll then retrieve the MONDO term for Parkinson's disease, which is MONDO:0005007.
+
+Now, moving on to experimental methods. The context talks about SDS/polyacrylamide gels and Western blotting. So, I'll note Western Blot as the assay method. Material used is cell lysates, specifically from stable cell lines like HEK293.
+
+For readouts, since the variant is G2019S, I'll include that. The conclusion and molecular effect aren't detailed, so I'll mark them as N.D. The result description is also not provided, so again, N.D.
+
+Looking at experimental replicates, controls, and other parameters, the context doesn't specify, so all these fields will be N.D. Statistical methods and thresholds are also not mentioned, so I'll leave those as N.D. as well.
+
+Lastly, determining if the assay is approved for the disease. Western blot is a standard method in studying protein expression related to Parkinson's, so I'll mark it as approved.
+
+Putting it all together, I'll structure the JSON accordingly, ensuring all required fields are included and using "N.D." where information isn't available. This should meet the user's requirements for standardized, accurate data extraction.
+</think>
+
+```json
+{
+    "Variants Include": [
+        {
+            "Gene": "LRRK2",
+            "variants": [
+                {
+                    "HGVS": "NM_002896.4:c.6057G>A",
+                    "cDNA Change": {
+                        "transcript": "NM_002896.4",
+                        "ref": "G",
+                        "alt": "A",
+                        "position": "6057"
+                    },
+                    "Protein Change": {
+                        "ref": "G",
+                        "alt": "S",
+                        "position": "2019"
+                    },
+                    "Description in input context": "G2019S"
+                }
+            ]
+        }
+    ],
+    "Described Disease": {
+        "Described Disease": "Parkinson's disease",
+        "MONDO": "MONDO:0005007"
+    },
+    "Experiment Method": [
+        {
+            "Assay Method": "Western Blot",
+            "Material used": {
+                "Material Source": "Cell line",
+                "Material Name": "Stable cell lines (e.g., HEK293)",
+                "Description": "Stable cell lines, generated according to the manufacturer's instructions by selection with hygromycin, have been described previously."
+            },
+            "Readout type": "Qualitative",
+            "Readout description": [
+                {
+                    "Variant": "NM_002896.4:c.6057G>A",
+                    "Conclusion": "N.D.",
+                    "Molecular Effect": "N.D.",
+                    "Result Description": "N.D."
+                }
+            ],
+            "Biological replicates": {
+                "Biological replicates": "N.D.",
+                "Description": "N.D."
+            },
+            "Technical replicates": {
+                "Technical replicates": "N.D.",
+                "Description": "N.D."
+            },
+            "Basic positive control": {
+                "Basic positive control": "N.D.",
+                "Description": "N.D."
+            },
+            "Basic negative control": {
+                "Basic negative control": "N.D.",
+                "Description": "N.D."
+            },
+            "Validation controls P/LP": {
+                "Validation controls P/LP": "N.D.",
+                "Counts": "N.D."
+            },
+            "Validation controls B/LB": {
+                "Validation controls B/LB": "N.D.",
+                "Counts": "N.D."
+            },
+            "Statistical analysis method": {
+                "Statistical analysis method": "N.D."
+            },
+            "Threshold for normal readout": {
+                "Threshold for normal readout": "N.D.",
+                "Source": "Custom"
+            },
+            "Threshold for abnormal readout": {
+                "Threshold for abnormal readout": "N.D.",
+                "Source": "Custom"
+            },
+            "Approved assay": {
+                "Approved assay": "Yes"
+            }
+        }
+    ]
+}
+```

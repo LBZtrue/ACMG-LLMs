@@ -1,0 +1,57 @@
+总时间（秒）：3425.69
+问答时间（秒）：54.80
+
+Alright, so I need to help the user extract mutation information from a given paragraph of medical literature. Let me start by reading through the context and the question carefully.
+
+The context provided discusses the effects of missense and truncating mutations on the PINK1 protein, mentioning their impact on protein function and the variability in age of onset. It also touches on how truncating mutations are generally expected to cause loss of function, either through nonsense-mediated decay or by producing a shorter protein. Missense mutations, however, are more uncertain and need to be evaluated case by case.
+
+The user's question is asking to extract information related to mutations from this text. My role is to act as a professional medical literature data mining expert, skilled in identifying and extracting such information accurately.
+
+Looking at the text, I notice mentions of specific mutations: c.731C>G and c.949G>A. These are cDNA changes. The protein changes are mentioned as p.A244 and p.V317, but the specific alterations (like p.A244G or p.V317M) aren't provided. The gene in question is PINK1, which is stated in the context.
+
+I also see descriptions of methods used, like electropherograms, Western Blotting, and TUNEL assay, but these are part of the figures and not directly part of the mutation descriptions in the text. The main focus is on the types of mutations and their effects, so I should extract the gene, cDNA changes, and protein changes as per the template.
+
+Since the text doesn't specify the alternative amino acids for the protein changes, I'll mark those as "N.D." in the JSON. The cDNA positions and changes are clearly stated, so I can include those.
+
+I need to structure this information according to the provided JSON template, ensuring that all fields are present. Each variant will have its cDNA and protein changes, along with a description. I'll create an array for variants since there are two mutations mentioned.
+
+Let me double-check that I'm not missing any other mutations. The context mentions both missense and truncating mutations, but only two specific cDNA changes are given. The rest are general discussions about mutation types, so I don't need to extract those as specific variants.
+
+Putting it all together, the JSON should include the gene PINK1, each variant with their respective cDNA and protein changes, and the descriptions as they appear in the text. I'll make sure to use "N.D." where specific information isn't provided.
+</think>
+
+```json
+{
+    "Gene": "PINK1",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "C",
+                "alt": "G",
+                "position": "731"
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "N.D.",
+                "position": "244"
+            },
+            "Description in input context": "c.731C>G (p.A244)"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "G",
+                "alt": "A",
+                "position": "949"
+            },
+            "Protein Change": {
+                "ref": "V",
+                "alt": "N.D.",
+                "position": "317"
+            },
+            "Description in input context": "c.949G>A (p.V317)"
+        }
+    ]
+}
+```

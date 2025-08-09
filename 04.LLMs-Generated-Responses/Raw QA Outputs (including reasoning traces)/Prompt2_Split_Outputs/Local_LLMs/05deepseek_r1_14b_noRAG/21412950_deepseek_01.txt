@@ -1,0 +1,49 @@
+总时间（秒）：14.64
+问答时间（秒）：14.40
+
+<think>
+Alright, I'm trying to figure out how to approach this query. The user is asking me to act as a professional medical literature data mining expert. They want me to extract information related to mutations from given paragraphs of medical literature. 
+
+First, I need to understand the structure and terminology used in biomedical literature. The goal is to quickly identify if there's mutation-related information and then extract details like gene names, cDNA changes, protein changes, etc.
+
+Looking at the example provided, it seems that when a mutation is mentioned, I should look for terms like "c.xxxx" (for cDNA) and "p.xxxx" (for protein). These indicate specific changes. For instance, in the first example, "c.248G>A (p.G83D)" clearly shows both cDNA and protein changes.
+
+Now, considering the constraints, I should only extract information directly related to mutations. If a paragraph doesn't mention any mutations, I return "N.D." for all fields except maybe indicating that no mutation info was found.
+
+I also need to ensure accuracy in extraction. Sometimes, the text might describe mutations without specifying cDNA or protein changes explicitly. In such cases, I should note only what's provided. For example, if it just says "mutations in gene XYZ are associated with...", and doesn't specify the type of mutation, I'd leave the specific details as N.D.
+
+The output format is specified as JSON, so I need to structure my response accordingly. Each entry will have a "Gene" field and an array of "variants," each containing cDNA and protein changes if available.
+
+I should also be careful not to include any unrelated information. The focus is solely on mutations within the context of genes mentioned in the literature.
+
+In summary, my steps are:
+1. Read the text carefully.
+2. Identify mutation-related terms like gene names followed by "mutation," "c.xxxx," or "p.xxxx."
+3. Extract gene name and specific changes if present.
+4. Structure the extracted information into JSON format as specified.
+5. Use "N.D." for any missing details to ensure completeness.
+
+I think I've got a good grasp of what's needed. Now, I'll apply this approach to each paragraph provided by the user.
+</think>
+
+```json
+{
+    "Gene": "PINK1",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "G",
+                "alt": "T",
+                "position": "326"
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "V",
+                "position": "109"
+            },
+            "Description in input context": "c.326G>T (p.A109V)"
+        }
+    ]
+}
+```

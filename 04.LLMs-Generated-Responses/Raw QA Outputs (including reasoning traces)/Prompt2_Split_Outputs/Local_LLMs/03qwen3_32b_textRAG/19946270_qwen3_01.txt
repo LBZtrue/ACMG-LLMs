@@ -1,0 +1,38 @@
+总时间（秒）：22.18
+问答时间（秒）：20.64
+
+<think>
+Okay, let's start by reading the user's query and the provided context carefully. The user wants me to act as a medical literature data mining expert to extract mutation-related information from the given abstracts. The output should be in a specific JSON format.
+
+First, I need to determine if the input text contains mutation information. The abstract mentions PARK2 mutations in cancer, specifically inactivating somatic mutations and intragenic deletions. It also states that these mutations occur in the same domains as germline mutations in Parkinson's disease. However, the text doesn't provide specific cDNA or protein changes like c.248G>A or p.G83D. Instead, it refers to the domains affected and the consequences, such as decreased E3 ligase activity.
+
+The example given by the user shows that when specific mutations are mentioned, they should be extracted with details like transcript, ref, alt, and position. However, in this case, the abstract doesn't list specific mutations but rather describes the type of mutations (inactivating, intragenic deletions) and their locations (same domains as germline mutations). 
+
+I need to check if there are any cDNA or protein changes explicitly stated. The text mentions "cancer-specific mutations" and "germline mutations causing familial Parkinson's disease," but no specific nucleotide or amino acid changes. Therefore, the cDNA and protein change fields should be marked as N.D. 
+
+The gene is clearly PARK2. The variants section should include the type of mutations (inactivating somatic, intragenic deletions) and the fact that they occur in the same domains as germline mutations. Since there are no specific positions or changes, the cDNA and protein change fields remain N.D.
+
+I should structure the JSON accordingly, making sure to include the gene name and the variants with the available information, using N.D. for the unspecified parts. The description in the input context should summarize the mutation types and their implications as described in the abstract.
+</think>
+
+```json
+{
+    "Gene": "PARK2",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "Inactivating somatic mutations and frequent intragenic deletions of PARK2 in human malignancies. The PARK2 mutations in cancer occur in the same domains (and sometimes at the same residues) as the germline mutations causing familial Parkinson's disease."
+        }
+    ]
+}
+```

@@ -1,0 +1,61 @@
+总时间（秒）：22.85
+问答时间（秒）：21.96
+
+<think>
+Okay, I'm trying to figure out how to extract mutation information from the given medical literature paragraph. The user wants me to act as an expert data miner focusing on mutations.
+
+First, I'll read through the abstract and context provided. Let me start by identifying any mention of mutations in the text.
+
+In the abstract, it says: "Mutations in DJ-1 gene have been linked to autosomal recessive early onset parkinsonism (AR-EOP)." So that's a clear mention of DJ-1 gene mutations causing AR-EOP. The next sentence mentions the mechanism isn't fully understood but points out that loss of DJ-1 function causes the phenotype.
+
+Looking further, it talks about downregulating DJ-1 with siRNA and the effects on cell death under various stress conditions. Then there's mention of over-expression of wild-type DJ-1 rescuing cell death caused by hydrogen peroxide. However, the L166P mutant DJ-1 doesn't rescue this, implying that mutation is non-functional.
+
+In the context section, it states that DJ-1 is the second causative gene for AR-EOP (PARK7) and notes that mutations include a large deletion causing loss of DJ-1 protein or function. It also mentions Parkin gene mutations in AR-JP patients but doesn't specify any specific mutations beyond PARK2.
+
+So, compiling this information:
+
+Gene: DJ-1
+Variants:
+- L166P mutation (protein change)
+- Mention of a large deletion causing loss of function
+
+I should structure the JSON accordingly. However, I notice that in the variants array, each entry should include cDNA and protein changes if available. Since only L166P is specified as a protein change without the corresponding cDNA change, I'll mark cDNA details as N.D.
+
+Additionally, there's mention of a large deletion leading to loss of function but no specific variant details, so that would be another entry with N.D. for both cDNA and protein changes.
+</think>
+
+```json
+{
+    "Gene": "DJ-1",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "L",
+                "alt": "P",
+                "position": "166"
+            },
+            "Description in input context": "L166P mutant DJ-1"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "large deletion causing loss of DJ-1 protein or function"
+        }
+    ]
+}
+```

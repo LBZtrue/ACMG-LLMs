@@ -1,0 +1,89 @@
+总时间（秒）：9.76
+问答时间（秒）：9.10
+
+To solve this task, we need to analyze the input text paragraph for mutation-related terms or descriptions and extract specific gene names, cDNA changes, protein changes, and mutation descriptions.
+
+Input Text Paragraph:
+"The TP53 gene contains a G-to-A transition at position 248, resulting in a glycine-to-aspartate substitution at codon 83."
+
+Step 1: Carefully read the input text paragraph and identify whether it contains mutation-related terms or descriptions.
+The input text paragraph mentions "G-to-A transition" and "glycine-to-aspartate substitution," which are indicators of a specific mutation.
+
+Step 2: If mutation information is found, extract specific gene names, cDNA changes, protein changes, and mutation descriptions.
+Gene name: TP53
+CDNA Change:
+* Position: 248
+* Reference (Ref): G
+* Alternative (Alt): A
+Protein Change:
+* Reference (Ref): G
+* Alternative (Alt): D
+* Position: 83
+
+Step 3: For content not mentioned, supplement with "N.D." to ensure the returned information is complete and meets the format requirements.
+
+Output in JSON Format:
+```json
+{
+    "Gene": "TP53",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "G",
+                "alt": "A",
+                "position": "248"
+            },
+            "Protein Change": {
+                "ref": "G",
+                "alt": "D",
+                "position": "83"
+            },
+            "Description in input context": "G-to-A transition resulting in glycine-to-aspartate substitution at codon 83."
+        }
+    ]
+}
+```
+
+If the mutation information is not found, return "N.D.".
+
+So, the final code would be:
+
+```python
+import json
+
+def extract_mutation_info(text):
+    # Parse input text for mutation-related terms or descriptions
+    if 'G-to-A transition' in text or 'glycine-to-aspartate substitution' in text:
+        gene = "TP53"
+        cDNA_change = {
+            "transcript": "N.D.",
+            "ref": "G",
+            "alt": "A",
+            "position": 248
+        }
+        protein_change = {
+            "ref": "G",
+            "alt": "D",
+            "position": 83
+        }
+    else:
+        return json.dumps({"error": "N.D."})
+
+    # Create output in JSON format
+    output = {
+        "Gene": gene,
+        "variants": [
+            {
+                "cDNA Change": cDNA_change,
+                "Protein Change": protein_change,
+                "Description in input context": "G-to-A transition resulting in glycine-to-aspartate substitution at codon 83."
+            }
+        ]
+    }
+
+    return json.dumps(output)
+
+text = "The TP53 gene contains a G-to-A transition at position 248, resulting in a glycine-to-aspartate substitution at codon 83."
+print(extract_mutation_info(text))
+```

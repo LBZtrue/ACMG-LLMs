@@ -1,0 +1,119 @@
+总时间（秒）：14.65
+问答时间（秒）：14.49
+
+Based on the provided instructions and example, I will outline a step-by-step approach to extract and organize data from the literature.
+
+### Step 1: Extract Relevant Variant Information
+
+1. Identify gene name, preliminary HGVS nomenclature (e.g., NM_001126112.3:c.248G>A), cDNA changes, and protein changes mentioned in the literature.
+2. For each variant:
+   - Record the HGVS nomenclature as it appears in the literature.
+   - Extract transcript number, reference nucleotide, alternative nucleotide, and variant position from the preliminary HGVS nomenclature.
+   - Determine the corresponding protein change (reference amino acid, alternative amino acid, and variant position) using tools like SnpEff or Alamut Batch.
+3. Organize extracted information into the "Variants Include" section of the JSON framework.
+
+### Step 2: Standardize HGVS Nomenclature
+
+1. Use a relevant API (e.g., Ensembl's Variation API) to standardize the HGVS nomenclature for each variant.
+2. Update the standardized HGVS nomenclature in the "Variants Include" section of the JSON framework.
+
+### Step 3: Identify Disease and Retrieve MONDO Terms
+
+1. Determine the disease name mentioned in the literature.
+2. Search the MONDO database for corresponding terms (e.g., MONDO:0012345).
+3. Organize this information into the "Described Disease" section of the JSON framework.
+
+### Step 4: Extract Experimental Method Information
+
+1. Identify all experimental methods used (e.g., Western Blot, PCR).
+2. For each method:
+   - Record the assay name and any relevant descriptions from the literature.
+   - Determine material sources, names, and original text describing materials.
+   - Decide if the readout type is qualitative or quantitative.
+   - List variants mentioned in the context of this experimental method.
+     * Extract conclusion (abnormal/normal), molecular effect, and a specific result description for each variant.
+   - Identify whether biological replicate experiments were performed and provide relevant text from the literature.
+   - Indicate if technical replicates were done and note any descriptions related to these experiments.
+   - Determine if basic positive and negative controls were set up and include relevant text describing them.
+   - Note the inclusion of validation controls for pathogenic/likely pathogenic variants (P/LP) and benign/likely benign variants (B/LB), along with the number of such controls.
+   - Record the statistical analysis method used in the experimental protocol.
+   - Identify thresholds for normal and abnormal readouts, noting their source (literature or custom).
+   - Determine if the experimental protocol is generally approved for studying this disease.
+
+### Step 5: Organize Extracted Information into JSON Framework
+
+1. Populate each section of the JSON framework with the extracted data:
+   * "Variants Include" with standardized HGVS nomenclature and detailed variant information.
+   * "Described Disease" with the identified disease name and corresponding MONDO term.
+   * Each experimental method in the "Experiment Method" section, including detailed descriptions as outlined above.
+
+### Example Implementation (Simplified for Demonstration)
+
+Below is a simplified example implementation using Python. It highlights the steps involved in data extraction and organization into the JSON framework:
+
+```python
+import json
+
+# Function to standardize HGVS nomenclature
+def standardize_hgvs(nom):
+    # Simulate API call for simplicity
+    return "NM_001126112.3:c.248G>A"
+
+# Function to extract experimental method information
+def get_experiment_details(text):
+    # Parse text to identify key details (material, readout type, etc.)
+    material_source = ""
+    assay_name = ""
+    variants_mentioned = []
+    
+    # For demonstration, return placeholder data
+    return {
+        "Assay Method": "Western Blot",
+        "Material used": {"Source": "Cell line", "Name": "HEK293"},
+        "Readout type": "Quantitative",
+        "Variants Mentioned": [{"HGVS": "NM_001126112.3:c.248G>A"}]
+    }
+
+# Sample data
+literature_text = """
+The experiment was conducted using the HEK293 cell line.
+c.248G>A (p.G83D) variant causes structural change in protein, affecting function.
+"""
+
+# Main program loop
+data = {
+    "Variants Include": [],
+    "Described Disease": {"Described Disease": "", "MONDO": ""},
+    "Experiment Method": []
+}
+
+variant_info = get_variant_info(literature_text)
+for info in variant_info:
+    standardized_nom = standardize_hgvs(info["HGVS"])
+    data["Variants Include"].append({
+        "Gene": "",
+        "variants": [
+            {
+                "HGVS": standardized_nom,
+                # Other fields...
+            }
+        ]
+    })
+
+disease_info = get_disease_info(literature_text)
+data["Described Disease"]["Described Disease"] = disease_info["Disease Name"]
+data["Described Disease"]["MONDO"] = disease_info["Mondo Term"]
+
+experimental_method = get_experiment_details(literature_text)
+data["Experiment Method"].append(experimental_method)
+
+# Convert data to JSON
+output_json = json.dumps(data, indent=4)
+
+print(output_json)
+```
+
+### Notes
+
+- This example implementation is highly simplified and doesn't cover error handling or extensive logic for extracting detailed information from the literature.
+- Real-world applications would require integrating with external APIs for tasks like standardizing HGVS nomenclature and retrieving MONDO terms.

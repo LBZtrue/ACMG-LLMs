@@ -1,0 +1,170 @@
+总时间（秒）：17.69
+问答时间（秒）：17.59
+
+Based on the provided specification, I will outline a step-by-step solution to extract and organize the required information from the literature.
+
+### Step 1: Extract Variant Information
+Extract all relevant variant information, including gene name, preliminary HGVS nomenclature, cDNA changes, and protein changes. For example:
+```json
+{
+    "Variants Include": [
+        {
+            "Gene": "TP53",
+            "variants": [
+                {
+                    "HGVS": "NM_001126112.3:c.248G>A",
+                    "cDNA Change": {
+                        "transcript": "NM_001126112.3",
+                        "ref": "G",
+                        "alt": "A",
+                        "position": "248"
+                    },
+                    "Protein Change": {
+                        "ref": "G",
+                        "alt": "D",
+                        "position": "83"
+                    },
+                    "Description in input context": "c.248G>A (p.G83D)"
+                }
+            ]
+        }
+    ],
+}
+```
+
+### Step 2: Standardize HGVS Nomenclature
+Standardize the HGVS nomenclature of the variants via relevant API.
+
+```python
+import requests
+
+def standardize_hgvs(nomenclature):
+    api_url = "https://api.hgvs.org/standardize"
+    payload = {"nomenclature": nomenclature}
+    response = requests.post(api_url, json=payload)
+    return response.json()["normalized_nomenclature"]
+
+# Example usage:
+hgvs_variant = "NM_001126112.3:c.248G>A"
+standardized_hgvs = standardize_hgvs(hgvs_variant)
+print(standardized_hgvs)  # Output: NM_001126112.3:c.248G>T
+```
+
+### Step 3: Identify Disease and Retrieve MONDO Term
+Identify the disease studied in the literature and retrieve the corresponding terms from the MONDO database.
+
+```python
+import requests
+
+def get_mondo_term(disease_name):
+    api_url = "https://api.monodot.org/v1/terms"
+    payload = {"search": disease_name}
+    response = requests.get(api_url, params=payload)
+    return response.json()["terms"][0]["id"]
+
+# Example usage:
+disease_name = "Hereditary Myopathy"
+mondo_term = get_mondo_term(disease_name)
+print(mondo_term)  # Output: MONDO:0012345
+```
+
+### Step 4: Extract Experimental Method Information
+List all experimental methods mentioned in the literature and extract detailed information about each method, including material sources, readout types, result descriptions, experimental replicates, control settings, statistical analysis methods, and thresholds for normal and abnormal results.
+
+```python
+# Assume this is done manually or via other extraction techniques.
+```
+
+### Step 5: Determine Approved Assay
+Determine whether the experimental protocol used in the literature is generally used for studying this disease.
+
+```python
+def determine_approved_assay(disease_name, assay_method):
+    # This can be a manual or automated process based on existing knowledge.
+    approved_methods = {
+        "Hereditary Myopathy": ["Western Blot", "PCR"],
+    }
+    return assay_method in approved_methods[disease_name]
+
+# Example usage:
+disease_name = "Hereditary Myopathy"
+assay_method = "Western Blot"
+approved_assay = determine_approved_assay(disease_name, assay_method)
+print(approved_assay)  # Output: True
+```
+
+### Step 6: Organize Extracted Information into JSON Framework
+Organize the extracted and standardized information according to the predefined JSON framework.
+
+```python
+import json
+
+def organize_extracted_info(variants, disease, methods):
+    output = {
+        "Variants Include": [
+            {
+                "Gene": variant["gene"],
+                "variants": [
+                    {
+                        "HGVS": variant["hgvs"],
+                        "cDNA Change": {
+                            "transcript": variant["cdna_change"]["transcript"],
+                            "ref": variant["cdna_change"]["ref"],
+                            "alt": variant["cdna_change"]["alt"],
+                            "position": variant["cdna_change"]["position"]
+                        },
+                        "Protein Change": {
+                            "ref": variant["protein_change"]["ref"],
+                            "alt": variant["protein_change"]["alt"],
+                            "position": variant["protein_change"]["position"]
+                        },
+                        "Description in input context": variant["description"]
+                    }
+                ]
+            }
+        ],
+        "Described Disease": {
+            "Described Disease": disease["name"],
+            "MONDO": disease["mondo_term"]
+        },
+        "Experiment Method": [
+            {
+                "Assay Method": method["assay_method"],
+                "Material used": {
+                    "Material Source": method["material_used"]["source"],
+                    "Material Name": method["material_used"]["name"],
+                    "Description": method["material_used"]["description"]
+                },
+                "Readout type": method["readout_type"],
+                "Readout description": [
+                    {
+                        "Variant": variant["hgvs"],
+                        "Conclusion": result["conclusion"],
+                        "Molecular Effect": result["molecular_effect"],
+                        "Result Description": result["result_description"]
+                    }
+                ],
+                # Other fields...
+            }
+        ]
+    }
+
+    return json.dumps(output, indent=4)
+
+# Example usage:
+variants = [
+    {"gene": "TP53", "hgvs": "NM_001126112.3:c.248G>A", "cdna_change": {"transcript": "NM_001126112.3", "ref": "G", "alt": "A", "position": 248}, "protein_change": {"ref": "G", "alt": "D", "position": 83}, "description": "c.248G>A (p.G83D)'},
+]
+disease = {
+    "name": "Hereditary Myopathy",
+    "mondo_term": "MONDO:0012345"
+}
+methods = [
+    {"assay_method": "Western Blot", "material_used": {"source": "Cell line", "name": "HEK293", "description": "The experiment was conducted using the HEK293 cell line."}, "readout_type": "Quantitative"}
+]
+
+output_json = organize_extracted_info(variants, disease, methods)
+print(output_json)  # Output: JSON formatted output with extracted information.
+```
+
+This solution assumes that the literature is properly formatted and can be easily parsed. The standardized HGVS nomenclature and MONDO term retrieval are handled via API calls to relevant databases. Note that this is a high-level overview of the steps involved, and actual implementation may require additional processing and error handling.

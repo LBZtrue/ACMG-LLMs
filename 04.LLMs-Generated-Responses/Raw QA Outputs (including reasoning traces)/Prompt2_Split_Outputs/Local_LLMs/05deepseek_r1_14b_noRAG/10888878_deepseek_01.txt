@@ -1,0 +1,59 @@
+总时间（秒）：30.51
+问答时间（秒）：29.51
+
+<think>
+Okay, so I'm trying to figure out how to approach this query where the user wants me to act as a professional medical literature data mining expert. They provided a paragraph from some medical literature and want me to extract information related to mutations. If there's mutation info, I need to pull out gene names, cDNA changes, protein changes, and descriptions. If not, return "N.D." for everything.
+
+First, I'll read through the input text carefully. The context given is about a study involving the ubiquitin-proteasome system and its relation to neurodegenerative diseases. It talks about how mutations in certain genes lead to the accumulation of proteins tagged with ubiquitin, causing disease pathogenesis.
+
+Looking for mutation-related terms: I see "mutations", specifically mentioning point mutations at positions Thr240Arg and Gln311Stop in the parkin gene. The references are numbered 28, so it's a citation from that source.
+
+Now, I need to extract details:
+
+- **Gene**: Clearly mentioned as "parkin". So that's straightforward.
+  
+- **Variants**: There are two mutations described here:
+  1. Thr240Arg: This is an amino acid change from Threonine (Thr) to Arginine (Arg) at position 240 in the protein. In terms of cDNA, it would be a transition from adenine (A) to guanine (G) at the corresponding position. But since the input doesn't provide the exact cDNA position or change, I'll mark those as "N.D." and only note the protein change.
+  
+  2. Gln311Stop: This is a nonsense mutation where Glutamine (Gln) at position 311 becomes a stop codon. Again, no cDNA info provided, so that's also marked as "N.D."
+
+I don't see any other mutations mentioned in the paragraph, so only these two variants are relevant.
+
+Putting it all together into JSON format, I'll structure it with "Gene" and an array of "variants", each containing their respective details. Since cDNA info is missing, I'll use "N.D." for those fields.
+</think>
+
+```json
+{
+    "Gene": "parkin",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "240"
+            },
+            "Protein Change": {
+                "ref": "Thr",
+                "alt": "Arg",
+                "position": "240"
+            },
+            "Description in input context": "Thr240Arg"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "311"
+            },
+            "Protein Change": {
+                "ref": "Gln",
+                "alt": "Stop",
+                "position": "311"
+            },
+            "Description in input context": "Gln311Stop"
+        }
+    ]
+}
+```

@@ -1,0 +1,40 @@
+总时间（秒）：10.12
+问答时间（秒）：8.83
+
+<think>
+Alright, I'm trying to figure out how to approach this query. The user is an expert in medical literature data mining and wants me to extract mutation information from a given paragraph. They provided an example of the expected output format, which is JSON with specific fields.
+
+First, I need to read the input text carefully. The paragraph mentions a study on mitochondrial respiratory dysfunction in familial Parkinsonism associated with the PINK1 mutation. Specifically, it talks about a patient carrying the homozygous W437X nonsense mutation in the PINK1 gene.
+
+So, the key elements here are the gene name and the mutation details. The gene is PINK1, and the mutation described is W437X. Now, I need to map this to the JSON structure provided in the example.
+
+Looking at the "variants" array, each variant should have cDNA change and protein change details. In the input text, the mutation is described as W437X, which refers to a tryptophan (W) being replaced by stop codon (X) at position 437 in the protein.
+
+For the cDNA change, since the exact nucleotide changes aren't specified, I'll mark them as N.D. The same applies to the transcript and other fields where specifics aren't given.
+
+The description field will include what's stated: W437X nonsense mutation causing early-onset Parkinsonism.
+
+I should make sure not to omit any JSON fields, even if they're marked as "N.D." for not mentioned. This ensures the output is complete and adheres strictly to the format provided.
+</think>
+
+```json
+{
+    "Gene": "PINK1",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "W",
+                "alt": "X",
+                "position": "437"
+            },
+            "Description in input context": "homozygous W437X nonsense mutation causing early-onset Parkinsonism"
+        }
+    ]
+}
+```

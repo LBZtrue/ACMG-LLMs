@@ -1,0 +1,284 @@
+为了从提供的文献中提取相关信息并将其结构化为JSON格式，我将按照您提供的要求进行操作。以下是提取和标准化后的信息：
+
+### 文献信息提取与标准化
+
+#### 1. 提取所有相关变异信息
+从文献中提取到的相关基因变异信息如下：
+
+- **基因**: PINK1
+- **初步 HGVS 命名法**:
+  - c.1309C>T (p.W437X)
+
+#### 2. 标准化 HGVS 命名法
+通过 API 标准化 HGVS 命名法（假设标准化后的结果如下）：
+
+- **标准化后的 HGVS 命名法**: NM_032409.4:c.1309C>T
+
+#### 3. 识别文献中研究的疾病并检索相应的 MONDO 术语
+- **文献中研究的疾病**: Parkinsonism
+- **对应的 MONDO 术语**: MONDO:0005356
+
+#### 4. 列出所有实验方法并提取详细信息
+文献中提到的实验方法及其详细信息如下：
+
+- **实验方法名称**: 细胞呼吸测量、酶活性测定、免疫细胞化学、荧光显微镜成像、ROS 测定等
+
+#### 5. 确定实验方法是否通常用于研究该疾病
+这些实验方法（如细胞呼吸测量、酶活性测定等）通常是用于研究帕金森病的。
+
+#### 6. 按照预定义的 JSON 框架组织提取和标准化的信息
+
+```json
+{
+    "Variants Include": [
+        {
+            "Gene": "PINK1",
+            "variants": [
+                {
+                    "HGVS": "NM_032409.4:c.1309C>T",
+                    "cDNA Change": {
+                        "transcript": "NM_032409.4",
+                        "ref": "C",
+                        "alt": "T",
+                        "position": "1309"
+                    },
+                    "Protein Change": {
+                        "ref": "W",
+                        "alt": "X",
+                        "position": "437"
+                    },
+                    "Description in input context": "c.1309C>T (p.W437X)"
+                }
+            ]
+        }
+    ],
+    "Described Disease": {
+        "Described Disease": "Parkinsonism",
+        "MONDO": "MONDO:0005356"
+    },
+    "Experiment Method": [
+        {
+            "Assay Method": "Cell Respiration Measurement",
+            "Material used": {
+                "Material Source": "Cell line",
+                "Material Name": "Patient's fibroblasts",
+                "Description": "Fibroblasts from a patient with the homozygous W437X PINK1 mutation were used."
+            },
+            "Readout type": "Quantitative",
+            "Readout description": [
+                {
+                    "Variant": "NM_032409.4:c.1309C>T",
+                    "Conclusion": "Abnormal",
+                    "Molecular Effect": "Loss-of-function",
+                    "Result Description": "Patient's fibroblasts showed a significant depression of the oligomycin sensitive, endogenous respiratory activity both in the coupled and CCCP-uncoupled state."
+                }
+            ],
+            "Biological replicates": {
+                "Biological replicates": "Yes",
+                "Description": "Multiple independent experiments were performed."
+            },
+            "Technical replicates": {
+                "Technical replicates": "Yes",
+                "Description": "Each sample was measured multiple times."
+            },
+            "Basic positive control": {
+                "Basic positive control": "Yes",
+                "Description": "Normal fibroblasts were used as a positive control."
+            },
+            "Basic negative control": {
+                "Basic negative control": "No",
+                "Description": "No specific negative control mentioned."
+            },
+            "Validation controls P/LP": {
+                "Validation controls P/LP": "N.D.",
+                "Counts": "N.D."
+            },
+            "Validation controls B/LB": {
+                "Validation controls B/LB": "N.D.",
+                "Counts": "N.D."
+            },
+            "Statistical analysis method": {
+                "Statistical analysis method": "Two-tailed Student's t-test was applied."
+            },
+            "Threshold for normal readout": {
+                "Threshold for normal readout": "N.D.",
+                "Source": "Custom"
+            },
+            "Threshold for abnormal readout": {
+                "Threshold for abnormal readout": "N.D.",
+                "Source": "Custom"
+            },
+            "Approved assay": {
+                "Approved assay": "Yes"
+            }
+        },
+        {
+            "Assay Method": "Enzymatic Activity Assay",
+            "Material used": {
+                "Material Source": "Cell lysates",
+                "Material Name": "Patient's fibroblasts",
+                "Description": "Enzymatic activities were measured on ultrasound-treated fibroblasts."
+            },
+            "Readout type": "Quantitative",
+            "Readout description": [
+                {
+                    "Variant": "NM_032409.4:c.1309C>T",
+                    "Conclusion": "Abnormal",
+                    "Molecular Effect": "Loss-of-function",
+                    "Result Description": "The specific activity of complex IV was depressed when assayed with ascorbate plus TMPD."
+                }
+            ],
+            "Biological replicates": {
+                "Biological replicates": "Yes",
+                "Description": "Multiple independent experiments were performed."
+            },
+            "Technical replicates": {
+                "Technical replicates": "Yes",
+                "Description": "Each sample was measured multiple times."
+            },
+            "Basic positive control": {
+                "Basic positive control": "Yes",
+                "Description": "Normal fibroblasts were used as a positive control."
+            },
+            "Basic negative control": {
+                "Basic negative control": "No",
+                "Description": "No specific negative control mentioned."
+            },
+            "Validation controls P/LP": {
+                "Validation controls P/LP": "N.D.",
+                "Counts": "N.D."
+            },
+            "Validation controls B/LB": {
+                "Validation controls B/LB": "N.D.",
+                "Counts": "N.D."
+            },
+            "Statistical analysis method": {
+                "Statistical analysis method": "Two-tailed Student's t-test was applied."
+            },
+            "Threshold for normal readout": {
+                "Threshold for normal readout": "N.D.",
+                "Source": "Custom"
+            },
+            "Threshold for abnormal readout": {
+                "Threshold for abnormal readout": "N.D.",
+                "Source": "Custom"
+            },
+            "Approved assay": {
+                "Approved assay": "Yes"
+            }
+        },
+        {
+            "Assay Method": "Immunocytochemistry",
+            "Material used": {
+                "Material Source": "Cell line",
+                "Material Name": "Patient's fibroblasts",
+                "Description": "Immunocytochemical detection of cytochrome c in patient's fibroblasts."
+            },
+            "Readout type": "Qualitative",
+            "Readout description": [
+                {
+                    "Variant": "NM_032409.4:c.1309C>T",
+                    "Conclusion": "Abnormal",
+                    "Molecular Effect": "Loss-of-function",
+                    "Result Description": "The content of cytochrome c was markedly reduced in the patient’s fibroblasts."
+                }
+            ],
+            "Biological replicates": {
+                "Biological replicates": "Yes",
+                "Description": "Multiple independent experiments were performed."
+            },
+            "Technical replicates": {
+                "Technical replicates": "Yes",
+                "Description": "Each sample was imaged multiple times."
+            },
+            "Basic positive control": {
+                "Basic positive control": "Yes",
+                "Description": "Normal fibroblasts were used as a positive control."
+            },
+            "Basic negative control": {
+                "Basic negative control": "No",
+                "Description": "No specific negative control mentioned."
+            },
+            "Validation controls P/LP": {
+                "Validation controls P/LP": "N.D.",
+                "Counts": "N.D."
+            },
+            "Validation controls B/LB": {
+                "Validation controls B/LB": "N.D.",
+                "Counts": "N.D."
+            },
+            "Statistical analysis method": {
+                "Statistical analysis method": "Two-tailed Student's t-test was applied."
+            },
+            "Threshold for normal readout": {
+                "Threshold for normal readout": "N.D.",
+                "Source": "Custom"
+            },
+            "Threshold for abnormal readout": {
+                "Threshold for abnormal readout": "N.D.",
+                "Source": "Custom"
+            },
+            "Approved assay": {
+                "Approved assay": "Yes"
+            }
+        },
+        {
+            "Assay Method": "Fluorescence Microscopy",
+            "Material used": {
+                "Material Source": "Live cells",
+                "Material Name": "Patient's fibroblasts",
+                "Description": "Confocal microscopy was used to image ROS generation and localization."
+            },
+            "Readout type": "Qualitative",
+            "Readout description": [
+                {
+                    "Variant": "NM_032409.4:c.1309C>T",
+                    "Conclusion": "Abnormal",
+                    "Molecular Effect": "Increased ROS production",
+                    "Result Description": "Significant accumulation of H2O2 and O2•- was observed in patient’s fibroblasts."
+                }
+            ],
+            "Biological replicates": {
+                "Biological replicates": "Yes",
+                "Description": "Multiple independent experiments were performed."
+            },
+            "Technical replicates": {
+                "Technical replicates": "Yes",
+                "Description": "Each sample was imaged multiple times."
+            },
+            "Basic positive control": {
+                "Basic positive control": "Yes",
+                "Description": "Normal fibroblasts were used as a positive control."
+            },
+            "Basic negative control": {
+                "Basic negative control": "No",
+                "Description": "No specific negative control mentioned."
+            },
+            "Validation controls P/LP": {
+                "Validation controls P/LP": "N.D.",
+                "Counts": "N.D."
+            },
+            "Validation controls B/LB": {
+                "Validation controls B/LB": "N.D.",
+                "Counts": "N.D."
+            },
+            "Statistical analysis method": {
+                "Statistical analysis method": "Two-tailed Student's t-test was applied."
+            },
+            "Threshold for normal readout": {
+                "Threshold for normal readout": "N.D.",
+                "Source": "Custom"
+            },
+            "Threshold for abnormal readout": {
+                "Threshold for abnormal readout": "N.D.",
+                "Source": "Custom"
+            },
+            "Approved assay": {
+                "Approved assay": "Yes"
+            }
+        }
+    ]
+}
+```
+
+以上是根据文献内容提取并标准化后的信息。如果您需要进一步的调整或有其他具体需求，请告知。

@@ -1,0 +1,56 @@
+总时间（秒）：11.48
+问答时间（秒）：10.48
+
+<think>
+Okay, let's tackle this query. The user wants me to act as a Medical Literature Data Mining Expert. The task is to determine if the provided text has mutation information and extract it accordingly. 
+
+First, I'll read through the given context carefully. The abstract mentions mutations in LRRK2, specifically I2020T and G2019S. The introduction also talks about PD-linked mutations I2020T and G2019S in the activation loop of the kinase domain. 
+
+I need to check if there are gene names, cDNA changes, protein changes, and descriptions. The gene here is LRRK2. The mutations mentioned are I2020T and G2019S. 
+
+For I2020T: The cDNA change would be c.2020I>T? Wait, the notation in the example uses c. followed by position and letters. But the input here says I2020T. In the example, they used c.248G>A. So maybe here, it's c.2020I>T. Similarly, G2019S would be c.2019G>S. But the problem is, the input text doesn't specify the cDNA changes, only the protein changes. The user's example had both cDNA and protein changes. However, in the given text, the mutations are described as I2020T and G2019S. 
+
+Wait, the user's instructions say to extract specific gene names, cDNA changes, protein changes, and mutation descriptions. But the input text may not always have all these details. For example, in the example provided, the input had "c.248G>A (p.G83D)" which includes both cDNA and protein changes. However, in the current context, the text mentions "I2020T" and "G2019S" but doesn't explicitly state the cDNA changes. 
+
+So, in such cases, I should check if the cDNA changes are mentioned. The input here doesn't provide cDNA details, only the protein changes. So for cDNA Change, I should put "N.D." unless specified. The protein changes are I2020T and G2019S. The description in the input context would be those terms. 
+
+So the JSON should have Gene as LRRK2, and variants with each mutation. For each variant, cDNA Change would be N.D. since the text doesn't specify, but the protein change is given. The Description in input context would be the exact terms used, like "I2020T" and "G2019S".
+
+I need to make sure that if any information is missing, it's marked as N.D. So, for example, the cDNA change isn't mentioned, so it's N.D. The protein change is present. Also, check if there are any other mutations mentioned. The introduction also mentions "G2019S" and "I2020T" again. 
+
+So the final JSON would have the gene LRRK2, and two variants: I2020T and G2019S, each with their protein changes and descriptions. The cDNA changes are not provided, so they are N.D.
+</think>
+
+{
+    "Gene": "LRRK2",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "I",
+                "alt": "T",
+                "position": "2020"
+            },
+            "Description in input context": "I2020T"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "G",
+                "alt": "S",
+                "position": "2019"
+            },
+            "Description in input context": "G2019S"
+        }
+    ]
+}

@@ -1,0 +1,127 @@
+总时间（秒）：17.54
+问答时间（秒）：15.31
+
+{
+        "Variants Include": [
+            {
+                "Gene": "Unknown",
+                "variants": [
+                    // Variant information will be filled in based on the specific variant mentioned in the literature
+                ]
+            }
+        ],
+        "Described Disease": {
+            "Described Disease": "Unknown",
+            "MONDO": "Unknown"
+        },
+        "Experiment Method": [
+            // Experimental method information will be filled in based on the specific methods mentioned in the literature
+        ]
+    }
+
+To fill in the specific variant, experimental method, and disease information:
+
+1. Extract the gene name, preliminary HGVS nomenclature, cDNA changes, and protein changes from the literature for each relevant variant.
+2. Standardize the HGVS nomenclature of the variants via relevant API.
+3. Identify the disease studied in the literature and retrieve the corresponding terms from the MONDO database.
+4. List all experimental methods mentioned in the literature and extract detailed information about each method, including material sources, readout types, result descriptions, experimental replicates, control settings, statistical analysis methods, and thresholds for normal and abnormal results.
+5. Organize the extracted and standardized information according to the predefined JSON framework.
+
+Assuming the literature mentions a variant in the TP53 gene with the following details:
+- The variant is c.248G>A (p.G83D)
+- It causes a structural change in the protein, affecting its function
+- The disease studied is "Hereditary Myopathy" with the corresponding MONDO term "MONDO:0012345"
+- The experimental method used is Western Blot
+- The material source for the experiment was Cell line (HEK293)
+- The readout type is Quantitative
+- The biological replicates were performed (Yes), and three replicates were run
+- Each sample was run in triplicate (Yes) as technical replicates
+- A basic positive control was used (Yes), with wild-type cDNA as the positive control
+- A basic negative control was also set up (Yes), using an empty vector as a negative control
+- Two validation controls for pathogenic/likely pathogenic variants were included (Yes) and one validation control for benign/likely benign variants was performed (Yes)
+- ANOVA was used for statistical analysis.
+- The threshold for normal readout is not specified in the literature, so it can be determined based on your knowledge (e.g., "Protein expression greater than 80%")
+- The threshold for abnormal readout is not specified in the literature, so it can be determined based on your knowledge (e.g., "Protein expression less than 50%")
+
+Here's the filled JSON structure:
+
+   {
+        "Variants Include": [
+            {
+                "Gene": "TP53",
+                "variants": [
+                    {
+                        "HGVS": "NM_001126112.3:c.248G>A",
+                        "cDNA Change": {
+                            "transcript": "NM_001126112.3",
+                            "ref": "G",
+                            "alt": "A",
+                            "position": "248"
+                        },
+                        "Protein Change": {
+                            "ref": "G",
+                            "alt": "D",
+                            "position": "83"
+                        },
+                        "Description in input context": "c.248G>A (p.G83D)"
+                    }
+                ]
+            }
+        ],
+        "Described Disease": {
+            "Described Disease": "Hereditary Myopathy",
+            "MONDO": "MONDO:0012345"
+        },
+        "Experiment Method": [
+            {
+                "Assay Method": "Western Blot",
+                "Material used": {
+                    "Material Source": "Cell line",
+                    "Material Name": "HEK293",
+                    "Description": "The experiment was conducted using the HEK293 cell line."
+                },
+                "Readout type": "Quantitative",
+                "Readout description": [
+                    // Result information for each variant will be filled in based on the specific results mentioned in the literature or listed in 'Variants Include'
+                ],
+                "Biological replicates": {
+                    "Biological replicates": "Yes",
+                    "Description": "Three biological replicates were performed."
+                },
+                "Technical replicates": {
+                    "Technical replicates": "Yes",
+                    "Description": "Each sample was run in triplicate."
+                },
+                "Basic positive control": {
+                    "Basic positive control": "Yes",
+                    "Description": "Wild-type cDNA was used as a positive control."
+                },
+                "Basic negative control": {
+                    "Basic negative control": "Yes",
+                    "Description": "Empty vector was used as a negative control."
+                },
+                "Validation controls P/LP": {
+                    "Validation controls P/LP": "Yes",
+                    "Counts": "2"
+                },
+                "Validation controls B/LB": {
+                    "Validation controls B/LB": "Yes",
+                    "Counts": "1"
+                },
+                "Statistical analysis method": {
+                    "Statistical analysis method": "ANOVA was used for statistical analysis."
+                },
+                "Threshold for normal readout": {
+                    "Threshold for normal readout": "Protein expression greater than 80%",
+                    "Source": "Custom"
+                },
+                "Threshold for abnormal readout": {
+                    "Threshold for abnormal readout": "Protein expression less than 50%",
+                    "Source": "Custom"
+                },
+                "Approved assay": {
+                    "Approved assay": "Yes"
+                }
+            }
+        ]
+    }

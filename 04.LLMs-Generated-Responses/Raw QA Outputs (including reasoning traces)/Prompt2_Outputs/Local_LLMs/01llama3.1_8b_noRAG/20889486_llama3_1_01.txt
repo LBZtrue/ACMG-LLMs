@@ -1,0 +1,83 @@
+总时间（秒）：9.57
+问答时间（秒）：9.47
+
+Based on the provided specifications, I will outline the steps to complete the task:
+
+**Step 1: Extract relevant variant information from the literature**
+
+* Identify the gene name, preliminary HGVS nomenclature, cDNA changes, and protein changes for each variant mentioned in the literature.
+* Example:
+	+ Gene: TP53
+	+ Preliminary HGVS nomenclature: c.248G>A (p.G83D)
+	+ cDNA Change: transcript = NM_001126112.3, ref = G, alt = A, position = 248
+	+ Protein Change: ref = G, alt = D, position = 83
+
+**Step 2: Standardize the HGVS nomenclature via relevant API**
+
+* Use a suitable API (e.g., Ensembl) to standardize the HGVS nomenclature for each variant.
+* Example:
+	+ Standardized HGVS: NM_001126112.3:c.248G>A
+
+**Step 3: Identify the disease studied in the literature and retrieve corresponding MONDO terms**
+
+* Determine the disease name mentioned in the literature (e.g., "Hereditary Myopathy").
+* Retrieve the corresponding MONDO term from the MONDO database.
+* Example:
+	+ Disease Name: Hereditary Myopathy
+	+ MONDO Term: MONDO:0012345
+
+**Step 4: Extract experimental method details**
+
+* Identify all experimental methods mentioned in the literature (e.g., Western Blot).
+* For each method, extract detailed information about material sources, readout types, result descriptions, experimental replicates, control settings, statistical analysis methods, and thresholds for normal and abnormal results.
+* Example:
+	+ Assay Method: Western Blot
+	+ Material Source: Cell line
+	+ Readout Type: Quantitative
+
+**Step 5: Determine whether the experimental methods are generally used for studying the disease**
+
+* Based on external knowledge or literature review, determine whether the experimental protocol used in the literature is commonly accepted for studying the specific disease.
+* Example:
+	+ Approved Assay: Yes (Western Blot is a widely accepted method for studying protein expression)
+
+**Step 6: Organize extracted and standardized information according to the predefined JSON framework**
+
+* Structure the data into the specified JSON format, including "Variants Include," "Described Disease," and "Experiment Method" sections.
+* Example:
+```json
+{
+    "Variants Include": [
+        {
+            "Gene": "TP53",
+            "variants": [
+                {
+                    "HGVS": "NM_001126112.3:c.248G>A",
+                    "cDNA Change": {
+                        "transcript": "NM_001126112.3",
+                        "ref": "G",
+                        "alt": "A",
+                        "position": "248"
+                    },
+                    "Protein Change": {
+                        "ref": "G",
+                        "alt": "D",
+                        "position": "83"
+                    },
+                    "Description in input context": "c.248G>A (p.G83D)"
+                }
+            ]
+        }
+    ],
+    "Described Disease": {
+        "Described Disease": "Hereditary Myopathy",
+        "MONDO": "MONDO:0012345"
+    },
+    "Experiment Method": [
+        {
+            "Assay Method": "Western Blot",
+            ...
+        }
+    ]
+}
+```

@@ -1,0 +1,54 @@
+总时间（秒）：14.61
+问答时间（秒）：14.35
+
+<think>
+Alright, I need to figure out how to approach this query where the user is asking for an extraction of mutation information from a given medical literature paragraph. The user has provided a detailed context with several references and wants me to extract specific details about mutations.
+
+First, I'll read through each paragraph carefully to identify any mentions of mutations. In biomedical texts, mutations are often described using terms like "mutation", "variant", or specific notations such as cDNA changes (like c.248G>A) or protein changes (p.G83D). 
+
+Looking at the provided paragraphs, I notice several instances where mutations are discussed. For example, in one paragraph, it mentions the E46K mutation causing Parkinson's disease and Lewy body dementia. Another paragraph refers to the A30P mutant and its effects on α-synuclein.
+
+My goal is to extract gene names, cDNA changes, protein changes, and any relevant descriptions. I'll need to parse each mention accurately. For instance, when it says "E46K mutation", this indicates a missense mutation where glutamic acid (E) at position 46 is changed to lysine (K).
+
+I also notice that some paragraphs discuss the effects of these mutations without specifying the exact cDNA change. In such cases, I'll note the protein change as per the given information.
+
+It's important to ensure that each mutation entry is clear and correctly formatted in JSON. If a paragraph doesn't mention any specific mutation details, I'll mark it with "N.D." where necessary.
+
+I should go through each paragraph one by one, identify mutations, extract the relevant gene, cDNA changes (if available), protein changes, and their descriptions. This methodical approach will help capture all mutation information without missing anything.
+</think>
+
+```json
+{
+    "Gene": "α-synuclein",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "E",
+                "alt": "K",
+                "position": "46"
+            },
+            "Protein Change": {
+                "ref": "E",
+                "alt": "K",
+                "position": "46"
+            },
+            "Description in input context": "E46K mutation causes Parkinson's disease and Lewy body dementia."
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "A",
+                "alt": "P",
+                "position": "30"
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "P",
+                "position": "30"
+            },
+            "Description in input context": "A30P mutant causes phosphorylation of α-synuclein."
+        }
+    ]
+}
+```

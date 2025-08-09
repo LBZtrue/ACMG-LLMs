@@ -1,0 +1,82 @@
+总时间（秒）：14.15
+问答时间（秒）：12.44
+
+<think>
+Okay, let's tackle this query. The user wants me to act as a Medical Literature Data Mining Expert, focusing on extracting mutation information from the provided text. First, I need to carefully read the given abstract and identify any mentions of mutations.
+
+Looking at the abstract, the first part mentions "A30P mutant" of α-synuclein. The A30P is a specific mutation. Then there's a mention of "A53T (4), A30P (5), and E46K (6)" in the context of Parkinson's disease. Also, there's a part about "multiplication (7)(8)(9)(10)(11)(12) of the α-synuclein gene." 
+
+So, the mutations listed here are A53T, A30P, and E46K. The numbers in parentheses might be references, but the user's example didn't include those, so I should focus on the actual mutation names. The "multiplication" refers to gene duplication, which is a different type of mutation, but the user's example included cDNA and protein changes. However, "multiplication" here might not have a specific cDNA or protein change listed, so maybe that's a separate entry.
+
+For each mutation, I need to extract the gene name, cDNA change, protein change, and description. The gene is α-synuclein, which is SNCA. The A30P mutation: the position is 30, amino acid change from A to P. Similarly, A53T would be position 53, A to T. E46K is position 46, E to K. The "multiplication" might not have a specific cDNA or protein change, so those fields would be N.D.
+
+Wait, the user's example had "cDNA Change" with transcript, ref, alt, position, and "Protein Change" with ref, alt, position. But in the input text, the mutations are given as A30P, etc. So for A30P, the cDNA change isn't explicitly stated here. The text mentions "A30P mutant" but doesn't specify the cDNA change. So in that case, the cDNA Change fields would be N.D., but the Protein Change would have position 30, ref A, alt P. Similarly for the others. 
+
+The "multiplication" part refers to gene duplication, but there's no specific cDNA or protein change mentioned. So for that, the cDNA and protein changes would be N.D., and the description would be "multiplication".
+
+So compiling all this, the JSON should list each mutation. The gene is SNCA (α-synuclein). The variants would be A53T, A30P, E46K, and multiplication. Each with their respective details. The references in the text (like (4), (5), etc.) are probably citations, but the user's example didn't include those, so they can be omitted. 
+
+I need to make sure that any fields not mentioned are filled with N.D. So for the cDNA Change, since the text doesn't provide transcript information or specific cDNA changes, those are N.D. The protein changes are present. The multiplication doesn't have a protein or cDNA change, so those are N.D. as well.
+</think>
+
+{
+    "Gene": "SNCA",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "P",
+                "position": "30"
+            },
+            "Description in input context": "A30P"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "T",
+                "position": "53"
+            },
+            "Description in input context": "A53T"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "E",
+                "alt": "K",
+                "position": "46"
+            },
+            "Description in input context": "E46K"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Description in input context": "multiplication"
+        }
+    ]
+}

@@ -1,0 +1,130 @@
+总时间（秒）：39.66
+问答时间（秒）：37.29
+
+<think>
+Okay, let's tackle this query step by step. The user wants me to extract information from the provided scientific literature and structure it into a specific JSON format. The main components required are variants, the disease described, and experimental methods with their details.
+
+First, I need to identify the genetic variants mentioned in the abstract. The text mentions three point mutations in α-synuclein (αSyn) associated with early-onset familial Parkinson disease (PD): A30P, E46K, and A53T. These are the variants of interest. However, the user's example uses HGVS nomenclature, which includes transcript numbers and positions. The problem is that the original text doesn't provide the transcript details (like NM_ numbers), so I might need to infer or use standard nomenclature. But since the user emphasizes standardizing via API, I should note that without the exact transcript, I can't standardize properly. However, the example provided by the user might have assumed that the variants are already in the correct format, even if the transcript isn't specified. Wait, the example uses "NM_001126112.3:c.248G>A," which is a specific transcript. In the given literature, the variants are mentioned as A30P, E46K, and A53T. These are protein changes, not cDNA. So I need to convert these to HGVS format. But without the transcript ID, I can't do that accurately. However, maybe the standard transcript for α-synuclein is known. Let me check. The gene symbol is SNCA, and the transcript might be NM_000340.3. For example, A30P would be p.A30P, which corresponds to c.90C>T. But I need to confirm. However, the user's example includes both cDNA and protein changes, so I should include both. But since the literature doesn't provide the transcript, I have to use N.D. for the transcript number. Wait, but the user's example has a specific transcript. Maybe the user expects me to use the standard transcript for the gene, even if it's not mentioned in the literature. But the instructions say to extract what's mentioned. Since the literature doesn't provide the transcript, I have to mark it as N.D. However, the user might expect me to use a standard transcript. This is a bit of a dilemma. Alternatively, perhaps the user expects me to use the information given in the literature, which only mentions the protein changes. So, for each variant, the cDNA change would be N.D., and the protein change would be the given amino acid change. But the HGVS nomenclature requires the transcript. Since the literature doesn't specify, I have to leave that as N.D. But the user's example includes a specific transcript, so maybe they expect that even if the literature doesn't mention it, I should use the standard one. But I can't be sure. Maybe I should proceed with the information given, even if it's incomplete.
+
+Next, the disease described is Parkinson disease, specifically early-onset familial. I need to find the MONDO term for this. MONDO is a database of diseases, so I need to look up the term for Parkinson disease. The MONDO term for Parkinson disease is MONDO:0005307. However, the text specifies early-onset familial, which might be a more specific term. But without access to the MONDO database, I might have to use the general term. Alternatively, the user might expect the general term. I'll go with MONDO:0005307 for Parkinson disease.
+
+Now, the experimental methods. The abstract mentions that the study involves the 20S proteasome, α-synuclein, and the 20S proteasome. But the main experimental methods described are the effects of the variants on proteasome function. However, the abstract doesn't detail specific experimental methods like Western blot or other assays. The user's example includes Western Blot, but in the given literature, the methods aren't explicitly described. The abstract mentions that the variants are associated with early-onset PD, but the actual experiments (like proteasome activity assays) aren't detailed in the abstract. Therefore, the experimental methods section might be N.D. since the abstract doesn't provide that information. However, the user's example includes an assay method, so maybe the user expects me to infer based on the content. The abstract states that the variants are linked to proteasome dysfunction, so perhaps the experiments involve measuring proteasome activity. But without explicit details, I can't be certain. The user might expect that the methods are not described in the abstract, so they should be N.D. However, the user's example includes a method, so perhaps they want me to include that even if the abstract is brief. This is tricky. Since the abstract doesn't mention specific experimental methods like Western Blot, I think it's safest to state that the methods are not described in the abstract, hence N.D.
+
+Putting it all together, the variants are A30P, E46K, A53T in the SNCA gene. The disease is Parkinson disease with MONDO:0005307. Experimental methods are not described in the abstract, so they are N.D. However, the user might expect some inferred methods, but given the information, I can't confirm. Therefore, the JSON structure would have the variants with N.D. for transcript and cDNA details, the disease with the MONDO term, and experimental methods as N.D.
+</think>
+
+{
+  "Variants Include": [
+    {
+      "Gene": "SNCA",
+      "variants": [
+        {
+          "HGVS": "N.D.",
+          "cDNA Change": {
+            "transcript": "N.D.",
+            "ref": "N.D.",
+            "alt": "N.D.",
+            "position": "N.D."
+          },
+          "Protein Change": {
+            "ref": "A",
+            "alt": "P",
+            "position": "30"
+          },
+          "Description in input context": "A30P"
+        },
+        {
+          "HGVS": "N.D.",
+          "cDNA Change": {
+            "transcript": "N.D.",
+            "ref": "N.D.",
+            "alt": "N.D.",
+            "position": "N.D."
+          },
+          "Protein Change": {
+            "ref": "E",
+            "alt": "K",
+            "position": "46"
+          },
+          "Description in input context": "E46K"
+        },
+        {
+          "HGVS": "N.D.",
+          "cDNA Change": {
+            "transcript": "N.D.",
+            "ref": "N.D.",
+            "alt": "N.D.",
+            "position": "N.D."
+          },
+          "Protein Change": {
+            "ref": "A",
+            "alt": "T",
+            "position": "53"
+          },
+          "Description in input context": "A53T"
+        }
+      ]
+    }
+  ],
+  "Described Disease": {
+    "Described Disease": "Parkinson disease",
+    "MONDO": "MONDO:0005307"
+  },
+  "Experiment Method": [
+    {
+      "Assay Method": "N.D.",
+      "Material used": {
+        "Material Source": "N.D.",
+        "Material Name": "N.D.",
+        "Description": "N.D."
+      },
+      "Readout type": "N.D.",
+      "Readout description": [
+        {
+          "Variant": "N.D.",
+          "Conclusion": "N.D.",
+          "Molecular Effect": "N.D.",
+          "Result Description": "N.D."
+        }
+      ],
+      "Biological replicates": {
+        "Biological replicates": "N.D.",
+        "Description": "N.D."
+      },
+      "Technical replicates": {
+        "Technical replicates": "N.D.",
+        "Description": "N.D."
+      },
+      "Basic positive control": {
+        "Basic positive control": "N.D.",
+        "Description": "N.D."
+      },
+      "Basic negative control": {
+        "Basic negative control": "N.D.",
+        "Description": "N.D."
+      },
+      "Validation controls P/LP": {
+        "Validation controls P/LP": "N.D.",
+        "Counts": "N.D."
+      },
+      "Validation controls B/LB": {
+        "Validation controls B/LB": "N.D.",
+        "Counts": "N.D."
+      },
+      "Statistical analysis method": {
+        "Statistical analysis method": "N.D."
+      },
+      "Threshold for normal readout": {
+        "Threshold for normal readout": "N.D.",
+        "Source": "N.D."
+      },
+      "Threshold for abnormal readout": {
+        "Threshold for abnormal readout": "N.D.",
+        "Source": "N.D."
+      },
+      "Approved assay": {
+        "Approved assay": "N.D."
+      }
+    }
+  ]
+}

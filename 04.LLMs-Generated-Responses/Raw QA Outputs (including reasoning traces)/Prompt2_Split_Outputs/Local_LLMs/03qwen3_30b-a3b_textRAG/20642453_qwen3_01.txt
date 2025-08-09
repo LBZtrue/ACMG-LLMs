@@ -1,0 +1,148 @@
+总时间（秒）：25.50
+问答时间（秒）：22.84
+
+<think>
+Okay, let's tackle this query. The user wants me to act as a Medical Literature Data Mining Expert, specifically looking for mutation information in the provided text. The input is an abstract and introduction from a study on LRRK2 and Parkinson's disease.
+
+First, I need to read through the text carefully. The main focus here is to identify any mentions of mutations. The user's instructions say to extract specific details like gene names, cDNA changes, protein changes, and descriptions. If there's no info, return "N.D.".
+
+Looking at the abstract, the first mention of mutations is in the context of LRRK2. The text says, "41 reported mutations of LRRK2 affected 14-3-3 binding and cellular localization." Then it lists specific mutations: R1441C, R1441G, R1441H, Y1699C, and I2020T. These are all pathogenic mutations. The next part mentions that these mutations reduce phosphorylation of Ser 910/Ser 935, disrupting 14-3-3 interaction. 
+
+Further down, there's a mention of three mutations (R1728H, G2019S, T2031S) that increase protein kinase activity. The introduction also states that autosomal dominant missense mutations in LRRK2 predispose to PD.
+
+Now, I need to structure this into the required JSON format. The gene is LRRK2. For each mutation, I need cDNA and protein changes. However, the text doesn't provide cDNA details like transcripts or specific positions beyond the amino acid changes. For example, R1441C would be a protein change with position 1441, ref C, alt C? Wait, no. Wait, R is the original amino acid, and C is the change. So the protein change would be ref R, alt C, position 1441. But the text doesn't specify the cDNA change, like whether it's a G to T or something else. So for cDNA Change, the transcript is N.D., and the ref and alt would be N.D. unless specified. The text only gives the protein changes. 
+
+Similarly, the other mutations like Y1699C would be protein change Y to C at position 1699. The introduction mentions "autosomal dominant missense mutations" but doesn't give specific examples beyond what's in the abstract. 
+
+The three mutations with increased kinase activity (R1728H, G2019S, T2031S) also need to be included. Again, no cDNA details, only protein changes. 
+
+So the JSON should have the Gene as LRRK2, and each variant as an entry. For each variant, the cDNA Change would have transcript as N.D., and ref/alt/position as N.D. unless the text specifies. The Protein Change would have ref and alt as the amino acids, and position as the number. The Description in input context would be the exact string from the text, like "R1441C", etc.
+
+I need to check if all the mutations are covered. The abstract lists five mutations (R1441C, R1441G, R1441H, Y1699C, I2020T) and three others (R1728H, G2019S, T2031S). Each of these should be separate entries in the variants array. 
+
+Wait, the user's example shows that for a mutation like c.248G>A (p.G83D), the cDNA Change has transcript, ref, alt, position, and Protein Change has ref, alt, position. But in the given text, the mutations are described as R1441C, etc., which are protein changes. The cDNA changes aren't specified here. So for each variant, the cDNA Change would have transcript as N.D., and the ref/alt/position as N.D., since the text doesn't provide that info. The Protein Change would have the actual amino acid changes.
+
+So the final JSON would have Gene: "LRRK2", and variants with each of the listed mutations. Each variant's cDNA Change is N.D., and Protein Change has the ref and alt as the amino acids, position as the number. The Description in input context is the exact mutation string from the text.
+
+I need to make sure that all the mutations mentioned are included. The text also mentions "41 reported mutations" but only specific ones are detailed. The user's example uses the exact mutation notation from the text, so I should follow that.
+
+Therefore, the extracted information should include all the mutations listed in the abstract, each as a separate variant entry. The cDNA and transcript info is not present, so N.D. There's no mention of specific transcripts or cDNA changes, only protein changes. So that's the structure.
+</think>
+
+{
+    "Gene": "LRRK2",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "R",
+                "alt": "C",
+                "position": "1441"
+            },
+            "Description in input context": "R1441C"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "R",
+                "alt": "G",
+                "position": "1441"
+            },
+            "Description in input context": "R1441G"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "R",
+                "alt": "H",
+                "position": "1441"
+            },
+            "Description in input context": "R1441H"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "Y",
+                "alt": "C",
+                "position": "1699"
+            },
+            "Description in input context": "Y1699C"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "I",
+                "alt": "T",
+                "position": "2020"
+            },
+            "Description in input context": "I2020T"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "R",
+                "alt": "H",
+                "position": "1728"
+            },
+            "Description in input context": "R1728H"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "G",
+                "alt": "S",
+                "position": "2019"
+            },
+            "Description in input context": "G2019S"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "T",
+                "alt": "S",
+                "position": "2031"
+            },
+            "Description in input context": "T2031S"
+        }
+    ]
+}

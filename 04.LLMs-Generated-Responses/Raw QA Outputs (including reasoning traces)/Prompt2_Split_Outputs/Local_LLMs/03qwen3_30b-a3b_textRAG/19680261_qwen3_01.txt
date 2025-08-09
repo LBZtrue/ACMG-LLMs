@@ -1,0 +1,54 @@
+总时间（秒）：9.71
+问答时间（秒）：6.57
+
+<think>
+Okay, let's tackle this query. The user wants me to act as a Medical Literature Data Mining Expert. The task is to check if the provided text has mutation information and extract it in JSON format. If not, return "N.D." 
+
+First, I'll read through the given context carefully. The abstract mentions DJ-1 and its role in Parkinson's disease. There are specific mutations discussed: D149A and L166P. 
+
+Looking at the abstract, it states that the D149A mutation makes DJ-1 resistant to caspase-6 proteolysis and removes its protective effect. Then there's the L166P mutation which prevents dimerization but doesn't affect proteolysis by caspase-6. 
+
+So, I need to extract these mutations. The gene is DJ-1. For D149A: the cDNA change isn't explicitly given, so transcript would be N.D. The protein change is D to A at position 149. The description is "D149A". 
+
+Next, L166P: similarly, no cDNA info, so transcript N.D. Protein change L to P at 166, description "L166P". 
+
+I should check if there are other mutations mentioned. The introduction talks about parkin, PINK-1, and DJ-1, but no specific mutations there. The rest of the text discusses mechanisms, not other mutations. 
+
+So the variants array should have both mutations. The Gene is DJ-1. All other fields not mentioned get N.D. Let me structure the JSON accordingly.
+</think>
+
+```json
+{
+    "Gene": "DJ-1",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "D",
+                "alt": "A",
+                "position": "149"
+            },
+            "Protein Change": {
+                "ref": "D",
+                "alt": "A",
+                "position": "149"
+            },
+            "Description in input context": "D149A"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "L",
+                "alt": "P",
+                "position": "166"
+            },
+            "Protein Change": {
+                "ref": "L",
+                "alt": "P",
+                "position": "166"
+            },
+            "Description in input context": "L166P"
+        }
+    ]
+}
+```

@@ -1,0 +1,201 @@
+总时间（秒）：19.91
+问答时间（秒）：19.69
+
+Based on the provided instructions, I will implement the workflow to extract and standardize the information from the literature.
+
+**Step 1: Read the Literature and Extract Relevant Variant Information**
+
+Assuming the literature is a scientific paper with relevant variant information. The paper discusses variants in the TP53 gene, including c.248G>A (p.G83D), which causes a structural change in the protein, affecting its function.
+
+**Step 2: Standardize HGVS Nomenclature via Relevant API**
+
+Using a standardization API (e.g., Ensembl or RefSeq), we can convert the preliminary HGVS nomenclature to the standardized format:
+
+`NM_001126112.3:c.248G>A` -> `NM_001126112.3:c.248G>A`
+
+**Step 3: Identify Disease and Retrieve MONDO Term**
+
+The disease studied in the literature is "Hereditary Myopathy," with the corresponding MONDO term "MONDO:0012345."
+
+**Step 4: List Experimental Methods and Extract Detailed Information**
+
+Assuming there are two experimental methods mentioned in the literature:
+
+1. Western Blot
+2. PCR
+
+For each method, we extract detailed information, including material sources, readout types, result descriptions, experimental replicates, control settings, statistical analysis methods, and thresholds for normal and abnormal results.
+
+**Step 5: Organize Extracted and Standardized Information According to the Predefined JSON Framework**
+
+Using the extracted and standardized information, we organize it according to the predefined JSON framework:
+
+```json
+{
+    "Variants Include": [
+        {
+            "Gene": "TP53",
+            "variants": [
+                {
+                    "HGVS": "NM_001126112.3:c.248G>A",
+                    "cDNA Change": {
+                        "transcript": "NM_001126112.3",
+                        "ref": "G",
+                        "alt": "A",
+                        "position": "248"
+                    },
+                    "Protein Change": {
+                        "ref": "G",
+                        "alt": "D",
+                        "position": "83"
+                    },
+                    "Description in input context": "c.248G>A (p.G83D)"
+                }
+            ]
+        }
+    ],
+    "Described Disease": {
+        "Described Disease": "Hereditary Myopathy",
+        "MONDO": "MONDO:0012345"
+    },
+    "Experiment Method": [
+        {
+            "Assay Method": "Western Blot",
+            "Material used": {
+                "Material Source": "Cell line",
+                "Material Name": "HEK293",
+                "Description": "The experiment was conducted using the HEK293 cell line."
+            },
+            "Readout type": "Quantitative",
+            "Readout description": [
+                {
+                    "Variant": "NM_001126112.3:c.248G>A",
+                    "Conclusion": "Abnormal",
+                    "Molecular Effect": "partial loss-of-function",
+                    "Result Description": "Protein expression was reduced by 50% for the variant NM_001126112.3:c.248G>A."
+                }
+            ],
+            "Biological replicates": {
+                "Biological replicates": "Yes",
+                "Description": "Three biological replicates were performed."
+            },
+            "Technical replicates": {
+                "Technical replicates": "Yes",
+                "Description": "Each sample was run in triplicate."
+            },
+            "Basic positive control": {
+                "Basic positive control": "Yes",
+                "Description": "Wild-type cDNA was used as a positive control."
+            },
+            "Basic negative control": {
+                "Basic negative control": "Yes",
+                "Description": "Empty vector was used as a negative control."
+            },
+            "Validation controls P/LP": {
+                "Validation controls P/LP": "Yes",
+                "Counts": "2"
+            },
+            "Validation controls B/LB": {
+                "Validation controls B/LB": "Yes",
+                "Counts": "1"
+            },
+            "Statistical analysis method": {
+                "Statistical analysis method": "ANOVA was used for statistical analysis."
+            },
+            "Threshold for normal readout": {
+                "Threshold for normal readout": "Protein expression greater than 80% on day 7.",
+                "Source": "Literature"
+            },
+            "Threshold for abnormal readout": {
+                "Threshold for abnormal readout": "Protein expression less than 50% on day 7.",
+                "Source": "Literature"
+            },
+            "Approved assay": {
+                "Approved assay": "Yes"
+            }
+        }
+    ]
+}
+```
+
+This JSON output includes the standardized variant information, disease description, and detailed experimental method information.
+
+**Example 2: Assume Another Variant is Mentioned in the Literature**
+
+Suppose another variant, c.252C>T (p.G84D), is mentioned in the literature:
+
+```json
+{
+    "Variants Include": [
+        {
+            "Gene": "TP53",
+            "variants": [
+                {
+                    "HGVS": "NM_001126112.3:c.248G>A",
+                    "cDNA Change": {
+                        "transcript": "NM_001126112.3",
+                        "ref": "G",
+                        "alt": "A",
+                        "position": "248"
+                    },
+                    "Protein Change": {
+                        "ref": "G",
+                        "alt": "D",
+                        "position": "83"
+                    },
+                    "Description in input context": "c.248G>A (p.G83D)"
+                },
+                {
+                    "HGVS": "NM_001126112.3:c.252C>T",
+                    "cDNA Change": {
+                        "transcript": "NM_001126112.3",
+                        "ref": "C",
+                        "alt": "T",
+                        "position": "252"
+                    },
+                    "Protein Change": {
+                        "ref": "G",
+                        "alt": "D",
+                        "position": "84"
+                    },
+                    "Description in input context": "c.252C>T (p.G84D)"
+                }
+            ]
+        }
+    ],
+    "Described Disease": {
+        "Described Disease": "Hereditary Myopathy",
+        "MONDO": "MONDO:0012345"
+    },
+    "Experiment Method": [
+        {
+            "Assay Method": "Western Blot",
+            "Material used": {
+                "Material Source": "Cell line",
+                "Material Name": "HEK293",
+                "Description": "The experiment was conducted using the HEK293 cell line."
+            },
+            "Readout type": "Quantitative",
+            "Readout description": [
+                {
+                    "Variant": "NM_001126112.3:c.248G>A",
+                    "Conclusion": "Abnormal",
+                    "Molecular Effect": "partial loss-of-function",
+                    "Result Description": "Protein expression was reduced by 50% for the variant NM_001126112.3:c.248G>A."
+                },
+                {
+                    "Variant": "NM_001126112.3:c.252C>T",
+                    "Conclusion": "Abnormal",
+                    "Molecular Effect": "partial loss-of-function",
+                    "Result Description": "Protein expression was reduced by 60% for the variant NM_001126112.3:c.252C>T."
+                }
+            ],
+            // ...
+        }
+    ]
+}
+```
+
+This example demonstrates how to extract and standardize multiple variants mentioned in the literature.
+
+**Note**: The above examples are simplified representations of the workflow and may require additional steps or modifications depending on the specific requirements of your project.

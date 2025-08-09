@@ -1,0 +1,74 @@
+总时间（秒）：16.17
+问答时间（秒）：14.11
+
+<think>
+Alright, so I'm looking at this query where the user wants me to act as an expert data miner for medical literature. The goal is to extract mutation information from a given text paragraph and structure it in JSON format. If there's no mutation info, return "N.D.".
+
+First, I need to understand what exactly the user is asking for. They provided an example where they extracted gene name, cDNA changes, protein changes, and descriptions. The output was a JSON with specific fields filled or marked as N.D. if not present.
+
+Looking at the input text, it's an abstract about DJ-1 mutations causing Parkinsonism. There are three missense mutations mentioned: A104T, E163K, and M26I. Each of these affects the protein structure in different ways.
+
+So, I'll start by identifying each mutation. For Gene, it's DJ-1 across all three variants. Now, for each variant:
+
+1. **A104T**: The text says this substitution introduces water and a disordered residue into the core. But there's no cDNA change mentioned. So, in the JSON, I'll mark transcript as N.D., since the description only refers to the protein level.
+
+2. **E163K**: This disrupts a salt bridge with R145. Again, no specific nucleotide changes are given, so the cDNA part will be N.D.
+
+3. **M26I**: Causes packing defects in the dimer. No cDNA info here either, so same as above for transcript.
+
+Each variant's protein change is specified: A104T, E163K, M26I. For each, I'll note their positions and ref/alt changes.
+
+Putting it all together, I structure each variant into an array under variants in the JSON. Since no cDNA info is provided beyond the protein level, those fields are marked as N.D.
+
+I also need to ensure that all required fields are present, even if they're N.D., so the output remains consistent and complete.
+</think>
+
+```json
+{
+    "Gene": "DJ-1",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "A",
+                "alt": "T",
+                "position": "104"
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "T",
+                "position": "104"
+            },
+            "Description in input context": "A104T introduces water and a discretely disordered residue into the core of the protein."
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "E",
+                "alt": "K",
+                "position": "163"
+            },
+            "Protein Change": {
+                "ref": "E",
+                "alt": "K",
+                "position": "163"
+            },
+            "Description in input context": "E163K disrupts a key salt bridge with R145."
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "M",
+                "alt": "I",
+                "position": "26"
+            },
+            "Protein Change": {
+                "ref": "M",
+                "alt": "I",
+                "position": "26"
+            },
+            "Description in input context": "M26I causes packing defects in the core of the dimer."
+        }
+    ]
+}
+```

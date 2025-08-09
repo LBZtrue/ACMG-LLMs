@@ -1,0 +1,38 @@
+总时间（秒）：14.42
+问答时间（秒）：13.22
+
+<think>
+Okay, let's tackle this query. The user wants me to extract mutation information from the provided medical literature. First, I need to read through the abstract and the context given.
+
+The article title mentions the LRRK2 Gly2385Arg variant associated with Parkinson's disease. Looking at the abstract, they talk about a missense variant, Gly2385Arg. The key terms here are "Gly2385Arg," which is a protein change. The abstract also mentions that the glycine at position 2385 is replaced by arginine. 
+
+In the methods, they discuss the case-control study and the frequency of the heterozygous Gly2385Arg genotype. The results section confirms the association between this variant and increased PD risk. The functional studies part describes the mutation's effect on the protein's localization and toxicity under oxidative stress.
+
+Now, the user's example shows that they want the gene name, cDNA changes, protein changes, and description. However, the text here doesn't mention cDNA changes, only the protein change (Gly2385Arg). The gene is LRRK2. The description in the context is that it's a missense variant replacing glycine with arginine at position 2385. 
+
+Wait, the abstract says "common LRRK2 missense variant, Gly2385Arg," so that's the protein change. The cDNA change isn't specified here. The user's example includes cDNA changes, but if the literature doesn't mention it, I should put "N.D." for transcript, ref, alt, position. 
+
+So the extracted JSON should have the gene as LRRK2, variants with cDNA change all N.D., and protein change with ref Gly, alt Arg, position 2385. The description would be "Gly2385Arg variant replaces the hydrophobic glycine with the hydrophilic arginine, and increases the net positive charge of the LRRK2 WD40 domain."
+
+I need to make sure I don't include any information not present. The user's constraints say to use N.D. where not mentioned. So cDNA change is N.D. and the transcript is N.D. as well. The protein change is clear. Also, the functional impact is mentioned in the abstract, so that's part of the description.
+</think>
+
+{
+    "Gene": "LRRK2",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "Gly",
+                "alt": "Arg",
+                "position": "2385"
+            },
+            "Description in input context": "The Gly2385Arg variant replaces the hydrophobic glycine with the hydrophilic arginine, and increases the net positive charge of the LRRK2 WD40 domain. This variant was associated with increased risk of Parkinson’s disease (PD) in Chinese populations from Singapore and Taiwan, with an odds ratio of 2.1 (95% CI: 1.1–3.9) and a population attributable risk (PAR) of ~4%. Functional studies showed that the variant was more toxic under oxidative stress, leading to higher apoptosis rates compared to the wild-type protein."
+        }
+    ]
+}

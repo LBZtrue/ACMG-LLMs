@@ -1,0 +1,66 @@
+总时间（秒）：9.19
+问答时间（秒）：7.21
+
+<think>
+Okay, let's tackle this query. The user provided a paragraph from a medical literature abstract and wants me to extract mutation information. The role is to act as a medical literature data mining expert, so I need to focus on identifying any mutations mentioned.
+
+First, I'll read through the abstract carefully. The context mentions that mutations in the PINK1 gene cause an autosomal recessive form of Parkinson's disease. Then, it talks about specific mutations: G309D, L347P, and W437X. These are all point mutations, so I need to extract those.
+
+Looking at the structure, the gene is PINK1. The variants are G309D, L347P, and W437X. Each of these has a cDNA change and a protein change. For example, G309D would be a change from G to D at position 309. Similarly, L347P is leucine to proline at 347, and W437X is tryptophan to termination at 437. The description in the input context is the original notation given in the text.
+
+I need to check if all these are present. The abstract says that the ability of PINK1 to promote TRAP1 phosphorylation and cell survival is impaired by PD-linked PINK1 G309D, L347P, and W437X mutations. So those three mutations are specifically mentioned. The other parts of the abstract don't mention any other mutations. The rest is about the function of PINK1 and TRAP1, but no other genes or mutations.
+
+So the JSON should have the gene as PINK1, and the three variants. Each variant's cDNA and protein changes are derived from the mutation notation. The description is the original string from the text. The transcript is N.D. because the cDNA position is given, but the transcript ID isn't specified here. Wait, in the example, the transcript was N.D. when not provided. Here, the cDNA change is given as positions, so for each variant, the cDNA change is position, and the protein change is the amino acid change. 
+
+I need to make sure that each variant is correctly parsed. For example, G309D: the cDNA change is G>A at position 309, and the protein change is G>D at position 309. Similarly for the others. The W437X is a stop codon, so the protein change is W to X (termination). 
+
+So the final JSON should list these three variants with their respective details. The rest of the information in the abstract is about the function of PINK1 and TRAP1, but no other mutations. Therefore, the answer should only include these three mutations.
+</think>
+
+{
+    "Gene": "PINK1",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "G",
+                "alt": "A",
+                "position": "309"
+            },
+            "Protein Change": {
+                "ref": "G",
+                "alt": "D",
+                "position": "309"
+            },
+            "Description in input context": "G309D"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "L",
+                "alt": "P",
+                "position": "347"
+            },
+            "Protein Change": {
+                "ref": "L",
+                "alt": "P",
+                "position": "347"
+            },
+            "Description in input context": "L347P"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "W",
+                "alt": "X",
+                "position": "437"
+            },
+            "Protein Change": {
+                "ref": "W",
+                "alt": "X",
+                "position": "437"
+            },
+            "Description in input context": "W437X"
+        }
+    ]
+}

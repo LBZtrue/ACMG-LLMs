@@ -1,0 +1,58 @@
+总时间（秒）：11.00
+问答时间（秒）：8.34
+
+<think>
+Okay, let's tackle this query. The user wants me to extract mutation information from the provided abstract. First, I need to read through the abstract carefully.
+
+The abstract mentions two novel mutations: L10P and P158DEL in the DJ-1 gene. The L10P is a missense mutation, and P158DEL is a deletion. The gene is DJ-1, so that's the gene name. The cDNA changes aren't explicitly stated here, but the protein changes are given as L10P and P158DEL. The description in the context includes the specific amino acid substitutions. 
+
+I need to check if there are any other mutations mentioned. The abstract also talks about L166P, but the question is about the mutations in the context. The user's example shows that even if there are multiple mutations, each should be listed as a separate variant. 
+
+Wait, the user's example includes multiple variants in the variants array. So for each mutation mentioned, I need to create an entry. The L10P and P158DEL are both mentioned as novel pathogenic mutations. The L166P is another variant, but the question is about the mutations in the context. The abstract says "the specific effects of the novel L10P and P158DEL mutations..." so those are the ones to focus on. The L166P is mentioned in comparison, but it's not part of the mutations being studied here. 
+
+So the variants should be L10P and P158DEL. For each, the protein change is given. The cDNA change isn't directly stated, but the protein change is. However, in the example, the cDNA change is provided even if it's not present. Wait, in the example, the cDNA change is given as c.248G>A, but in the input text, the user's example has that. However, in the current abstract, the mutations are described as missense (L10P) and deletion (P158DEL). The cDNA changes aren't explicitly mentioned, so for those, the cDNA change would be N.D. because the text doesn't specify the exact cDNA position. 
+
+But the user's example includes the cDNA change even if it's not present. Wait, in the example, the input text mentions c.248G>A (p.G83D), so the cDNA change is present. In this case, the abstract doesn't mention cDNA changes, only the protein changes. So for L10P and P158DEL, the cDNA change is N.D., but the protein change is given. 
+
+So the JSON should have the gene as DJ-1, and the variants array with each mutation. For each variant, the cDNA change is N.D., and the protein change is as per the text. The description in the input context is the exact text from the abstract: "L10P amino acid substitution" and "deletion of DJ-1 residue P158". 
+
+So the final JSON should have the gene as DJ-1, and two variants. Each variant's cDNA change is N.D., but the protein change is L10P and P158DEL respectively. The description in the input context is the exact phrase from the abstract. 
+
+I need to make sure that the structure is correct, with the gene name and variants array. Each variant has cDNA change, protein change, and description. Since the cDNA changes aren't mentioned, they are N.D. But the protein changes are present. The example shows that even if cDNA isn't present, it's N.D., but the protein change is included. 
+
+So the answer should be structured accordingly.
+</think>
+
+{
+    "Gene": "DJ-1",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "L",
+                "alt": "P",
+                "position": "10"
+            },
+            "Description in input context": "novel pathogenic homozygous DJ-1 missense mutation resulting in the L10P amino acid substitution"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "P",
+                "alt": "DEL",
+                "position": "158"
+            },
+            "Description in input context": "novel homozygous mutation resulting in the deletion of DJ-1 residue P158"
+        }
+    ]
+}

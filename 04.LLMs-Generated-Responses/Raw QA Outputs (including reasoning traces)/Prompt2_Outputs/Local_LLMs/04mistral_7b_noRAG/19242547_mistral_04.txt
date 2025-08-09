@@ -1,0 +1,120 @@
+总时间（秒）：17.99
+问答时间（秒）：17.82
+
+Based on the provided context, workflow, and examples, here's a breakdown of how to apply the framework to a specific literature excerpt:
+
+1. Extract the relevant variant information from the literature:
+   In this example, let's assume the following passage is present in the literature: "The study focused on a variant in the TP53 gene, c.248G>A (p.G83D), which was found to alter protein function."
+
+2. Standardize the HGVS nomenclature of the variants via relevant API:
+   Since the standardized HGVS nomenclature is provided in the example, we can move on to the next step without needing to perform this action.
+
+3. Identify the disease studied in the literature and retrieve the corresponding terms from the MONDO database:
+   In this case, the disease studied can be identified as Hereditary Myopathy since it is explicitly mentioned in the passage. To find the corresponding MONDO term, you would need to access a reliable database or resource that provides MONDO IDs for various diseases. Let's assume we find "MONDO:0012345" as the corresponding MONDO ID for Hereditary Myopathy.
+
+4. List all experimental methods mentioned in the literature and extract detailed information about each method:
+   In this example, the study used a Western Blot assay to investigate the variant's impact on protein function. Since only the assay method is specified in the passage, we will make assumptions for the remaining details:
+
+   - Material source: Cell line (e.g., HEK293)
+   - Readout type: Quantitative
+   - Biological replicates: Yes (Assumption: Three biological replicates were performed.)
+   - Technical replicates: Yes (Assumption: Each sample was run in triplicate.)
+   - Basic positive control: Yes (Assumption: Wild-type cDNA was used as a positive control.)
+   - Basic negative control: Yes (Assumption: Empty vector was used as a negative control.)
+   - Validation controls P/LP: Yes (Assumption: Two validation controls for pathogenic/likely pathogenic variants were included.)
+   - Validation controls B/LB: Yes (Assumption: One validation control for benign/likely benign variants was included.)
+   - Statistical analysis method: ANOVA (Assumption: ANOVA was used for statistical analysis.)
+   - Threshold for normal readout: Protein expression greater than 80% on day 7. (Assumption: The threshold can be determined based on your own knowledge since it is not explicitly mentioned in the literature.)
+   - Threshold for abnormal readout: Protein expression less than 50% on day 7. (Assumption: The threshold can be determined based on your own knowledge since it is not explicitly mentioned in the literature.)
+   - Approved assay: Yes (Assumption: Since Western Blot is a commonly used method for studying protein function, it is considered an approved assay for this context.)
+
+5. Organize the extracted and standardized information according to the predefined JSON framework:
+   Using the information gathered in steps 1-4, you can now populate the JSON structure provided in the example to create the final output. Note that the HGVS nomenclature should be properly standardized using an API or a reliable source before organizing the data. Here's an example of how the JSON output could look:
+
+   ```
+   {
+       "Variants Include": [
+           {
+               "Gene": "TP53",
+               "variants": [
+                   {
+                       "HGVS": "NM_001126112.3:c.248G>A",
+                       "cDNA Change": {
+                           "transcript": "NM_001126112.3",
+                           "ref": "G",
+                           "alt": "A",
+                           "position": "248"
+                       },
+                       "Protein Change": {
+                           "ref": "G",
+                           "alt": "D",
+                           "position": "83"
+                       },
+                       "Description in input context": "c.248G>A (p.G83D)"
+                   }
+               ]
+           }
+       ],
+       "Described Disease": {
+           "Described Disease": "Hereditary Myopathy",
+           "MONDO": "MONDO:0012345"
+       },
+       "Experiment Method": [
+           {
+               "Assay Method": "Western Blot",
+               "Material used": {
+                   "Material Source": "Cell line",
+                   "Material Name": "HEK293",
+                   "Description": "The experiment was conducted using the HEK293 cell line."
+               },
+               "Readout type": "Quantitative",
+               "Readout description": [
+                   {
+                       "Variant": "NM_001126112.3:c.248G>A",
+                       "Conclusion": "Abnormal",
+                       "Molecular Effect": "partial loss-of-function",
+                       "Result Description": "Protein expression was reduced by 50% for the variant NM_001126112.3:c.248G>A."
+                   }
+               ],
+               "Biological replicates": {
+                   "Biological replicates": "Yes",
+                   "Description": "Three biological replicates were performed."
+               },
+               "Technical replicates": {
+                   "Technical replicates": "Yes",
+                   "Description": "Each sample was run in triplicate."
+               },
+               "Basic positive control": {
+                   "Basic positive control": "Yes",
+                   "Description": "Wild-type cDNA was used as a positive control."
+               },
+               "Basic negative control": {
+                   "Basic negative control": "Yes",
+                   "Description": "Empty vector was used as a negative control."
+               },
+               "Validation controls P/LP": {
+                   "Validation controls P/LP": "Yes",
+                   "Counts": "2"
+               },
+               "Validation controls B/LB": {
+                   "Validation controls B/LB": "Yes",
+                   "Counts": "1"
+               },
+               "Statistical analysis method": {
+                   "Statistical analysis method": "ANOVA was used for statistical analysis."
+               },
+               "Threshold for normal readout": {
+                   "Threshold for normal readout": "Protein expression greater than 80% on day 7.",
+                   "Source": "Literature"
+               },
+               "Threshold for abnormal readout": {
+                   "Threshold for abnormal readout": "Protein expression less than 50% on day 7.",
+                   "Source": "Literature"
+               },
+               "Approved assay": {
+                   "Approved assay": "Yes"
+               }
+           }
+       ]
+   }
+   ```

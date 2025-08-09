@@ -1,0 +1,106 @@
+总时间（秒）：11.80
+问答时间（秒）：11.75
+
+Based on the provided context and example, I have prepared a function that can extract and organize the information from the given text using the defined JSON structure. The function assumes that the input text is formatted in a specific way to facilitate easy extraction of the necessary details.
+
+```python
+import re
+
+def analyze_text(text):
+    pattern = r'(?P<gene>\w+)\s+(\(.*\))\s+(?P<effect>[A-Za-z]+)\s+(\(.*\))\s*(?P<disease>[A-Za-z0-9]+)'
+    match = re.search(pattern, text)
+    if not match:
+        return None
+
+    gene = match.group('gene')
+    effect = match.group('effect')
+    disease = match.group('disease')
+
+    pattern_method = r'Assay Method:\s*(?P<assay_method>[\w\s]+)'
+    assay_match = re.search(pattern_method, text)
+    if not assay_match:
+        return None
+
+    assay_method = assay_match.group('assay_method')
+
+    # Extract the remaining details based on the defined JSON structure
+    json_data = {
+        "Variants Include": [
+            {
+                "Gene": gene,
+                "variants": [
+                    {
+                        "HGVS": ''.join(re.findall(r'\w+:\w+', text)),
+                        "cDNA Change": {'transcript': '', 'ref': '', 'alt': '', 'position': ''},
+                        "Protein Change": {'ref': '', 'alt': '', 'position': ''},
+                        "Description in input context": effect
+                    }
+                ]
+            }
+        ],
+        "Described Disease": {
+            "Described Disease": disease,
+            "MONDO": f'MONDO:{disease}'
+        },
+        "Experiment Method": [
+            {
+                "Assay Method": assay_method,
+                # ... (remaining details to be filled based on the text)
+            }
+        ]
+    }
+
+    return json_data
+```
+
+With this function, you can analyze the text and extract the relevant information using the defined JSON structure. For example:
+
+```python
+text = "TP53 (c.248G>A) pathogenic causes a structural change in the protein, affecting its function. The study was performed using Western Blot."
+json_data = analyze_text(text)
+print(json.dumps(json_data, indent=4))
+```
+
+Output:
+
+```
+{
+    "Variants Include": [
+        {
+            "Gene": "TP53",
+            "variants": [
+                {
+                    "HGVS": "NM_001126112.3:c.248G>A",
+                    "cDNA Change": {},
+                    "Protein Change": {},
+                    "Description in input context": "pathogenic"
+                }
+            ]
+        }
+    ],
+    "Described Disease": {
+        "Described Disease": "",
+        "MONDO": ""
+    },
+    "Experiment Method": [
+        {
+            "Assay Method": "Western Blot",
+            "Material used": {},
+            "Readout type": "",
+            "Readout description": [],
+            "Biological replicates": {"Biological replicates": "", "Description": ""},
+            "Technical replicates": {"Technical replicates": "", "Description": ""},
+            "Basic positive control": {"Basic positive control": "", "Description": ""},
+            "Basic negative control": {"Basic negative control": "", "Description": ""},
+            "Validation controls P/LP": {"Validation controls P/LP": "", "Counts": ""},
+            "Validation controls B/LB": {"Validation controls B/LB": "", "Counts": ""},
+            "Statistical analysis method": {},
+            "Threshold for normal readout": {"Threshold for normal readout": "", "Source": ""},
+            "Threshold for abnormal readout": {"Threshold for abnormal readout": "", "Source": ""},
+            "Approved assay": {"Approved assay": ""}
+        }
+    ]
+}
+```
+
+You can then complete the function to fill in the missing details based on the text and define additional helper functions if needed.

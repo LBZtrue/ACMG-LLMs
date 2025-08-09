@@ -1,0 +1,62 @@
+总时间（秒）：22.58
+问答时间（秒）：21.18
+
+<think>
+Okay, let's tackle this query. The user wants me to extract mutation information from the provided literature. First, I'll need to scan through the text to find any mentions of mutations.
+
+Looking at the abstract, the first mention is about the Parkinson’s disease-associated mutant A30P. That's a mutation in the alpha-synuclein gene, right? The notation A30P indicates an amino acid change from Alanine to Proline at position 30. So that's one mutation.
+
+Then there's another mutant mentioned: A53T. This is also a Parkinson's disease-associated mutation, changing Alanine to Threonine at position 53. Both A30P and A53T are well-known mutations in alpha-synuclein linked to Parkinson's disease.
+
+Next, the text talks about mutations that disrupt a-helicity abrogating inhibition. However, specific mutations aren't named here, just their effect. So maybe those are not specific enough to extract as individual mutations unless they are named.
+
+Also, there's mention of phosphorylation at serine 129 and tyrosine residues 125 and 136. But phosphorylation isn't a mutation; it's a post-translational modification. The user is asking about mutations, so these might not count unless there's a specific mutation that mimics phosphorylation. The text says mutations that mimic phosphorylation at these sites. But the actual mutation names aren't provided, just the sites. So I might need to note those positions but without specific mutation names, they might not be included.
+
+The deletions mentioned are residues 56–102 (exon 4) and 130–140 (exon 6). Deletions are structural changes, but they aren't point mutations. However, the user's example includes cDNA changes, which might be deletions. But in the example, the mutation was a point mutation. The question is whether deletions count as mutations here. The user's instruction says to extract mutation information, which could include deletions. However, in the example, they used a point mutation. So maybe the user is looking for specific gene variants, like single nucleotide changes or amino acid substitutions. Deletions might be considered structural variations, but the user's example doesn't include them, so maybe they are not required here.
+
+Wait, the user's example includes a cDNA change with a position, ref, and alt. So deletions would be more complex, like a deletion of a segment. But the example given doesn't have deletions, so maybe the user wants only point mutations. However, the instructions say to extract information related to mutations, which can include deletions. But in the absence of specific details, like the exact nucleotide positions or the specific deletion, it's hard to extract them in the format required.
+
+So, focusing on the explicit mutations mentioned: A30P and A53T. These are specific and are named in the text. The other parts mention deletions and phosphorylation, but those may not be mutations in the context of the user's example.
+
+So the answer should include the gene (SNCA, since alpha-synuclein is encoded by SNCA), and the variants A30P and A53T. However, the user's example used the protein name (e.g., TP53), but here the gene is SNCA. The text refers to alpha-synuclein, so the gene is SNCA. The variants are A30P and A53T. The cDNA changes and protein changes would be the substitutions. The description in the input context would be the exact mentions from the text.
+
+So the JSON should have Gene: "SNCA", and variants as two entries: one for A30P and another for A53T. The cDNA change would be N.D. since the text doesn't specify the cDNA position, only the protein change. The protein change would be the amino acid substitution. The description would be "Parkinson’s disease-associated mutant A30P" and "PD-associated mutant A53T".
+
+I need to check the text again. The first mention is "Parkinson’s disease-associated mutant A30P" and "the PD-associated mutant A53T". The gene is alpha-synuclein, which is SNCA. The protein change is A30P and A53T. The cDNA change isn't mentioned, so that's N.D. The description is as per the text.
+
+So the final JSON should have those two mutations. The deletions and phosphorylation are not mutations per se, so they are excluded unless the user considers them, but based on the example, the answer focuses on specific mutations with protein changes.
+</think>
+
+{
+    "Gene": "SNCA",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "P",
+                "position": "30"
+            },
+            "Description in input context": "Parkinson’s disease-associated mutant A30P"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "T",
+                "position": "53"
+            },
+            "Description in input context": "PD-associated mutant A53T"
+        }
+    ]
+}

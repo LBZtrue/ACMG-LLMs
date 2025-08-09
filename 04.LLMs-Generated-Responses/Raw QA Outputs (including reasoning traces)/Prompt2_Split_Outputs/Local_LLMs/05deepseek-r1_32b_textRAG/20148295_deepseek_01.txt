@@ -1,0 +1,64 @@
+总时间（秒）：22.17
+问答时间（秒）：20.68
+
+<think>
+Alright, I'm going to tackle this query step by step. The user has provided a paragraph from a medical literature abstract and wants me to extract mutation information using a specific JSON format. 
+
+First, I'll read through the paragraph carefully to spot any mentions of mutations. Scanning through, I notice that it discusses three point mutations in α-synuclein (αSyn): A30P, E46K, and A53T. These are linked to early-onset familial Parkinson's Disease (PD). 
+
+Next, I need to extract the relevant details about each mutation. The paragraph provides their protein changes but doesn't mention cDNA changes or additional descriptions beyond their association with PD. So, for each variant, I'll note the Gene as "SNCA" since that's the gene encoding αSyn. Each variant will have a placeholder for cDNA Change and only include the Protein Change details available.
+
+I also need to structure this information into JSON format, making sure not to omit any fields even if some data points aren't present in the text. For missing data like transcript or specific descriptions, I'll use "N.D." as specified. 
+
+Putting it all together, I'll create an object with the Gene and a list of variants, each containing their respective changes. This ensures that the output is complete and adheres strictly to the required format.
+</think>
+
+```json
+{
+    "Gene": "SNCA",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "P",
+                "position": "30"
+            },
+            "Description in input context": "A30P mutation associated with early-onset familial PD"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "E",
+                "alt": "K",
+                "position": "46"
+            },
+            "Description in input context": "E46K mutation associated with early-onset familial PD"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "T",
+                "position": "53"
+            },
+            "Description in input context": "A53T mutation associated with early-onset familial PD"
+        }
+    ]
+}
+```

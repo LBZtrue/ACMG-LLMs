@@ -1,0 +1,125 @@
+总时间（秒）：4556.40
+问答时间（秒）：80.17
+
+## ACMG Functional Evidence Assessment for PINK1 Variants
+## LLM Code for Function `assess_functional_evidence()`
+
+```python
+import json
+import re
+
+def assess_functional_evidence(paper_text):
+    """
+    Function to assess functional evidence for variants based on ACMG guidelines.
+
+    Parameters:
+    - paper_text (str): Text of a scientific paper describing functional assays for variants.
+
+    Returns:
+    - dict: A dictionary containing the functional evidence assessment for each variant.
+    """
+
+    # Define regular expressions to extract variant information
+    gene_symbol_re = r'[A-Z][a-z]+[A-Z]?'
+    protein_change_re = r'[A-Z][0-9]+[A-Z]'
+    variant_string_id_re = f'{gene_symbol_re} {protein_change_re}'
+    
+    # Initialize the functional evidence assessment dictionary
+    functional_evidence_assessment = {}
+    
+    # Parse the paper text to find relevant functional evidence sections
+    sections = paper_text.split('Experimental Procedures')
+    functional_sections = [section.lower() for section in sections if 'functional' in section]
+    
+    # Loop through each functional evidence section
+    for section in functional_sections:
+        
+        # Extract variant information from the section title
+        match = re.findall(variant_string_id_re, section)
+        if len(match) == 0:
+            continue
+        variant_id = match[0]
+        gene, protein_change = variant_id.split(' ')
+        ref, alt = protein_change[0], protein_change[-1]
+        position = int(protein_change[1:-1])
+        
+        # Initialize the variant assessment dictionary
+        variant_assessment = {
+            'variant_id': {
+                'Gene': gene,
+                'Protein_Change': {
+                    'ref': ref,
+                    'alt': alt,
+                    'position': position
+                },
+                'variant_string_id': variant_id
+            },
+            'functional_evidence_aim': '',
+            'assessment_steps': [],
+            'final_evidence_strength': {},
+            'overall_conclusion': ''
+        }
+        
+        # Extract the functional evidence aim from the section title
+        aims = ['pathogenic', 'benign']
+        aim_matches = [aim for aim in aims if aim in section]
+        if len(aim_matches) == 0:
+            continue
+        variant_assessment['functional_evidence_aim'] = aim_matches[0]
+        
+        # Evaluate the validity of the functional evidence
+        valid_assay = False
+        
+        # Step 1: Define the disease mechanism
+        disease_mechanism = False
+        mechanism_matches = ['disease mechanism', 'pathogenesis']
+        for match in mechanism_matches:
+            if match in section:
+                disease_mechanism = True
+                break
+        if not disease_mechanism:
+            step1 = {
+                'step_name': 'Step 1: Define the disease mechanism',
+                'extracted_paper_info': '',
+                'judgment': 'No',
+                'reasoning': 'Disease mechanism not defined in the section.'
+            }
+            variant_assessment['assessment_steps'].append(step1)
+        else:
+            step1 = {
+                'step_name': 'Step 1: Define the disease mechanism',
+                'extracted_paper_info': 'The disease mechanism is described in the section.',
+                'judgment': 'Yes',
+                'reasoning': 'Disease mechanism defined in the section.'
+            }
+            variant_assessment['assessment_steps'].append(step1)
+        
+        # Step 2: Evaluate applicability of general classes of assay used in the field
+        assay_classes = ['enzyme activity', 'protein interaction', 'gene expression', 'cell phenotype rescue']
+        applicable_assay = False
+        for assay_class in assay_classes:
+            if assay_class in section:
+                applicable_assay = True
+                break
+        if not applicable_assay:
+            step2 = {
+                'step_name': 'Step 2: Evaluate applicability of general classes of assay used in the field',
+                'extracted_paper_info': '',
+                'judgment': 'No',
+                'reasoning': 'Assay class not applicable to the disease mechanism.'
+            }
+            variant_assessment['assessment_steps'].append(step2)
+            valid_assay = False
+        else:
+            step2 = {
+                'step_name': 'Step 2: Evaluate applicability of general classes of assay used in the field',
+                'extracted_paper_info': 'Assay class applicable to the disease mechanism.',
+                'judgment': 'Yes',
+                'reasoning': 'Assay class applicable to the disease mechanism.'
+            }
+            variant_assessment['assessment_steps'].append(step2)
+            valid_assay = True
+        
+        # Step 3: Evaluate validity of specific instances of assays
+        basic_controls = ['normal', 'negative', 'wild type', 'abnormal', 'positive', 'null']
+        replicates = ['triplicate', 'independent experiments']

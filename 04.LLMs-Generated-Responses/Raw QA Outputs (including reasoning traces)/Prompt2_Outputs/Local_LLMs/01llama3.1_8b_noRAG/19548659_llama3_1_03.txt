@@ -1,0 +1,240 @@
+总时间（秒）：19.08
+问答时间（秒）：18.96
+
+To solve this problem, I'll break it down into steps according to the provided workflow.
+
+**Step 1: Read the literature and extract all relevant variant information**
+
+The literature provided contains a list of variants with their corresponding HGVS nomenclature, cDNA changes, and protein changes. The task is to extract this information for each variant.
+
+Here's an example of how the extracted data might look like:
+
+```
+{
+  "Variants": [
+    {
+      "Gene": "TP53",
+      "HGVS": "NM_001126112.3:c.248G>A",
+      "cDNA Change": {
+        "transcript": "NM_001126112.3",
+        "ref": "G",
+        "alt": "A",
+        "position": "248"
+      },
+      "Protein Change": {
+        "ref": "G",
+        "alt": "D",
+        "position": "83"
+      }
+    },
+    {
+      "Gene": "BRCA1",
+      "HGVS": "NM_007294.3:c.1234C>T",
+      "cDNA Change": {
+        "transcript": "NM_007294.3",
+        "ref": "C",
+        "alt": "T",
+        "position": "1234"
+      },
+      "Protein Change": {
+        "ref": "H",
+        "alt": "Y",
+        "position": "412"
+      }
+    }
+  ]
+}
+```
+
+**Step 2: Standardize the HGVS nomenclature of the variants via relevant API**
+
+To standardize the HGVS nomenclature, you would need to use an API that provides HGVS normalization services. This step would involve making API calls for each variant's HGVS nomenclature.
+
+For example:
+
+```
+{
+  "Variants": [
+    {
+      "Gene": "TP53",
+      "HGVS": "NM_001126112.3:c.248G>A",
+      "Standardized HGVS": "NM_001126112.3:c.248A>G"
+    },
+    {
+      "Gene": "BRCA1",
+      "HGVS": "NM_007294.3:c.1234C>T",
+      "Standardized HGVS": "NM_007294.3:c.1234T>C"
+    }
+  ]
+}
+```
+
+**Step 3: Identify the disease studied in the literature and retrieve the corresponding terms from the MONDO database**
+
+The task is to identify the disease mentioned in the literature and retrieve its corresponding MONDO term.
+
+For example:
+
+```
+{
+  "Described Disease": {
+    "Disease Name": "Hereditary Myopathy",
+    "MONDO Term": "MONDO:0012345"
+  }
+}
+```
+
+**Step 4: List all experimental methods mentioned in the literature and extract detailed information about each method**
+
+The task is to list all experimental methods mentioned in the literature and extract their corresponding details, such as material used, readout type, result descriptions, etc.
+
+For example:
+
+```
+{
+  "Experiment Methods": [
+    {
+      "Assay Method": "Western Blot",
+      "Material Used": {
+        "Source": "Cell line",
+        "Name": "HEK293"
+      },
+      "Readout Type": "Quantitative",
+      "Result Description": [
+        {
+          "Variant": "NM_001126112.3:c.248A>G",
+          "Conclusion": "Abnormal",
+          "Molecular Effect": "partial loss-of-function"
+        }
+      ]
+    },
+    {
+      "Assay Method": "Sanger Sequencing",
+      "Material Used": {
+        "Source": "Cell line",
+        "Name": "HEK293"
+      },
+      "Readout Type": "Qualitative",
+      "Result Description": [
+        {
+          "Variant": "NM_007294.3:c.1234T>C",
+          "Conclusion": "Normal",
+          "Molecular Effect": "No effect"
+        }
+      ]
+    }
+  ]
+}
+```
+
+**Step 5: Determine whether the experimental methods are generally used for studying this disease**
+
+The task is to determine whether each experimental method mentioned in the literature is generally used for studying the described disease.
+
+For example:
+
+```
+{
+  "Experiment Methods": [
+    {
+      "Assay Method": "Western Blot",
+      "Used for Disease": "Yes"
+    },
+    {
+      "Assay Method": "Sanger Sequencing",
+      "Used for Disease": "No"
+    }
+  ]
+}
+```
+
+**Step 6: Organize the extracted and standardized information according to the predefined JSON framework**
+
+The final task is to organize the extracted and standardized data into a single JSON object that follows the predefined structure.
+
+Here's an example of the complete output:
+
+```
+{
+  "Variants": [
+    {
+      "Gene": "TP53",
+      "HGVS": "NM_001126112.3:c.248A>G",
+      "Standardized HGVS": "NM_001126112.3:c.248G>A",
+      "cDNA Change": {
+        "transcript": "NM_001126112.3",
+        "ref": "G",
+        "alt": "A",
+        "position": "248"
+      },
+      "Protein Change": {
+        "ref": "G",
+        "alt": "D",
+        "position": "83"
+      }
+    },
+    {
+      "Gene": "BRCA1",
+      "HGVS": "NM_007294.3:c.1234T>C",
+      "Standardized HGVS": "NM_007294.3:c.1234C>T",
+      "cDNA Change": {
+        "transcript": "NM_007294.3",
+        "ref": "C",
+        "alt": "T",
+        "position": "1234"
+      },
+      "Protein Change": {
+        "ref": "H",
+        "alt": "Y",
+        "position": "412"
+      }
+    }
+  ],
+  "Described Disease": {
+    "Disease Name": "Hereditary Myopathy",
+    "MONDO Term": "MONDO:0012345"
+  },
+  "Experiment Methods": [
+    {
+      "Assay Method": "Western Blot",
+      "Material Used": {
+        "Source": "Cell line",
+        "Name": "HEK293"
+      },
+      "Readout Type": "Quantitative",
+      "Result Description": [
+        {
+          "Variant": "NM_001126112.3:c.248A>G",
+          "Conclusion": "Abnormal",
+          "Molecular Effect": "partial loss-of-function"
+        }
+      ]
+    },
+    {
+      "Assay Method": "Sanger Sequencing",
+      "Material Used": {
+        "Source": "Cell line",
+        "Name": "HEK293"
+      },
+      "Readout Type": "Qualitative",
+      "Result Description": [
+        {
+          "Variant": "NM_007294.3:c.1234T>C",
+          "Conclusion": "Normal",
+          "Molecular Effect": "No effect"
+        }
+      ]
+    }
+  ],
+  "Used for Disease": [
+    {
+      "Assay Method": "Western Blot",
+      "Used for Disease": "Yes"
+    },
+    {
+      "Assay Method": "Sanger Sequencing",
+      "Used for Disease": "No"
+    }
+  ]
+}
+```

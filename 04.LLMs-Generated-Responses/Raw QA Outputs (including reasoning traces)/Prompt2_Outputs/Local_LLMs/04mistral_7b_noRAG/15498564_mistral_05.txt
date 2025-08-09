@@ -1,0 +1,76 @@
+总时间（秒）：10.01
+问答时间（秒）：9.98
+
+Based on the provided workflow and example, I will create a function that takes in the literature text as input and returns the output in the specified JSON format. The function will perform the following steps:
+
+1. Extract all relevant variant information from the literature text, including gene name, preliminary HGVS nomenclature, cDNA changes, and protein changes.
+2. Standardize the HGVS nomenclature of the variants via relevant API. (This step requires an additional function to perform the standardization.)
+3. Identify the disease studied in the literature and retrieve the corresponding terms from the MONDO database. (This requires access to a database or API for the MONDO terms.)
+4. List all experimental methods mentioned in the literature and extract detailed information about each method, as per the provided JSON format.
+5. Determine whether the experimental methods are generally used for studying the disease (this may require additional research or knowledge).
+6. Organize the extracted and standardized information according to the predefined JSON framework.
+
+Here is a Python function that implements these steps:
+
+```python
+import requests
+
+def extract_experiment_info(literature):
+    # Extract variant, disease, and experimental information from the literature text
+    # ... (This requires parsing the literature text, which can be done using regular expressions, NLP techniques, or other methods.)
+
+    variant = "NM_001126112.3:c.248G>A"  # Placeholder for extracted variant
+    gene = "TP53"  # Placeholder for extracted gene name
+    disease = "Hereditary Myopathy"  # Placeholder for identified disease
+    assay_approved = True  # Placeholder for whether the experimental protocol is approved for studying the disease
+
+    # Standardize the HGVS nomenclature of the variants (Requires an additional function to perform standardization)
+    variant = standardize_hgvs(variant)
+
+    # Retrieve the MONDO term for the identified disease
+    mondo_term = get_mondo_term(disease)
+
+    experimental_info = [
+        {
+            "Assay Method": "Western Blot",  # Placeholder for extracted assay method
+            "Material used": {
+                "Material Source": "Cell line",  # Placeholder for material source
+                "Material Name": "HEK293",  # Placeholder for material name
+                "Description": "The experiment was conducted using the HEK293 cell line."
+            },
+            # ... (Fill in the remaining details according to the provided JSON format)
+        }
+    ]
+
+    output = {
+        "Variants Include": [
+            {
+                "Gene": gene,
+                "variants": [
+                    {
+                        "HGVS": variant,
+                        "cDNA Change": {
+                            "transcript": "NM_001126112.3",
+                            "ref": "G",
+                            "alt": "A",
+                            "position": "248"
+                        },
+                        "Protein Change": {
+                            "ref": "G",
+                            "alt": "D",
+                            "position": "83"
+                        },
+                        "Description in input context": variant  # Placeholder for description in input context
+                    }
+                ]
+            }
+        ],
+        "Described Disease": {
+            "Described Disease": disease,
+            "MONDO": mondo_term
+        },
+        "Experiment Method": experimental_info  # Placeholder for the extracted and formatted experimental information
+    }
+
+    return output
+```

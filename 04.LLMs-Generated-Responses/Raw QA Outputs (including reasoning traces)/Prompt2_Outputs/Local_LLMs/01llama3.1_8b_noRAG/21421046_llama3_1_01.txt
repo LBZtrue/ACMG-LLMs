@@ -1,0 +1,138 @@
+总时间（秒）：14.58
+问答时间（秒）：14.38
+
+Based on the provided specifications, here's a step-by-step guide to extracting and organizing data from the literature into the predefined JSON framework:
+
+**Step 1: Read Literature and Extract Variant Information**
+
+* Identify relevant variants mentioned in the literature.
+* For each variant:
+	+ Extract gene name
+	+ Extract preliminary HGVS nomenclature (if not already available)
+	+ Determine cDNA change information (transcript, reference nucleotide, alternative nucleotide, position)
+	+ Determine protein change information (reference amino acid, alternative amino acid, position)
+
+**Step 2: Standardize HGVS Nomenclature**
+
+* Use a relevant API to standardize the HGVS nomenclature for each variant.
+
+**Step 3: Identify Disease and Retrieve MONDO Term**
+
+* Identify the disease studied in the literature.
+* Search the MONDO database for the corresponding term.
+
+**Step 4: Extract Experimental Method Information**
+
+* List all experimental methods mentioned in the literature.
+* For each method:
+	+ Extract assay name (e.g., Western Blot)
+	+ Extract material used information (source, name, description)
+	+ Determine readout type (qualitative/quantitative)
+	+ Extract result descriptions for each variant
+	+ Determine biological and technical replicate information
+	+ Determine positive and negative control settings
+	+ Determine statistical analysis method used
+	+ Determine thresholds for normal and abnormal readouts
+
+**Step 5: Organize Data into JSON Framework**
+
+* Create a new entry in the "Variants Include" array for each variant.
+* Fill out relevant fields (gene, HGVS, cDNA change, protein change) with extracted information.
+* Create a new entry in the "Described Disease" object with disease name and corresponding MONDO term.
+* For each experimental method:
+	+ Create a new entry in the "Experiment Method" array.
+	+ Fill out relevant fields (assay name, material used, readout type, result descriptions) with extracted information.
+
+**Example JSON Output**
+
+Here's an example of what the output might look like for the literature mentioned:
+
+```json
+{
+  "Variants Include": [
+    {
+      "Gene": "TP53",
+      "variants": [
+        {
+          "HGVS": "NM_001126112.3:c.248G>A",
+          "cDNA Change": {
+            "transcript": "NM_001126112.3",
+            "ref": "G",
+            "alt": "A",
+            "position": "248"
+          },
+          "Protein Change": {
+            "ref": "G",
+            "alt": "D",
+            "position": "83"
+          },
+          "Description in input context": "c.248G>A (p.G83D)"
+        }
+      ]
+    }
+  ],
+  "Described Disease": {
+    "Described Disease": "Hereditary Myopathy",
+    "MONDO": "MONDO:0012345"
+  },
+  "Experiment Method": [
+    {
+      "Assay Method": "Western Blot",
+      "Material used": {
+        "Material Source": "Cell line",
+        "Material Name": "HEK293",
+        "Description": "The experiment was conducted using the HEK293 cell line."
+      },
+      "Readout type": "Quantitative",
+      "Readout description": [
+        {
+          "Variant": "NM_001126112.3:c.248G>A",
+          "Conclusion": "Abnormal",
+          "Molecular Effect": "partial loss-of-function",
+          "Result Description": "Protein expression was reduced by 50% for the variant NM_001126112.3:c.248G>A."
+        }
+      ],
+      "Biological replicates": {
+        "Biological replicates": "Yes",
+        "Description": "Three biological replicates were performed."
+      },
+      "Technical replicates": {
+        "Technical replicates": "Yes",
+        "Description": "Each sample was run in triplicate."
+      },
+      "Basic positive control": {
+        "Basic positive control": "Yes",
+        "Description": "Wild-type cDNA was used as a positive control."
+      },
+      "Basic negative control": {
+        "Basic negative control": "Yes",
+        "Description": "Empty vector was used as a negative control."
+      },
+      "Validation controls P/LP": {
+        "Validation controls P/LP": "Yes",
+        "Counts": "2"
+      },
+      "Validation controls B/LB": {
+        "Validation controls B/LB": "Yes",
+        "Counts": "1"
+      },
+      "Statistical analysis method": {
+        "Statistical analysis method": "ANOVA was used for statistical analysis."
+      },
+      "Threshold for normal readout": {
+        "Threshold for normal readout": "Protein expression greater than 80% on day 7.",
+        "Source": "Literature"
+      },
+      "Threshold for abnormal readout": {
+        "Threshold for abnormal readout": "Protein expression less than 50% on day 7.",
+        "Source": "Literature"
+      },
+      "Approved assay": {
+        "Approved assay": "Yes"
+      }
+    }
+  ]
+}
+```
+
+This output represents a single entry in the JSON framework, which can be expanded to include additional variants and experimental methods as needed.

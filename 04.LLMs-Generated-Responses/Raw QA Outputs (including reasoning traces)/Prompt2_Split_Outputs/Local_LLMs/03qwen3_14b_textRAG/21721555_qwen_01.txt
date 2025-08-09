@@ -1,0 +1,54 @@
+总时间（秒）：13.55
+问答时间（秒）：12.23
+
+<think>
+Okay, let's tackle this query. The user wants me to extract mutation information from the provided medical literature paragraph. First, I need to carefully read through the text to identify any mentions of mutations.
+
+Looking at the abstract, the key part is where they mention the A53T substitution and the S87N substitution. These are specific mutations in the α-synuclein protein. The article compares human and mouse α-synuclein and discusses how these mutations affect aggregation kinetics.
+
+So, the gene here is α-synuclein, which is often referred to as αSyn. The mutations are A53T and S87N. The text doesn't mention cDNA changes, so those fields should be N.D. The protein changes are clear: A53T means alanine at position 53 is replaced by threonine, and S87N is serine at 87 replaced by asparagine. The description in the context is given as "A53T substitution" and "S87N substitutions."
+
+I need to make sure that each mutation is listed in the variants array. Also, since the user's example includes both cDNA and protein changes, I should check if there's any cDNA information here. The text doesn't provide cDNA positions or transcripts, so those remain N.D. 
+
+Another thing to note is that the abstract refers to "human-mouse chimeras," but the mutations themselves are in the human α-synuclein. The study is about how these mutations affect the protein's behavior, which is relevant to Parkinson's disease. 
+
+I should structure the JSON with the gene name as "α-synuclein" (or αSyn), and list each mutation in the variants array. Each variant should have cDNA change as N.D., protein change with the respective amino acid changes, and the description from the text. 
+
+Double-checking the example provided by the user, the format uses "Gene" and "variants" with each variant containing cDNA and protein changes. Since the mutations here are on the protein level without cDNA details, those fields stay as N.D. 
+
+So the final JSON should have the gene name, two variants with their respective protein changes and descriptions. Everything else not mentioned is N.D. That should cover all the required information accurately.
+</think>
+
+{
+    "Gene": "α-synuclein",
+    "variants": [
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "A",
+                "alt": "T",
+                "position": "53"
+            },
+            "Description in input context": "A53T substitution dominates the growth kinetics"
+        },
+        {
+            "cDNA Change": {
+                "transcript": "N.D.",
+                "ref": "N.D.",
+                "alt": "N.D.",
+                "position": "N.D."
+            },
+            "Protein Change": {
+                "ref": "S",
+                "alt": "N",
+                "position": "87"
+            },
+            "Description in input context": "S87N substitutions affect the lag phase in combination with A53T"
+        }
+    ]
+}
