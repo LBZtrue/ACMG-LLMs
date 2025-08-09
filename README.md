@@ -2,16 +2,19 @@
 
 <img width="12219" height="5363" alt="02研究架构主图" src="https://github.com/user-attachments/assets/d25f00ad-4473-4281-8e38-1ce9232980d5" />
 
+
 ## 1、Directory Structure Description
+
 **01.Gold-Standard-Json:** Directory containing expert-curated intermediate information and final PS3/BS3 classifications, serving as the ground-truth benchmark.
 
 **02.Prompts:** Directory storing the various prompts used to test the large language models.
 
-**03.Source-Code:**
+**03.Source-Code:** Code repository for JSON-formatting utilities and evaluation scripts.
 
 **04.LLMs-Generated-Responses:** Directory holding the models’ initial responses under different prompts (Raw QA Outputs, including reasoning traces) and their corresponding structured JSON outputs (Normalized JSON Responses).
 
-**05.Evaluation-Results:**
+**05.Evaluation-Results:** Dataset repository housing all evaluation results.
+
 
 ## 2、Tested LLM Inventory
 | Environment | Model Name          | Parameters | RAG Mode      |
