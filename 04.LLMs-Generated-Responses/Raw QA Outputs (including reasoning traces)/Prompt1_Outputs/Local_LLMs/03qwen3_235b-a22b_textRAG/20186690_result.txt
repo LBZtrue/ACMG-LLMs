@@ -1,0 +1,248 @@
+总时间（秒）：29826.50
+问答时间（秒）：137.05
+
+Please provide your output in the required JSON format.
+```
+functional_evidence_assessment: [ ... ]
+```
+
+**Note:**
+* If multiple variants are being assessed, all should be included in a single array under `functional_evidence_assessment`.
+* Ensure that all ACMG criteria (PS3, BS3) and strength levels (very_strong, moderate, supporting) are correctly applied based on the flowchart logic.
+* If any step or sub-step does not apply to a particular variant, it should be omitted from the array for that variant.
+* All extracted information must come directly from the provided text.
+
+**Given the complexity of the task, I am providing a simplified example (which does not match the current input) for illustrative purposes:**
+
+```json
+{
+  "variant_id": {
+    "Gene": "EGFR",
+    "Protein_Change": {
+      "ref": "L",
+      "alt": "R",
+      "position": "858"
+    },
+    "variant_string_id": "EGFR L858R"
+  },
+  "functional_evidence_aim": "Pathogenic",
+  "assessment_steps": [
+    {
+      "step_name": "Step 1: Define the disease mechanism",
+      "extracted_paper_info": "The paper states that 'EGFR L858R leads to constitutive activation of the kinase domain, driving uncontrolled cell proliferation in non-small cell lung cancer.'",
+      "judgment": "Yes",
+      "reasoning": "The disease mechanism is clearly defined as constitutive kinase activation leading to uncontrolled cell growth."
+    },
+    {
+      "step_name": "Step 2: Evaluate applicability of general classes of assay used in the field",
+      "extracted_paper_info": "The study used kinase activity assays to measure EGFR phosphorylation levels in transfected cells.",
+      "judgment": "Yes",
+      "reasoning": "Kinase activity assays directly assess the mechanism of constitutive activation described for this disease.",
+      "next_step_or_outcome": "Proceed to Step 3"
+    },
+    {
+      "step_name": "Step 3a: Basic Controls and Replicates",
+      "extracted_paper_info": "The methods state that 'all experiments included wild-type EGFR as a negative control and the known activating mutant EGFR T790M as a positive control, with n=5 replicates.'",
+      "judgment": "Yes",
+      "reasoning": "Both negative and positive controls were used with multiple replicates.",
+      "next_step_or_outcome": "Proceed to Step 3c"
+    },
+    {
+      "step_name": "Step 3c: Variant Controls",
+      "extracted_paper_info": "The study tested 12 known pathogenic variants and 8 known benign variants across the kinase domain.",
+      "judgment": "Yes",
+      "reasoning": "A sufficient number of known pathogenic and benign variants were used as controls.",
+      "next_step_or_outcome": "Proceed to Step 4"
+    },
+    {
+      "step_name": "Step 4a: Statistical Analyses",
+      "extracted_paper_info": "The paper reports 'p=0.0002 for kinase activity compared to wild-type, with an OddsPath of 23.5 for pathogenicity.'",
+      "judgment": "Yes",
+      "reasoning": "OddsPath is calculated and statistically significant.",
+      "next_step_or_outcome": "Proceed to Step 4c"
+    },
+    {
+      "step_name": "Step 4c: Correlate OddsPath",
+      "extracted_paper_info": "OddsPath of 23.5 for EGFR L858R was calculated from kinase activity and clinical correlation.",
+      "judgment": "Yes",
+      "reasoning": "OddsPath exceeds 18.7 threshold for very strong pathogenic evidence.",
+      "next_step_or_outcome": "Final assessment"
+    }
+  ],
+  "final_evidence_strength": {
+    "type": "Pathogenic",
+    "strength": "PS3_very_strong"
+  },
+  "overall_conclusion": "EGFR L858R shows very strong pathogenic evidence due to constitutive kinase activation with OddsPath of 23.5, using appropriate controls and multiple replicates."
+}
+```
+
+**Now, please analyze the given context text and output the JSON according to these instructions.**
+Answer:
+
+```json
+{
+  "functional_evidence_assessment": [
+    {
+      "variant_id": {
+        "Gene": "LRRK2",
+        "Protein_Change": {
+          "ref": "G",
+          "alt": "R",
+          "position": "2385"
+        },
+        "variant_string_id": "LRRK2 G2385R"
+      },
+      "functional_evidence_aim": "Pathogenic",
+      "assessment_steps": [
+        {
+          "step_name": "Step 1: Define the disease mechanism",
+          "extracted_paper_info": "The variant p.G2385R was identified as a risk factor in multiple case-control studies across independent cohorts.",
+          "judgment": "Yes",
+          "reasoning": "The paper indicates a role in disease pathogenesis by showing consistent association across multiple datasets."
+        },
+        {
+          "step_name": "Step 2: Evaluate applicability of general classes of assay used in the field",
+          "extracted_paper_info": "The variant was analyzed in case-control association studies; however, no direct functional assay was described.",
+          "judgment": "No",
+          "reasoning": "The evidence comes solely from genetic association studies, not from assays that model disease mechanisms like protein function or cellular pathways.",
+          "next_step_or_outcome": "Do not use PS3/BS3"
+        }
+      ],
+      "final_evidence_strength": {
+        "type": "Pathogenic",
+        "strength": "N/A"
+      },
+      "overall_conclusion": "The variant p.G2385R is associated with increased disease risk based on genetic association studies, but no functional assays were described to assess its impact directly."
+    },
+    {
+      "variant_id": {
+        "Gene": "LRRK2",
+        "Protein_Change": {
+          "ref": "R",
+          "alt": "P",
+          "position": "1628"
+        },
+        "variant_string_id": "LRRK2 R1628P"
+      },
+      "functional_evidence_aim": "Pathogenic",
+      "assessment_steps": [
+        {
+          "step_name": "Step 1: Define the disease mechanism",
+          "extracted_paper_info": "The variant p.R1628P was identified as a risk factor and consistently observed across multiple replication cohorts.",
+          "judgment": "Yes",
+          "reasoning": "The variant is implicated in disease pathogenesis through consistent association across independent datasets."
+        },
+        {
+          "step_name": "Step 2: Evaluate applicability of general classes of assay used in the field",
+          "extracted_paper_info": "The variant was analyzed in case-control association studies; no functional assays were reported.",
+          "judgment": "No",
+          "reasoning": "The evidence is derived from genetic association studies, not from direct functional testing of the variant’s impact.",
+          "next_step_or_outcome": "Do not use PS3/BS3"
+        }
+      ],
+      "final_evidence_strength": {
+        "type": "Pathogenic",
+        "strength": "N/A"
+      },
+      "overall_conclusion": "The variant p.R1628P is associated with disease risk based on genetic association data, but no direct functional assays were described to evaluate its biological impact."
+    },
+    {
+      "variant_id": {
+        "Gene": "LRRK2",
+        "Protein_Change": {
+          "ref": "S",
+          "alt": "T",
+          "position": "1647"
+        },
+        "variant_string_id": "LRRK2 S1647T"
+      },
+      "functional_evidence_aim": "Pathogenic",
+      "assessment_steps": [
+        {
+          "step_name": "Step 1: Define the disease mechanism",
+          "extracted_paper_info": "The variant p.S1647T was identified as a risk factor in further case-control studies involving three independent cohorts.",
+          "judgment": "Yes",
+          "reasoning": "The paper associates the variant with increased disease risk, indicating a potential role in pathogenesis."
+        },
+        {
+          "step_name": "Step 2: Evaluate applicability of general classes of assay used in the field",
+          "extracted_paper_info": "The variant was analyzed in case-control association studies; no functional assays were reported.",
+          "judgment": "No",
+          "reasoning": "The evidence for this variant is based solely on genetic association without any functional validation provided.",
+          "next_step_or_outcome": "Do not use PS3/BS3"
+        }
+      ],
+      "final_evidence_strength": {
+        "type": "Pathogenic",
+        "strength": "N/A"
+      },
+      "overall_conclusion": "The variant p.S1647T is associated with disease risk based on genetic association studies, but no functional assays were described to assess its biological effect."
+    },
+    {
+      "variant_id": {
+        "Gene": "LRRK2",
+        "Protein_Change": {
+          "ref": "R",
+          "alt": "H",
+          "position": "1398"
+        },
+        "variant_string_id": "LRRK2 R1398H"
+      },
+      "functional_evidence_aim": "Benign",
+      "assessment_steps": [
+        {
+          "step_name": "Step 1: Define the disease mechanism",
+          "extracted_paper_info": "The variant p.R1398H was identified as a protective factor in further case-control studies involving three independent cohorts.",
+          "judgment": "Yes",
+          "reasoning": "The paper associates the variant with decreased disease risk, indicating a potential protective role."
+        },
+        {
+          "step_name": "Step 2: Evaluate applicability of general classes of assay used in the field",
+          "extracted_paper_info": "The variant was analyzed in case-control association studies; no functional assays were reported.",
+          "judgment": "No",
+          "reasoning": "The evidence for this variant is based solely on genetic association without any functional validation provided.",
+          "next_step_or_outcome": "Do not use PS3/BS3"
+        }
+      ],
+      "final_evidence_strength": {
+        "type": "Benign",
+        "strength": "N/A"
+      },
+      "overall_conclusion": "The variant p.R1398H is associated with reduced disease risk based on genetic association studies, but no functional assays were described to assess its biological impact."
+    },
+    {
+      "variant_id": {
+        "Gene": "LRRK2",
+        "Protein_Change": {
+          "ref": "N",
+          "alt": "K",
+          "position": "551"
+        },
+        "variant_string_id": "LRRK2 N551K"
+      },
+      "functional_evidence_aim": "Benign",
+      "assessment_steps": [
+        {
+          "step_name": "Step 1: Define the disease mechanism",
+          "extracted_paper_info": "The variant p.N551K was identified as a protective factor in further case-control studies involving three independent cohorts.",
+          "judgment": "Yes",
+          "reasoning": "The paper associates the variant with decreased disease risk, indicating a potential protective role."
+        },
+        {
+          "step_name": "Step 2: Evaluate applicability of general classes of assay used in the field",
+          "extracted_paper_info": "The variant was analyzed in case-control association studies; no functional assays were reported.",
+          "judgment": "No",
+          "reasoning": "The evidence for this variant is based solely on genetic association without any functional validation provided.",
+          "next_step_or_outcome": "Do not use PS3/BS3"
+        }
+      ],
+      "final_evidence_strength": {
+        "type": "Benign",
+        "strength": "N/A"
+      },
+      "overall_conclusion": "The variant p.N551K is associated with reduced disease risk based on genetic association studies, but no functional assays were described to assess its biological impact."
+    }
+  ]
+}
+```
