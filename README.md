@@ -19,14 +19,6 @@
 ## 3、Tested LLM Inventory
 ### (1) Local Deployment LLMs Test Parameter Inventory
 
-| Model Name   | 70B | 32B | 30B-A3B | 27B | 14B | 12B | 8B | 7B | 4B | 1.7B | 1.5B | 1B | 0.6B |
-|:-------------|:----|:----|:--------|:----|:----|:----|:---|:---|:---|:-----|:-----|:---|:-----|
-| Llama3.1     | ✓   |     |         |     |     |     | ✓  |    |    |      |      |    |      |
-| Gemma3       |     |     |         | ✓   |     | ✓   |    |    | ✓  |      |      | ✓  |      |
-| Qwen3        |     | ✓   | ✓       |     | ✓   |     | ✓  |    | ✓  | ✓    |      |    | ✓    |
-| Mistral      |     |     |         |     |     |     |    | ✓  |    |      |      |    |      |
-| DeepSeek-r1  | ✓   | ✓   |         |     | ✓   |     |    | ✓  |    |      | ✓    |    |      |
-
 | Model Name  | 235B-A22B | 70B | 32B | 30B-A3B | 27B | 14B | 12B | 8B | 7B | 4B | 1.7B | 1.5B | 1B | 0.6B |
 | :---------- | :-------- | :-- | :-- | :------ | :-- | :-- | :-- | :- | :- | :- | :--- | :--- | :- | :--- |
 | Llama3.1    |           | ✓   |     |         |     |     |     | ✓  |    |    |      |      |    |      |
@@ -51,7 +43,7 @@
 | **Local ↓** |
 |             | Llama3.1 | 70B / 8B | RAG / noRAG·RAG |
 |             | Gemma3 | 27B / 12B / 4B / 1B | RAG / noRAG·RAG / RAG / RAG |
-|             | Qwen3 | 32B / 30B-A3B / 14B / 8B / 4B / 1.7B / 0.6B | RAG / RAG / noRAG·RAG / RAG / RAG / RAG / RAG |
+|             | Qwen3 | 235B-A22B / 32B / 30B-A3B / 14B / 8B / 4B / 1.7B / 0.6B | RAG / RAG / RAG / noRAG·RAG / RAG / RAG / RAG / RAG |
 |             | Mistral | 7B | noRAG·RAG |
 |             | DeepSeek-r1 | 70B / 32B / 14B / 7B / 1.5B | RAG / RAG / noRAG·RAG / RAG / RAG |
 
