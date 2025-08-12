@@ -27,6 +27,15 @@
 | Mistral      |     |     |         |     |     |     |    | ✓  |    |      |      |    |      |
 | DeepSeek-r1  | ✓   | ✓   |         |     | ✓   |     |    | ✓  |    |      | ✓    |    |      |
 
+| Model Name  | 235B-A22B | 70B | 32B | 30B-A3B | 27B | 14B | 12B | 8B | 7B | 4B | 1.7B | 1.5B | 1B | 0.6B |
+| :---------- | :-------- | :-- | :-- | :------ | :-- | :-- | :-- | :- | :- | :- | :--- | :--- | :- | :--- |
+| Llama3.1    |           | ✓   |     |         |     |     |     | ✓  |    |    |      |      |    |      |
+| Gemma3      |           |     |     |         | ✓   |     | ✓   |    |    | ✓  |      |      | ✓  |      |
+| Qwen3       | ✓         |     | ✓   | ✓       |     | ✓   |     | ✓  |    | ✓  | ✓    |      |    | ✓    |
+| Mistral     |           |     |     |         |     |     |     |    | ✓  |    |      |      |    |      |
+| DeepSeek-r1 |           | ✓   | ✓   |         |     | ✓   |     |    | ✓  |    |      | ✓    |    |      |
+
+
 ### (2) Comprehensive Test Inventory of All LLMs
 
 | Environment | Model Name | Parameters | RAG Mode |
