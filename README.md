@@ -30,22 +30,20 @@
 
 ### (2) Comprehensive Test Inventory of All LLMs
 
-| Environment | Model Name | Parameters | RAG Mode |
-|:------------|:-----------|:-----------|:---------|
-| **Online ↓** |
-|             | Doubao-1.5-Pro | — | noRAG |
-|             | DeepSeek-v3 | 671B | noRAG |
-|             | Gemini-2.0-flash | — | noRAG |
-|             | GPT-4o | 1.8T | noRAG |
-|             | Grok3 | 2.7T | noRAG |
-|             | Kimi-v1 | — | noRAG |
-|             | Qwen-Long | 235B | noRAG |
-| **Local ↓** |
-|             | Llama3.1 | 70B / 8B | RAG / noRAG·RAG |
-|             | Gemma3 | 27B / 12B / 4B / 1B | RAG / noRAG·RAG / RAG / RAG |
-|             | Qwen3 | 235B-A22B / 32B / 30B-A3B / 14B / 8B / 4B / 1.7B / 0.6B | RAG / RAG / RAG / noRAG·RAG / RAG / RAG / RAG / RAG |
-|             | Mistral | 7B | noRAG·RAG |
-|             | DeepSeek-r1 | 70B / 32B / 14B / 7B / 1.5B | RAG / RAG / noRAG·RAG / RAG / RAG |
+| Environment | Model Name       | Parameters                                              | RAG Mode                                            |
+| :---------- | :--------------- | :------------------------------------------------------ | :-------------------------------------------------- |
+| Online      | Doubao-1.5-Pro   | —                                                       | noRAG                                               |
+| Online      | DeepSeek-v3      | 671B                                                    | noRAG                                               |
+| Online      | Gemini-2.0-flash | —                                                       | noRAG                                               |
+| Online      | GPT-4o           | 1.8T                                                    | noRAG                                               |
+| Online      | Grok3            | 2.7T                                                    | noRAG                                               |
+| Online      | Kimi-v1          | —                                                       | noRAG                                               |
+| Online      | Qwen-Long        | 235B                                                    | noRAG                                               |
+| Local       | Llama3.1         | 70B / 8B                                                | RAG / noRAG·RAG                                     |
+| Local       | Gemma3           | 27B / 12B / 4B / 1B                                     | RAG / noRAG·RAG / RAG / RAG                         |
+| Local       | Qwen3            | 235B-A22B / 32B / 30B-A3B / 14B / 8B / 4B / 1.7B / 0.6B | RAG / RAG / RAG / noRAG·RAG / RAG / RAG / RAG / RAG |
+| Local       | Mistral          | 7B                                                      | noRAG·RAG                                           |
+| Local       | DeepSeek-r1      | 70B / 32B / 14B / 7B / 1.5B                             | RAG / RAG / noRAG·RAG / RAG / RAG                   |
 
 
 ## 4、Additional Remarks
